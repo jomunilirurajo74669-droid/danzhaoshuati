@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>语文字音字形刷题</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+:root{--ink:#1a1208;--paper:#fdf6e8;--paper2:#f5ead0;--vermillion:#c0392b;--gold:#b8860b;--gold-light:#d4a017;--sage:#5a7a5a;--correct:#2d6a4f;--correct-bg:#d8f3dc;--wrong:#9b2226;--wrong-bg:#fce4e4;--shadow:rgba(26,18,8,0.12);}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='none'/%3E%3Ccircle cx='1' cy='1' r='0.4' fill='%23c8a96e' opacity='0.15'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+.app{position:relative;z-index:1;max-width:480px;margin:0 auto;min-height:100vh;}
+
+/* TOPBAR */
+.topbar{background:var(--ink);color:var(--paper);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.topbar-title{font-family:'Noto Serif SC',serif;font-size:18px;font-weight:700;letter-spacing:2px;}
+.topbar-title span{color:var(--gold-light);}
+.topbar-nav{display:flex;gap:6px;}
+.nav-btn{background:none;border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.8);padding:5px 10px;border-radius:4px;font-size:12px;cursor:pointer;font-family:'Noto Sans SC',sans-serif;transition:all 0.2s;}
+.nav-btn:hover,.nav-btn.active{background:var(--vermillion);border-color:var(--vermillion);color:white;}
+
+/* SCREENS */
+.screen{display:none;padding:20px;animation:fadeIn 0.3s ease;}
+.screen.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* HOME */
+.hero-banner{background:var(--ink);border-radius:16px;padding:24px 20px;color:var(--paper);margin-bottom:20px;position:relative;overflow:hidden;}
+.hero-banner::before{content:'音';position:absolute;right:-10px;top:-20px;font-family:'Noto Serif SC',serif;font-size:120px;color:rgba(255,255,255,0.04);line-height:1;pointer-events:none;}
+.hero-label{font-size:11px;color:var(--gold-light);letter-spacing:3px;margin-bottom:8px;}
+.hero-title{font-family:'Noto Serif SC',serif;font-size:26px;font-weight:700;line-height:1.3;}
+.hero-sub{font-size:13px;color:rgba(255,255,255,0.55);margin-top:8px;}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.stat-card{background:white;border-radius:12px;padding:14px 10px;text-align:center;box-shadow:0 2px 8px var(--shadow);border-top:3px solid var(--paper2);}
+.stat-card.red{border-top-color:var(--vermillion);}
+.stat-card.gold{border-top-color:var(--gold);}
+.stat-card.green{border-top-color:var(--sage);}
+.stat-num{font-size:28px;font-weight:700;line-height:1;}
+.stat-label{font-size:11px;color:#888;margin-top:4px;}
+.progress-section{background:white;border-radius:12px;padding:16px;margin-bottom:20px;box-shadow:0 2px 8px var(--shadow);}
+.progress-title{font-size:13px;font-weight:500;margin-bottom:10px;color:#555;}
+.progress-bar-wrap{background:var(--paper2);border-radius:99px;height:10px;overflow:hidden;}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--sage),var(--gold));border-radius:99px;transition:width 0.5s ease;}
+.progress-text{display:flex;justify-content:space-between;font-size:12px;color:#888;margin-top:6px;}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.mode-btn{background:white;border:none;border-radius:12px;padding:18px 14px;text-align:left;cursor:pointer;box-shadow:0 2px 8px var(--shadow);transition:all 0.2s;position:relative;overflow:hidden;}
+.mode-btn:active{transform:scale(0.97);}
+.mode-btn .icon{font-size:28px;margin-bottom:8px;display:block;}
+.mode-btn .name{font-size:14px;font-weight:700;color:var(--ink);}
+.mode-btn .desc{font-size:11px;color:#888;margin-top:3px;}
+.mode-btn.primary{background:var(--ink);}
+.mode-btn.primary .name{color:var(--gold-light);}
+.mode-btn.primary .desc{color:rgba(255,255,255,0.5);}
+.badge{position:absolute;top:10px;right:10px;background:var(--vermillion);color:white;font-size:10px;padding:2px 6px;border-radius:99px;}
+
+/* QUIZ */
+.quiz-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.quiz-prog-text{font-size:12px;color:#888;white-space:nowrap;}
+.quiz-prog-wrap{flex:1;background:var(--paper2);border-radius:99px;height:6px;}
+.quiz-prog-fill{height:100%;background:var(--vermillion);border-radius:99px;transition:width 0.3s;}
+.quit-btn{background:none;border:none;color:#aaa;font-size:20px;cursor:pointer;padding:4px;}
+.question-card{background:white;border-radius:16px;padding:22px 18px;box-shadow:0 4px 16px var(--shadow);margin-bottom:16px;border-left:4px solid var(--vermillion);}
+.question-num{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:1px;margin-bottom:10px;}
+.question-text{font-size:16px;line-height:1.9;font-family:'Noto Serif SC',serif;}
+.keyword{background:#fff3cd;border-radius:4px;padding:0 4px;color:var(--vermillion);font-weight:700;border-bottom:2px solid var(--vermillion);}
+.options-list{display:flex;flex-direction:column;gap:10px;}
+.option-btn{background:white;border:1.5px solid #e5ddd0;border-radius:12px;padding:15px 16px;display:flex;align-items:center;gap:14px;box-shadow:0 1px 4px var(--shadow);transition:all 0.15s;cursor:pointer;}
+.option-btn:hover{border-color:var(--gold);background:#fffdf5;}
+.option-btn:active{transform:scale(0.99);}
+.opt-letter{width:28px;height:28px;border-radius:50%;background:var(--paper2);color:#888;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Noto Sans SC',sans-serif;}
+.opt-pinyin{font-size:22px;font-weight:700;letter-spacing:3px;font-family:'Noto Serif SC',serif;}
+.option-btn.correct{background:var(--correct-bg);border-color:var(--correct);}
+.option-btn.correct .opt-letter{background:var(--correct);color:white;}
+.option-btn.correct .opt-pinyin{color:var(--correct);}
+.option-btn.wrong-c{background:var(--wrong-bg);border-color:var(--wrong);}
+.option-btn.wrong-c .opt-letter{background:var(--wrong);color:white;}
+.option-btn.wrong-c .opt-pinyin{color:var(--wrong);}
+.option-btn.dim{opacity:0.3;pointer-events:none;}
+.option-btn.disabled{pointer-events:none;}
+
+/* WRONG TOAST */
+.wrong-toast{background:var(--wrong);color:white;border-radius:12px;padding:14px 18px;margin-top:14px;animation:bounceIn 0.35s cubic-bezier(0.34,1.56,0.64,1);}
+@keyframes bounceIn{from{opacity:0;transform:scale(0.85)}to{opacity:1;transform:scale(1)}}
+.toast-top{font-size:12px;opacity:0.85;margin-bottom:6px;}
+.toast-answer{font-size:22px;font-weight:700;font-family:'Noto Serif SC',serif;letter-spacing:3px;}
+
+/* EXPLANATION */
+.exp-card{background:white;border-radius:12px;padding:16px;box-shadow:0 2px 8px var(--shadow);margin-top:12px;border-left:4px solid var(--gold);animation:slideUp 0.3s ease;}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.exp-label{font-size:11px;color:var(--gold);font-weight:600;letter-spacing:1px;margin-bottom:6px;}
+.exp-result{font-size:14px;font-weight:700;margin-bottom:8px;}
+.exp-result.ok{color:var(--correct);}
+.exp-result.fail{color:var(--wrong);}
+.exp-text{font-size:13px;line-height:1.85;color:#555;}
+.next-btn{width:100%;margin-top:14px;background:var(--ink);color:var(--gold-light);border:none;border-radius:12px;padding:15px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Noto Serif SC',serif;letter-spacing:2px;transition:opacity 0.2s;}
+.next-btn:active{opacity:0.8;}
+
+/* RESULT */
+.result-hero{background:var(--ink);border-radius:16px;padding:28px 20px;text-align:center;color:var(--paper);margin-bottom:20px;}
+.result-score{font-size:64px;font-weight:700;color:var(--gold-light);line-height:1;font-family:'Noto Serif SC',serif;}
+.result-score-label{font-size:13px;color:rgba(255,255,255,0.5);margin-top:4px;}
+.result-rank{font-size:16px;margin-top:14px;font-family:'Noto Serif SC',serif;}
+.result-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.result-stat{background:white;border-radius:12px;padding:14px 10px;text-align:center;box-shadow:0 2px 8px var(--shadow);}
+.result-stat .n{font-size:26px;font-weight:700;}
+.result-stat .l{font-size:11px;color:#888;margin-top:3px;}
+.result-stat.ok .n{color:var(--correct);}
+.result-stat.fail .n{color:var(--wrong);}
+.action-row{display:flex;gap:10px;margin-bottom:20px;}
+.action-btn{flex:1;padding:14px 10px;border-radius:12px;border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans SC',sans-serif;transition:opacity 0.2s;}
+.action-btn:active{opacity:0.8;}
+.action-btn.primary{background:var(--ink);color:var(--gold-light);}
+.action-btn.secondary{background:white;color:var(--ink);box-shadow:0 2px 8px var(--shadow);}
+
+/* ERROR SUMMARY (result page) */
+.err-summary{margin-top:4px;}
+.err-summary-title{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.err-count-tag{font-size:11px;background:var(--wrong-bg);color:var(--wrong);padding:3px 9px;border-radius:99px;font-family:'Noto Sans SC',sans-serif;font-weight:600;}
+.err-item{background:white;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px var(--shadow);border-left:3px solid var(--wrong);}
+.err-item-word{font-size:15px;font-weight:700;font-family:'Noto Serif SC',serif;margin-bottom:8px;}
+.err-item-word .kw{color:var(--wrong);}
+.err-ans-row{font-size:13px;margin-bottom:3px;}
+.err-ans-row .lb{font-weight:600;margin-right:4px;}
+.err-ans-row.my{color:var(--wrong);}
+.err-ans-row.cor{color:var(--correct);}
+.err-item-exp{font-size:12px;color:#777;line-height:1.8;margin-top:8px;padding-top:8px;border-top:1px dashed #e5ddd0;}
+.no-err-box{background:var(--correct-bg);border-radius:12px;padding:20px;text-align:center;color:var(--correct);font-weight:700;font-size:15px;margin-top:4px;}
+
+/* WRONG SCREEN */
+.wrong-list{display:flex;flex-direction:column;gap:12px;}
+.wrong-item{background:white;border-radius:12px;padding:16px;box-shadow:0 2px 8px var(--shadow);border-left:3px solid var(--vermillion);}
+.wrong-word{font-size:15px;font-weight:700;font-family:'Noto Serif SC',serif;margin-bottom:8px;}
+.wrong-word .kw{color:var(--wrong);}
+.wrong-row{font-size:13px;margin-bottom:3px;}
+.wrong-row .lb{font-weight:600;margin-right:4px;}
+.wrong-row.my{color:var(--wrong);}
+.wrong-row.cor{color:var(--correct);}
+.wrong-exp{font-size:12px;color:#777;padding-top:8px;border-top:1px dashed #e5ddd0;line-height:1.75;margin-top:6px;}
+.wc-badge{font-size:10px;background:var(--wrong-bg);color:var(--wrong);padding:2px 7px;border-radius:99px;display:inline-block;margin-top:6px;}
+.empty-state{text-align:center;padding:60px 20px;color:#aaa;}
+.empty-icon{font-size:48px;margin-bottom:12px;}
+.empty-text{font-size:15px;}
+.screen-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.screen-hdr h2{font-family:'Noto Serif SC',serif;font-size:18px;font-weight:700;}
+.clear-btn{background:none;border:1px solid #ddd;color:#aaa;padding:8px 14px;border-radius:8px;font-size:12px;cursor:pointer;}
+
+/* STATS */
+.stats-section{margin-bottom:20px;}
+.section-title{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--paper2);}
+.acc-card{background:white;border-radius:16px;padding:20px;box-shadow:0 2px 8px var(--shadow);display:flex;align-items:center;gap:16px;}
+.acc-ring{width:72px;height:72px;border-radius:50%;background:conic-gradient(var(--correct) 0%,var(--correct) var(--pct,0%),#eee var(--pct,0%));display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;}
+.acc-ring::before{content:'';position:absolute;width:54px;height:54px;background:white;border-radius:50%;}
+.acc-ring-num{position:relative;z-index:1;font-size:14px;font-weight:700;}
+.acc-info .big{font-size:22px;font-weight:700;}
+.acc-info .sm{font-size:12px;color:#888;margin-top:2px;}
+.history-list{display:flex;flex-direction:column;gap:8px;}
+.history-item{background:white;border-radius:10px;padding:12px 14px;box-shadow:0 1px 4px var(--shadow);display:flex;align-items:center;justify-content:space-between;}
+.history-score{font-size:20px;font-weight:700;}
+.history-score.high{color:var(--correct);}
+.history-score.mid{color:var(--gold);}
+.history-score.low{color:var(--wrong);}
+.history-date{font-size:11px;color:#aaa;margin-top:2px;}
+
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:#ccc;border-radius:99px;}
+
+/* ── MODULE SWITCHER ── */
+.module-tab-bar{display:flex;background:var(--paper2);border-radius:12px;padding:4px;margin-bottom:20px;gap:4px;}
+.module-tab{flex:1;padding:10px 6px;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans SC',sans-serif;background:transparent;color:#888;transition:all 0.2s;}
+.module-tab.active{background:var(--ink);color:var(--gold-light);}
+.module-tab .tab-icon{display:block;font-size:18px;margin-bottom:2px;}
+
+/* ── 字形 HOME ── */
+.xing-hero-banner{background:linear-gradient(135deg,#1a3a2a,#2d5a3d);border-radius:16px;padding:24px 20px;color:var(--paper);margin-bottom:20px;position:relative;overflow:hidden;}
+.xing-hero-banner::before{content:'形';position:absolute;right:-10px;top:-20px;font-family:'Noto Serif SC',serif;font-size:120px;color:rgba(255,255,255,0.04);line-height:1;pointer-events:none;}
+
+/* ── 字形 QUIZ ── */
+.xing-question-card{background:white;border-radius:16px;padding:22px 18px;box-shadow:0 4px 16px var(--shadow);margin-bottom:16px;border-left:4px solid var(--sage);}
+.xing-prompt{font-size:13px;color:#777;margin-bottom:12px;font-weight:500;}
+.xing-words-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;}
+.xing-opt{background:white;border:1.5px solid #e5ddd0;border-radius:12px;padding:14px 12px;text-align:center;cursor:pointer;transition:all 0.15s;box-shadow:0 1px 4px var(--shadow);}
+.xing-opt:active{transform:scale(0.98);}
+.xing-opt .xo-label{display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--paper2);color:#888;font-size:11px;font-weight:700;line-height:22px;margin-bottom:6px;}
+.xing-opt .xo-word{font-size:18px;font-family:'Noto Serif SC',serif;font-weight:700;letter-spacing:1px;}
+.xing-opt .xo-sub{font-size:11px;color:#aaa;margin-top:4px;}
+.xing-opt.correct{background:var(--correct-bg);border-color:var(--correct);}
+.xing-opt.correct .xo-label{background:var(--correct);color:white;}
+.xing-opt.correct .xo-word{color:var(--correct);}
+.xing-opt.wrong-c{background:var(--wrong-bg);border-color:var(--wrong);}
+.xing-opt.wrong-c .xo-label{background:var(--wrong);color:white;}
+.xing-opt.wrong-c .xo-word{color:var(--wrong);}
+.xing-opt.dim{opacity:0.3;pointer-events:none;}
+.xing-opt.disabled{pointer-events:none;}
+
+/* 错字高亮 */
+.err-char{color:var(--wrong);border-bottom:2px solid var(--wrong);}
+.ok-char{color:var(--correct);}
+
+/* ── 收藏按钮 ── */
+.fav-btn{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;border:none;background:rgba(255,255,255,0.9);box-shadow:0 2px 8px rgba(0,0,0,0.12);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;z-index:10;-webkit-tap-highlight-color:transparent;}
+.fav-btn:active{transform:scale(0.88);}
+.fav-btn.faved{background:#fff3e0;}
+.fav-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(30,30,30,0.85);color:#fff;padding:8px 18px;border-radius:99px;font-size:13px;pointer-events:none;opacity:0;transition:opacity 0.3s;z-index:999;white-space:nowrap;}
+.fav-toast.show{opacity:1;}
+
+/* ── 收藏页面 ── */
+.fav-tab-bar{display:flex;background:var(--paper2);border-radius:10px;padding:3px;gap:3px;margin-bottom:16px;}
+.fav-tab{flex:1;padding:8px 4px;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans SC',sans-serif;background:transparent;color:#888;transition:all 0.2s;}
+.fav-tab.active{background:white;color:var(--ink);box-shadow:0 1px 4px var(--shadow);}
+.fav-item{background:white;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 2px 8px var(--shadow);position:relative;}
+.fav-item-yin{border-left:3px solid var(--vermillion);}
+.fav-item-xing{border-left:3px solid var(--sage);}
+.fav-item-title{font-size:15px;font-weight:700;font-family:'Noto Serif SC',serif;margin-bottom:8px;padding-right:36px;}
+.fav-item-title .kw{color:var(--vermillion);}
+.fav-item-title .kw-xing{color:var(--sage);}
+.fav-item-detail{font-size:12px;color:#777;line-height:1.8;margin-top:6px;padding-top:6px;border-top:1px dashed #e5ddd0;}
+.fav-remove-btn{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;border:none;background:var(--paper2);color:#aaa;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.fav-remove-btn:hover{background:var(--wrong-bg);color:var(--wrong);}
+.fav-ans-row{font-size:13px;margin-bottom:2px;}
+.fav-ans-row .lb{font-weight:600;margin-right:4px;}
+.fav-ans-row.cor{color:var(--correct);}
+.fav-type-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:99px;font-weight:600;margin-left:6px;vertical-align:middle;}
+.fav-type-badge.yin{background:#fce4e4;color:var(--wrong);}
+.fav-type-badge.xing{background:#d8f3dc;color:var(--correct);}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="topbar">
+  <div class="topbar-title">语文<span>·</span>专练</div>
+  <div class="topbar-nav">
+    <button class="nav-btn active" id="nav-home" onclick="showScreen('home')">首页</button>
+    <button class="nav-btn" id="nav-wrong" onclick="showScreen('wrong')">收藏</button>
+    <button class="nav-btn" id="nav-stats" onclick="showScreen('stats')">统计</button>
+  </div>
+</div>
+
+<!-- HOME -->
+<div class="screen active" id="screen-home">
+
+  <!-- 模块切换Tab -->
+  <div class="module-tab-bar">
+    <button class="module-tab active" id="tab-yin" onclick="switchModule('yin')">
+      <span class="tab-icon">🔊</span>字音专练
+    </button>
+    <button class="module-tab" id="tab-xing" onclick="switchModule('xing')">
+      <span class="tab-icon">✍️</span>字形专练
+    </button>
+  </div>
+
+  <!-- 字音模块首页 -->
+  <div id="module-yin">
+    <div class="hero-banner">
+      <div class="hero-label">语文专项训练 · 多音字语境辨析</div>
+      <div class="hero-title">字音专练<br>看词选音</div>
+      <div class="hero-sub">共 <span id="total-count">0</span> 题 · 每题给出词语，选正确拼音</div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card gold"><div class="stat-num" id="stat-done">0</div><div class="stat-label">今日已答</div></div>
+      <div class="stat-card green"><div class="stat-num" id="stat-acc">—</div><div class="stat-label">今日正确率</div></div>
+      <div class="stat-card red"><div class="stat-num" id="stat-wrong">0</div><div class="stat-label">今日错题数</div></div>
+    </div>
+    <div class="progress-section">
+      <div class="progress-title">题目覆盖进度</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="coverage-bar" style="width:0%"></div></div>
+      <div class="progress-text"><span>已见过 <span id="seen-count">0</span> 题</span><span id="coverage-pct">0%</span></div>
+    </div>
+    <div class="mode-grid">
+      <button class="mode-btn primary" onclick="startQuiz('random',20)">
+        <span class="icon">🎯</span>
+        <div class="name">字音随机刷题</div>
+        <div class="desc">每次 20 题乱序</div>
+      </button>
+      <button class="mode-btn" onclick="startQuiz('all',999)">
+        <span class="icon">📖</span>
+        <div class="name">全部刷完</div>
+        <div class="desc">150 题按序练习</div>
+      </button>
+    </div>
+    <div class="mode-grid">
+      <button class="mode-btn" id="wrong-mode-btn" onclick="startQuiz('wrong',999)" style="display:none">
+        <span class="icon">📌</span>
+        <div class="name">收藏复习</div>
+        <div class="desc">复习收藏的字音题</div>
+        <span class="badge" id="wrong-badge">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 字形模块首页 -->
+  <div id="module-xing" style="display:none">
+    <div class="xing-hero-banner">
+      <div class="hero-label">语文专项训练 · 常见易错字辨析</div>
+      <div class="hero-title">字形专练<br>辨字识形</div>
+      <div class="hero-sub">共 <span id="xing-total-count">0</span> 题 · 找出写错的词语</div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card gold"><div class="stat-num" id="xstat-done">0</div><div class="stat-label">今日已答</div></div>
+      <div class="stat-card green"><div class="stat-num" id="xstat-acc">—</div><div class="stat-label">今日正确率</div></div>
+      <div class="stat-card red"><div class="stat-num" id="xstat-wrong">0</div><div class="stat-label">今日错题数</div></div>
+    </div>
+    <div class="progress-section">
+      <div class="progress-title">题目覆盖进度</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="xcoverage-bar" style="width:0%"></div></div>
+      <div class="progress-text"><span>已见过 <span id="xseen-count">0</span> 题</span><span id="xcoverage-pct">0%</span></div>
+    </div>
+    <div class="mode-grid">
+      <button class="mode-btn primary" style="background:linear-gradient(135deg,#1a3a2a,#2d5a3d)" onclick="startXingQuiz('random',15)">
+        <span class="icon">🎯</span>
+        <div class="name">字形随机刷题</div>
+        <div class="desc">每次 15 题乱序</div>
+      </button>
+      <button class="mode-btn" onclick="startXingQuiz('all',999)">
+        <span class="icon">📖</span>
+        <div class="name">全部刷完</div>
+        <div class="desc">按序全部练习（共100题）</div>
+      </button>
+    </div>
+    <div class="mode-grid">
+      <button class="mode-btn" id="xwrong-mode-btn" onclick="startXingQuiz('wrong',999)" style="display:none">
+        <span class="icon">📌</span>
+        <div class="name">收藏复习</div>
+        <div class="desc">复习收藏的字形题</div>
+        <span class="badge" id="xwrong-badge">0</span>
+      </button>
+    </div>
+    <div style="text-align:center;padding:12px;font-size:12px;color:#aaa;background:white;border-radius:10px;margin-top:4px;">
+      📝 共收录 <span id="xing-progress-tip">100</span> 题 · 混合二字、三字、四字词语考察
+    </div>
+  </div>
+
+</div>
+
+<!-- QUIZ -->
+<div class="screen" id="screen-quiz">
+  <div class="quiz-header">
+    <button class="quit-btn" onclick="quitQuiz()">✕</button>
+    <div class="quiz-prog-wrap"><div class="quiz-prog-fill" id="quiz-prog-fill"></div></div>
+    <div class="quiz-prog-text" id="quiz-prog-text">1/20</div>
+  </div>
+  <div id="question-area"></div>
+</div>
+
+<!-- 字形 QUIZ -->
+<div class="screen" id="screen-xquiz">
+  <div class="quiz-header">
+    <button class="quit-btn" onclick="quitXingQuiz()">✕</button>
+    <div class="quiz-prog-wrap"><div class="quiz-prog-fill" id="xquiz-prog-fill" style="background:var(--sage)"></div></div>
+    <div class="quiz-prog-text" id="xquiz-prog-text">1/15</div>
+  </div>
+  <div id="xquestion-area"></div>
+</div>
+
+<!-- RESULT -->
+<div class="screen" id="screen-result">
+  <div class="result-hero">
+    <div class="result-score" id="res-score">0</div>
+    <div class="result-score-label">分</div>
+    <div class="result-rank" id="res-rank">——</div>
+  </div>
+  <div class="result-stats">
+    <div class="result-stat"><div class="n" id="res-total">0</div><div class="l">总题数</div></div>
+    <div class="result-stat ok"><div class="n" id="res-correct">0</div><div class="l">答对</div></div>
+    <div class="result-stat fail"><div class="n" id="res-wrong">0</div><div class="l">答错</div></div>
+  </div>
+  <div class="action-row">
+    <button class="action-btn secondary" onclick="showScreen('home')">返回首页</button>
+    <button class="action-btn primary" onclick="retryQuiz()">再刷一次</button>
+  </div>
+  <div class="err-summary" id="err-summary"></div>
+</div>
+
+<!-- 字形 RESULT -->
+<div class="screen" id="screen-xresult">
+  <div class="result-hero" style="background:linear-gradient(135deg,#1a3a2a,#2d5a3d)">
+    <div class="result-score" id="xres-score">0</div>
+    <div class="result-score-label">分</div>
+    <div class="result-rank" id="xres-rank">——</div>
+  </div>
+  <div class="result-stats">
+    <div class="result-stat"><div class="n" id="xres-total">0</div><div class="l">总题数</div></div>
+    <div class="result-stat ok"><div class="n" id="xres-correct">0</div><div class="l">答对</div></div>
+    <div class="result-stat fail"><div class="n" id="xres-wrong">0</div><div class="l">答错</div></div>
+  </div>
+  <div class="action-row">
+    <button class="action-btn secondary" onclick="backToXingHome()">返回首页</button>
+    <button class="action-btn primary" onclick="retryXingQuiz()" style="background:var(--sage)">再刷一次</button>
+  </div>
+  <div class="err-summary" id="xerr-summary"></div>
+</div>
+
+<!-- 收藏夹 SCREEN -->
+<div class="screen" id="screen-wrong">
+  <div class="screen-hdr">
+    <h2>⭐ 我的收藏</h2>
+    <button class="clear-btn" onclick="clearFav()">清空当前</button>
+  </div>
+  <!-- 收藏分类Tab -->
+  <div class="fav-tab-bar">
+    <button class="fav-tab active" id="fav-tab-yin" onclick="switchFavTab('yin')">🔊 字音收藏</button>
+    <button class="fav-tab" id="fav-tab-xing" onclick="switchFavTab('xing')">✍️ 字形收藏</button>
+  </div>
+  <div id="fav-list"></div>
+</div>
+<!-- 悬浮收藏提示 -->
+<div class="fav-toast" id="fav-toast"></div>
+
+<!-- STATS -->
+<div class="screen" id="screen-stats">
+  <div class="stats-section">
+    <div class="section-title">总体正确率</div>
+    <div class="acc-card">
+      <div class="acc-ring" id="acc-ring"><div class="acc-ring-num" id="acc-ring-num">0%</div></div>
+      <div class="acc-info">
+        <div class="big" id="acc-big">0%</div>
+        <div class="sm">累计答题 <span id="acc-done">0</span> 次</div>
+        <div class="sm">答对 <span id="acc-cor">0</span> 次 · 答错 <span id="acc-err">0</span> 次</div>
+      </div>
+    </div>
+  </div>
+  <div class="stats-section">
+    <div class="section-title">练习记录</div>
+    <div class="history-list" id="history-list"></div>
+  </div>
+</div>
+
+</div><!-- .app -->
+
+<script>
+// ════════════════════════════════ 字音题库 ════════════════════════════════
+const Q = [
+  // ── A ──────────────────────────────────────────
+  {id:1,word:'腌肉',char:'腌',
+   text:'"<b class="keyword">腌</b>肉"中"腌"的正确读音是？',
+   opts:['ā','yān','yǎn','ān'],ans:1,
+   exp:'【腌】两音：①ā——腌臜（邋遢义）；②yān——腌肉、腌菜（用盐等保存食物）。"腌肉"读 yān。'},
+  {id:2,word:'挨打',char:'挨',
+   text:'"<b class="keyword">挨</b>打"中"挨"的正确读音是？',
+   opts:['āi','ái','ǎi','ài'],ans:1,
+   exp:'【挨】两音：①āi——挨边、挨个儿（靠近义）；②ái——挨打、挨饿（遭受义）。"挨打"读 ái。'},
+  {id:3,word:'方兴未艾',char:'艾',
+   text:'"方兴未<b class="keyword">艾</b>"中"艾"的正确读音是？',
+   opts:['yì','ài','ǎi','āi'],ans:1,
+   exp:'【艾】两音：①ài——方兴未艾（正在兴起未停止）；②yì——自怨自艾（悔恨、惩治）。"方兴未艾"读 ài。'},
+  {id:4,word:'拗口',char:'拗',
+   text:'"<b class="keyword">拗</b>口"中"拗"的正确读音是？',
+   opts:['ǎo','ào','niù','āo'],ans:1,
+   exp:'【拗】三音：①ǎo——拗断（折断）；②ào——拗口（不顺口）；③niù——执拗（固执）。"拗口"读 ào。'},
+  {id:5,word:'执拗',char:'拗',
+   text:'"执<b class="keyword">拗</b>"中"拗"的正确读音是？',
+   opts:['ǎo','ào','niù','niǔ'],ans:2,
+   exp:'【拗】三音：ǎo 拗断；ào 拗口；niù 执拗（固执倔强）。"执拗"读 niù。'},
+
+  // ── B ──────────────────────────────────────────
+  {id:6,word:'扒窃',char:'扒',
+   text:'"<b class="keyword">扒</b>窃"中"扒"的正确读音是？',
+   opts:['bā','pá','bǎ','pà'],ans:1,
+   exp:'【扒】两音：①bā——扒皮、扒土（剥开义）；②pá——扒窃、扒手（偷窃义）。"扒窃"读 pá。'},
+  {id:7,word:'刀把儿',char:'把',
+   text:'"刀<b class="keyword">把</b>儿"中"把"的正确读音是？',
+   opts:['bǎ','bà','bā','bá'],ans:1,
+   exp:'【把】两音：①bǎ——把持、把握（握住义）；②bà——刀把儿、话把儿（器物的柄，名词义）。"刀把儿"读 bà。'},
+  {id:8,word:'磅礴',char:'磅',
+   text:'"<b class="keyword">磅</b>礴"中"磅"的正确读音是？',
+   opts:['bàng','páng','bāng','pāng'],ans:1,
+   exp:'【磅】两音：①bàng——磅秤（英制重量单位）；②páng——磅礴（气势雄伟广大）。"磅礴"读 páng。'},
+  {id:9,word:'炮羊肉',char:'炮',
+   text:'"<b class="keyword">炮</b>羊肉"中"炮"的正确读音是？',
+   opts:['pào','páo','bāo','bào'],ans:2,
+   exp:'【炮】三音：①bāo——炮羊肉（旺火急炒的烹调法）；②páo——炮烙（酷刑）；③pào——火炮（武器）。"炮羊肉"读 bāo。'},
+  {id:10,word:'一曝十寒',char:'曝',
+   text:'"一<b class="keyword">曝</b>十寒"中"曝"的正确读音是？',
+   opts:['bào','pù','bú','pó'],ans:1,
+   exp:'【曝】两音：①bào——曝光（摄影或揭露义）；②pù——曝晒、一曝十寒（暴晒义）。"一曝十寒"读 pù。'},
+  {id:11,word:'背井离乡',char:'背',
+   text:'"<b class="keyword">背</b>井离乡"中"背"的正确读音是？',
+   opts:['bēi','bèi','bí','bì'],ans:1,
+   exp:'【背】两音：①bēi——背包、背负（背负义）；②bèi——背影、背井离乡（离开、违背义）。"背井离乡"读 bèi。'},
+  {id:12,word:'胳臂',char:'臂',
+   text:'"胳<b class="keyword">臂</b>"中"臂"的正确读音是？',
+   opts:['bì','bei','bèi','bí'],ans:1,
+   exp:'【臂】两音：①bei（轻声）——胳臂（口语）；②bì——手臂、臂力（书面语）。"胳臂"中"臂"读轻声 bei。'},
+  {id:13,word:'投奔',char:'奔',
+   text:'"投<b class="keyword">奔</b>"中"奔"的正确读音是？',
+   opts:['bēn','bèn','bén','běn'],ans:1,
+   exp:'【奔】两音：①bēn——奔波、奔跑（快速义）；②bèn——投奔、奔头儿（前往投靠义）。"投奔"读 bèn。'},
+  {id:14,word:'屏气',char:'屏',
+   text:'"<b class="keyword">屏</b>气"中"屏"的正确读音是？',
+   opts:['píng','bǐng','pīng','bīng'],ans:1,
+   exp:'【屏】两音：①bǐng——屏气、屏息（抑制、憋住义）；②píng——屏蔽、屏风（遮挡物义）。"屏气"读 bǐng。'},
+
+  // ── C ──────────────────────────────────────────
+  {id:15,word:'人参',char:'参',
+   text:'"人<b class="keyword">参</b>"中"参"的正确读音是？',
+   opts:['cān','cēn','shēn','sān'],ans:2,
+   exp:'【参】三音：①cān——参观；②cēn——参差；③shēn——人参、海参（药材植物）。"人参"读 shēn。'},
+  {id:16,word:'参差',char:'参',
+   text:'"<b class="keyword">参</b>差"中"参"的正确读音是？',
+   opts:['cān','shēn','cēn','sān'],ans:2,
+   exp:'【参差】（cēn cī）高低长短不整齐。固定读 cēn，不读 cān。'},
+  {id:17,word:'矿藏',char:'藏',
+   text:'"矿<b class="keyword">藏</b>"中"藏"的正确读音是？',
+   opts:['zàng','cáng','zāng','cāng'],ans:1,
+   exp:'【藏】两音：①cáng——藏品、矿藏（储藏义）；②zàng——宝藏、西藏（名词或地名义）。"矿藏"读 cáng。'},
+  {id:18,word:'出差',char:'差',
+   text:'"出<b class="keyword">差</b>"中"差"的正确读音是？',
+   opts:['chā','chà','chāi','cī'],ans:2,
+   exp:'【差】四音：chā偏差；chà差点儿；chāi出差（外出公务）；cī参差。"出差"读 chāi。'},
+  {id:19,word:'刹那',char:'刹',
+   text:'"<b class="keyword">刹</b>那"中"刹"的正确读音是？',
+   opts:['shā','chà','shà','chā'],ans:1,
+   exp:'【刹】两音：①chà——刹那、古刹（梵语音译）；②shā——刹车（使停止）。"刹那"读 chà。'},
+  {id:20,word:'称职',char:'称',
+   text:'"<b class="keyword">称</b>职"中"称"的正确读音是？',
+   opts:['chēng','chèn','chéng','chèng'],ans:1,
+   exp:'【称】两音：①chèn——称心、称职（相符合义）；②chēng——称呼、尊称（叫做义）。"称职"是胜任义，读 chèn。'},
+  {id:21,word:'澄清泥水',char:'澄',
+   text:'"<b class="keyword">澄</b>清泥水"（使沉淀）中"澄"的正确读音是？',
+   opts:['chéng','dèng','chēng','déng'],ans:1,
+   exp:'【澄】两音：①chéng——澄清（形容清澈）；②dèng——澄清（使杂质沉淀的动作义）。此处是动作义，读 dèng。'},
+  {id:22,word:'重复',char:'重',
+   text:'"<b class="keyword">重</b>复"中"重"的正确读音是？',
+   opts:['zhòng','chóng','zhōng','chōng'],ans:1,
+   exp:'【重】两音：①chóng——重复、重叠（再次义）；②zhòng——重要、体重（分量义）。"重复"读 chóng。'},
+
+  // ── D ──────────────────────────────────────────
+  {id:23,word:'颠簸',char:'簸',
+   text:'"颠<b class="keyword">簸</b>"中"簸"的正确读音是？',
+   opts:['bò','bǒ','bō','bó'],ans:1,
+   exp:'【簸】两音：①bǒ——颠簸（摇晃义）；②bò——簸箕（扬米去糠的工具）。"颠簸"读 bǒ。'},
+  {id:24,word:'绰绰有余',char:'绰',
+   text:'"绰<b class="keyword">绰</b>有余"中"绰"的正确读音是？',
+   opts:['chāo','chuò','zhuō','cháo'],ans:1,
+   exp:'【绰】两音：①chāo——绰起（顺手拿取）；②chuò——绰绰有余、绰号（宽裕义）。"绰绰有余"读 chuò。'},
+  {id:25,word:'扁舟',char:'扁',
+   text:'"<b class="keyword">扁</b>舟"中"扁"的正确读音是？',
+   opts:['biǎn','piān','biān','pián'],ans:1,
+   exp:'【扁】两音：①biǎn——扁担、扁豆（扁平义）；②piān——扁舟（小船，书面语）。"扁舟"读 piān。'},
+  {id:26,word:'复辟',char:'辟',
+   text:'"复<b class="keyword">辟</b>"中"辟"的正确读音是？',
+   opts:['pì','bì','pí','bí'],ans:1,
+   exp:'【辟】两音：①bì——辟邪、复辟（君主、邪恶义）；②pì——精辟、开辟、辟谣（开通、驳斥义）。"复辟"读 bì。'},
+  {id:27,word:'薄片',char:'薄',
+   text:'"<b class="keyword">薄</b>片"中"薄"的正确读音是？',
+   opts:['bó','báo','bào','bǒ'],ans:1,
+   exp:'【薄】两音：①báo——薄片（口语，厚度小）；②bó——薄弱、单薄（书面语，力量轻微）。"薄片"读 báo。'},
+  {id:28,word:'尊称',char:'称',
+   text:'"尊<b class="keyword">称</b>"中"称"的正确读音是？',
+   opts:['chèn','chēng','chéng','chèng'],ans:1,
+   exp:'【称】两音：①chēng——称呼、尊称（称谓义）；②chèn——称心、称职（相符义）。"尊称"读 chēng。'},
+  {id:29,word:'骠勇',char:'骠',
+   text:'"<b class="keyword">骠</b>勇"中"骠"的正确读音是？',
+   opts:['biāo','piào','biào','piāo'],ans:1,
+   exp:'【骠】两音：①biāo——黄骠马（毛色义）；②piào——骠勇（勇猛善战义）。"骠勇"读 piào。'},
+  {id:30,word:'单于',char:'单',
+   text:'"<b class="keyword">单</b>于"中"单"的正确读音是？',
+   opts:['dān','chán','Shàn','shān'],ans:1,
+   exp:'【单】三音：①dān——单独；②chán——单于（匈奴首领称号）；③Shàn——单县（地名）。"单于"读 chán。'},
+  {id:31,word:'倒戈',char:'倒',
+   text:'"<b class="keyword">倒</b>戈"中"倒"的正确读音是？',
+   opts:['dǎo','dào','dǎ','dōu'],ans:0,
+   exp:'【倒】两音：①dǎo——倒戈、倒闭、颠倒（翻倒、垮掉义）；②dào——倒立、倒退（方向相反义）。"倒戈"是背叛义，读 dǎo。'},
+  {id:32,word:'提防',char:'提',
+   text:'"<b class="keyword">提</b>防"中"提"的正确读音是？',
+   opts:['tí','dī','dí','tǐ'],ans:1,
+   exp:'【提】两音：①dī——提防、提溜（小心警惕义，特殊读音）；②tí——提高、提取（一般义）。"提防"读 dī，切勿读成 tí fáng。'},
+  {id:33,word:'调动',char:'调',
+   text:'"<b class="keyword">调</b>动"中"调"的正确读音是？',
+   opts:['tiáo','diào','diǎo','tiào'],ans:1,
+   exp:'【调】两音：①diào——调动、调度、调换（调遣义）；②tiáo——调皮、调和（调整义）。"调动"读 diào。'},
+  {id:34,word:'揣度',char:'度',
+   text:'"揣<b class="keyword">度</b>"中"度"的正确读音是？',
+   opts:['dù','duó','dú','duò'],ans:1,
+   exp:'【度】两音：①dù——程度、度量（名词，标准或限度）；②duó——揣度、忖度（动词，估量猜测义）。"揣度"读 duó。'},
+  {id:35,word:'囤粮',char:'囤',
+   text:'"<b class="keyword">囤</b>粮"中"囤"的正确读音是？',
+   opts:['tún','dùn','dūn','tǔn'],ans:1,
+   exp:'【囤】两音：①dùn——囤粮（储粮，dùn 多指少量储藏）；②tún——囤积（大量储存、积聚义）。"囤粮"读 dùn。'},
+
+  // ── F ──────────────────────────────────────────
+  {id:36,word:'结发',char:'发',
+   text:'"结<b class="keyword">发</b>"中"发"的正确读音是？',
+   opts:['fā','fà','fǎ','fá'],ans:1,
+   exp:'【发】两音：①fā——发表、发人深省（发出义）；②fà——理发、结发、千钧一发（头发义）。"结发"指成婚结发，读 fà。'},
+  {id:37,word:'磨坊',char:'坊',
+   text:'"磨<b class="keyword">坊</b>"中"坊"的正确读音是？',
+   opts:['fāng','fáng','fǎng','fàng'],ans:1,
+   exp:'【坊】两音：①fāng——坊间、牌坊（街坊义）；②fáng——磨坊、作坊（手工业场所义）。"磨坊"读 fáng。'},
+  {id:38,word:'缝隙',char:'缝',
+   text:'"<b class="keyword">缝</b>隙"中"缝"的正确读音是？',
+   opts:['féng','fèng','fēng','fóng'],ans:1,
+   exp:'【缝】两音：①féng——缝合（动词，用线缝义）；②fèng——缝隙、裂缝（名词，裂口义）。"缝隙"是名词，读 fèng。'},
+
+  // ── G ──────────────────────────────────────────
+  {id:39,word:'旗杆',char:'杆',
+   text:'"旗<b class="keyword">杆</b>"中"杆"的正确读音是？',
+   opts:['gǎn','gān','gàn','gáng'],ans:1,
+   exp:'【杆】两音：①gān——栏杆、旗杆（细长棍形物，书面义）；②gǎn——枪杆、笔杆子（口语义）。"旗杆"读 gān。'},
+  {id:40,word:'补给',char:'给',
+   text:'"补<b class="keyword">给</b>"中"给"的正确读音是？',
+   opts:['gěi','jǐ','gǐ','jì'],ans:1,
+   exp:'【给】两音：①gěi——给力、给你（口语义）；②jǐ——补给、给养、自给自足（供应义）。"补给"读 jǐ。'},
+  {id:41,word:'更换',char:'更',
+   text:'"<b class="keyword">更</b>换"中"更"的正确读音是？',
+   opts:['gèng','gēng','gěng','géng'],ans:1,
+   exp:'【更】两音：①gēng——更换、更新（改变义）；②gèng——更加（副词，程度加深义）。"更换"读 gēng。'},
+  {id:42,word:'脖颈儿',char:'颈',
+   text:'"脖<b class="keyword">颈</b>儿"中"颈"的正确读音是？',
+   opts:['jǐng','gěng','jìng','gēng'],ans:1,
+   exp:'【颈】两音：①gěng——脖颈儿（口语义）；②jǐng——颈椎、颈项（书面语义）。"脖颈儿"读 gěng。'},
+  {id:43,word:'骨碌',char:'骨',
+   text:'"<b class="keyword">骨</b>碌"中"骨"的正确读音是？',
+   opts:['gǔ','gū','gú','gù'],ans:1,
+   exp:'【骨】两音：①gū——骨碌（滚动，口语义）；②gǔ——骨肉、骨头（一般义）。"骨碌"读 gū。'},
+  {id:44,word:'皇冠',char:'冠',
+   text:'"皇<b class="keyword">冠</b>"中"冠"的正确读音是？',
+   opts:['guàn','guān','guǎn','guǎng'],ans:1,
+   exp:'【冠】两音：①guān——鸡冠、皇冠（名词，帽子类物件）；②guàn——冠军、沐猴而冠（动词，第一名义）。"皇冠"是名词，读 guān。'},
+  {id:45,word:'龟裂',char:'龟',
+   text:'"<b class="keyword">龟</b>裂"中"龟"的正确读音是？',
+   opts:['guī','jūn','qiū','guǐ'],ans:1,
+   exp:'【龟】三音：①guī——乌龟；②jūn——龟裂（皮肤干裂，借用义）；③Qiū——龟兹（古代西域地名）。"龟裂"读 jūn。'},
+
+  // ── H ──────────────────────────────────────────
+  {id:46,word:'引吭高歌',char:'吭',
+   text:'"引<b class="keyword">吭</b>高歌"中"吭"的正确读音是？',
+   opts:['kēng','háng','hāng','kēg'],ans:1,
+   exp:'【吭】两音：①háng——引吭高歌（吭是喉咙义，放声歌唱）；②kēng——吭声（发出声音义）。"引吭高歌"读 háng。'},
+  {id:47,word:'街头巷尾',char:'巷',
+   text:'"街头<b class="keyword">巷</b>尾"中"巷"的正确读音是？',
+   opts:['hàng','xiàng','xiǎng','hǎng'],ans:1,
+   exp:'【巷】两音：①hàng——巷道（矿井通道义）；②xiàng——巷战、街头巷尾（小路胡同义）。"街头巷尾"读 xiàng。'},
+  {id:48,word:'发号施令',char:'号',
+   text:'"发<b class="keyword">号</b>施令"中"号"的正确读音是？',
+   opts:['háo','hào','hāo','hǎo'],ans:1,
+   exp:'【号】两音：①háo——号叫、号哭（大声哭喊义）；②hào——商号、发号施令（名称或命令义）。"发号施令"读 hào。'},
+  {id:49,word:'和诗',char:'和',
+   text:'"<b class="keyword">和</b>诗"中"和"的正确读音是？',
+   opts:['hé','hè','huó','huò'],ans:1,
+   exp:'【和】五音：①hé——和睦；②hè——和诗、应和（跟随吟唱义）；③hú——和牌；④huó——和面；⑤huò——和药。"和诗"是跟和义，读 hè。'},
+  {id:50,word:'和面',char:'和',
+   text:'"<b class="keyword">和</b>面"中"和"的正确读音是？',
+   opts:['hé','hè','huó','huò'],ans:2,
+   exp:'【和面】（huó miàn）——加水揉和面粉。此处是揉面动作义，读 huó，不要读成 hé miàn。'},
+  {id:51,word:'威吓',char:'吓',
+   text:'"威<b class="keyword">吓</b>"中"吓"的正确读音是？',
+   opts:['xià','hè','xiā','hē'],ans:1,
+   exp:'【吓】两音：①hè——威吓、恐吓（用言行恐吓义）；②xià——吓唬、吓人（使害怕义）。"威吓"读 hè。'},
+  {id:52,word:'横财',char:'横',
+   text:'"<b class="keyword">横</b>财"中"横"的正确读音是？',
+   opts:['héng','hèng','hēng','hǒng'],ans:1,
+   exp:'【横】两音：①héng——横行、纵横（方向义）；②hèng——横财、蛮横（凶暴不讲理义）。"横财"是不义之财，读 hèng。'},
+  {id:53,word:'哄骗',char:'哄',
+   text:'"<b class="keyword">哄</b>骗"中"哄"的正确读音是？',
+   opts:['hōng','hǒng','hòng','héng'],ans:1,
+   exp:'【哄】三音：①hōng——哄堂大笑（众声义）；②hǒng——哄骗、哄孩子（欺骗哄逗义）；③hòng——起哄（捣乱义）。"哄骗"读 hǒng。'},
+  {id:54,word:'摇晃',char:'晃',
+   text:'"摇<b class="keyword">晃</b>"中"晃"的正确读音是？',
+   opts:['huǎng','huàng','huāng','huǎg'],ans:1,
+   exp:'【晃】两音：①huǎng——晃眼、明晃晃（光亮义）；②huàng——摇晃、晃动（摇摆义）。"摇晃"读 huàng。'},
+  {id:55,word:'豁出去',char:'豁',
+   text:'"<b class="keyword">豁</b>出去"中"豁"的正确读音是？',
+   opts:['huò','huō','huó','huǒ'],ans:1,
+   exp:'【豁】两音：①huō——豁出去（舍弃、冒险义）；②huò——豁亮、豁然开朗（开阔明亮义）。"豁出去"读 huō。'},
+
+  // ── J ──────────────────────────────────────────
+  {id:56,word:'滑稽',char:'稽',
+   text:'"滑<b class="keyword">稽</b>"中"稽"的正确读音是？',
+   opts:['qǐ','jī','jǐ','qī'],ans:1,
+   exp:'【稽】两音：①jī——滑稽、无稽之谈（查考、诙谐义）；②qǐ——稽首（古代叩头礼）。"滑稽"读 jī。'},
+  {id:57,word:'狼藉',char:'藉',
+   text:'"狼<b class="keyword">藉</b>"中"藉"的正确读音是？',
+   opts:['jiè','jí','jì','jiē'],ans:1,
+   exp:'【藉】两音：①jí——狼藉、杯盘狼藉（凌乱义）；②jiè——枕藉、慰藉（垫、凭借义）。"狼藉"读 jí。'},
+  {id:58,word:'救济',char:'济',
+   text:'"救<b class="keyword">济</b>"中"济"的正确读音是？',
+   opts:['jǐ','jì','jī','jíi'],ans:1,
+   exp:'【济】两音：①jǐ——济济一堂（人多义）；②jì——救济、同舟共济（帮助、渡过义）。"救济"读 jì。'},
+  {id:59,word:'系鞋带',char:'系',
+   text:'"<b class="keyword">系</b>鞋带"中"系"的正确读音是？',
+   opts:['xì','jì','xī','jǐ'],ans:1,
+   exp:'【系】两音：①jì——系鞋带、系围裙（打结绑扎义）；②xì——维系、系统（联系归属义）。"系鞋带"读 jì。'},
+  {id:60,word:'雪茄',char:'茄',
+   text:'"雪<b class="keyword">茄</b>"中"茄"的正确读音是？',
+   opts:['qié','jiā','jiē','qiē'],ans:1,
+   exp:'【茄】两音：①jiā——雪茄（外来词 cigar 音译）；②qié——茄子（蔬菜）。"雪茄"读 jiā。'},
+  {id:61,word:'亲密无间',char:'间',
+   text:'"亲密无<b class="keyword">间</b>"中"间"的正确读音是？',
+   opts:['jiān','jiàn','jiǎn','jián'],ans:1,
+   exp:'【间】两音：①jiān——中间（空间义）；②jiàn——间谍、亲密无间（间隔、分开义）。"亲密无间"是没有间隔义，读 jiàn。'},
+  {id:62,word:'将帅',char:'将',
+   text:'"<b class="keyword">将</b>帅"中"将"的正确读音是？',
+   opts:['jiāng','jiàng','qiǎng','jiǎng'],ans:1,
+   exp:'【将】三音：①jiāng——将来（未来义）；②jiàng——将帅、大将（武将义）；③qiāng——将进酒（请义，古语）。"将帅"读 jiàng。'},
+  {id:63,word:'强迫',char:'强',
+   text:'"<b class="keyword">强</b>迫"中"强"的正确读音是？',
+   opts:['qiáng','qiǎng','jiàng','jiǎng'],ans:1,
+   exp:'【强】三音：①jiàng——倔强（固执）；②qiáng——强大、强壮（力量大义）；③qiǎng——强迫、牵强（勉强、硬要义）。"强迫"读 qiǎng。'},
+  {id:64,word:'细嚼慢咽',char:'嚼',
+   text:'"细<b class="keyword">嚼</b>慢咽"中"嚼"的正确读音是？',
+   opts:['jué','jiáo','jiào','juě'],ans:1,
+   exp:'【嚼】两音：①jiáo——细嚼慢咽（口语，用牙咬）；②jué——咀嚼（书面语，反复品味义）。"细嚼慢咽"读 jiáo。'},
+  {id:65,word:'主角',char:'角',
+   text:'"主<b class="keyword">角</b>"中"角"的正确读音是？',
+   opts:['jiǎo','jué','jiào','jǐao'],ans:1,
+   exp:'【角】两音：①jiǎo——角落、号角（形状义）；②jué——主角、角色、角逐（戏曲演员、竞争义）。"主角"读 jué。'},
+  {id:66,word:'解数',char:'解',
+   text:'"<b class="keyword">解</b>数"中"解"的正确读音是？',
+   opts:['jiě','jiè','xiě','xiè'],ans:3,
+   exp:'【解】三音：①jiě——解除、解元（解开义）；②jiè——押解（押送义）；③xiè——解数（武术招数）、姓解。"解数"读 xiè。'},
+  {id:67,word:'干劲',char:'劲',
+   text:'"干<b class="keyword">劲</b>"中"劲"的正确读音是？',
+   opts:['jìng','jìn','jīn','jǐng'],ans:1,
+   exp:'【劲】两音：①jìn——干劲、劲头（力气精神义，口语）；②jìng——强劲、劲敌（强健义，书面）。"干劲"读 jìn。'},
+
+  // ── K ──────────────────────────────────────────
+  {id:68,word:'关卡',char:'卡',
+   text:'"关<b class="keyword">卡</b>"中"卡"的正确读音是？',
+   opts:['kǎ','qiǎ','kā','qiā'],ans:1,
+   exp:'【卡】两音：①kǎ——卡车、卡片（外来词音译）；②qiǎ——关卡、卡壳、卡脖子（夹住阻塞义）。"关卡"读 qiǎ。'},
+  {id:69,word:'看守',char:'看',
+   text:'"<b class="keyword">看</b>守"中"看"的正确读音是？',
+   opts:['kàn','kān','kǎn','kāng'],ans:1,
+   exp:'【看】两音：①kān——看守、看管（守护照管义）；②kàn——看病、看中（观看诊治义）。"看守"读 kān。'},
+  {id:70,word:'坎坷',char:'坷',
+   text:'"坎<b class="keyword">坷</b>"中"坷"的正确读音是？',
+   opts:['kē','kě','kè','kǒ'],ans:1,
+   exp:'【坷】两音：①kē——坷垃（方言，土块）；②kě——坎坷（道路不平，比喻处境困难）。"坎坷"读 kě。'},
+  {id:71,word:'地壳',char:'壳',
+   text:'"地<b class="keyword">壳</b>"中"壳"的正确读音是？',
+   opts:['ké','qiào','kè','qiāo'],ans:1,
+   exp:'【壳】两音：①ké——贝壳、脑壳（口语义）；②qiào——地壳、甲壳、金蝉脱壳（书面语义）。"地壳"读 qiào。'},
+
+  // ── L ──────────────────────────────────────────
+  {id:72,word:'丢三落四',char:'落',
+   text:'"丢三<b class="keyword">落</b>四"中"落"的正确读音是？',
+   opts:['luò','lào','là','luō'],ans:2,
+   exp:'【落】四音：①là——丢三落四（遗漏义）；②lào——落枕、落色（口语固定词）；③luō——大大落落；④luò——落花生（一般义）。"丢三落四"读 là。'},
+  {id:73,word:'落枕',char:'落',
+   text:'"<b class="keyword">落</b>枕"中"落"的正确读音是？',
+   opts:['luò','là','lào','luō'],ans:2,
+   exp:'【落枕】（lào zhěn）——睡觉姿势不当导致颈部酸痛。"落"在此是口语固定读法 lào，不读 luò。'},
+  {id:74,word:'悬崖勒马',char:'勒',
+   text:'"悬崖<b class="keyword">勒</b>马"中"勒"的正确读音是？',
+   opts:['lēi','lè','lě','léi'],ans:1,
+   exp:'【勒】两音：①lè——勒令、悬崖勒马（用缰绳控制马义）；②lēi——勒紧（用力捆绑义）。"悬崖勒马"读 lè。'},
+  {id:75,word:'果实累累',char:'累',
+   text:'"果实<b class="keyword">累</b>累"中"累"的正确读音是？',
+   opts:['lèi','léi','lǚ','lēi'],ans:1,
+   exp:'【累】三音：①léi——果实累累（连成串、堆叠义）；②lèi——牵累、日积月累（拖累积累义）；③lèi——劳累（疲乏义）。"果实累累"读 léi。'},
+  {id:76,word:'打擂',char:'擂',
+   text:'"打<b class="keyword">擂</b>"中"擂"的正确读音是？',
+   opts:['léi','lèi','lěi','luì'],ans:1,
+   exp:'【擂】两音：①léi——擂鼓、自吹自擂（捶打义，动词）；②lèi——擂台、打擂（比武台子，名词义）。"打擂"读 lèi。'},
+  {id:77,word:'量体裁衣',char:'量',
+   text:'"<b class="keyword">量</b>体裁衣"中"量"的正确读音是？',
+   opts:['liáng','liàng','liǎng','liǎo'],ans:0,
+   exp:'【量】两音：①liáng——丈量、量体裁衣（动词，测量义）；②liàng——气量、胆量（名词，限度义）。"量体裁衣"是测量动作，读 liáng。'},
+  {id:78,word:'笼络',char:'笼',
+   text:'"<b class="keyword">笼</b>络"中"笼"的正确读音是？',
+   opts:['lóng','lǒng','lōng','lòng'],ans:1,
+   exp:'【笼】两音：①lóng——笼子、牢笼（名物义）；②lǒng——笼络、笼统（动作义，笼盖控制）。"笼络"是拉拢义，读 lǒng。'},
+  {id:79,word:'弄堂',char:'弄',
+   text:'"<b class="keyword">弄</b>堂"中"弄"的正确读音是？',
+   opts:['nòng','lòng','lōng','nóng'],ans:1,
+   exp:'【弄】两音：①lòng——弄堂、里弄（小巷义，江浙方言）；②nòng——玩弄、弄权（操作玩耍义）。"弄堂"读 lòng。'},
+  {id:80,word:'捋虎须',char:'捋',
+   text:'"<b class="keyword">捋</b>虎须"中"捋"的正确读音是？',
+   opts:['lǚ','luō','luó','lǔ'],ans:1,
+   exp:'【捋】两音：①lǚ——捋胡子（顺着抹过义）；②luō——捋袖子、捋虎须（撸袖子，冒险挑衅义）。"捋虎须"读 luō。'},
+
+  // ── M ──────────────────────────────────────────
+  {id:81,word:'蒙骗',char:'蒙',
+   text:'"<b class="keyword">蒙</b>骗"中"蒙"的正确读音是？',
+   opts:['méng','mēng','měng','Měng'],ans:1,
+   exp:'【蒙】三音：①mēng——蒙骗、蒙蒙亮（欺骗、迷糊义）；②méng——蒙昧、蒙难（受、遭受义）；③Měng——蒙古族（专名）。"蒙骗"读 mēng。'},
+  {id:82,word:'蒙昧',char:'蒙',
+   text:'"<b class="keyword">蒙</b>昧"中"蒙"的正确读音是？',
+   opts:['mēng','méng','měng','mòng'],ans:1,
+   exp:'【蒙】三音：①méng——蒙昧、蒙太奇（受到、未开化义）；②mēng——蒙骗（欺骗义）；③Měng——蒙古族。"蒙昧"读 méng。'},
+  {id:83,word:'眯缝',char:'眯',
+   text:'"<b class="keyword">眯</b>缝"中"眯"的正确读音是？',
+   opts:['mī','mí','mì','mǐ'],ans:0,
+   exp:'【眯】两音：①mī——眯缝（眼睛微微合拢义）；②mí——眯了眼（灰尘等进入眼睛义）。"眯缝"读 mī。'},
+  {id:84,word:'分泌',char:'泌',
+   text:'"分<b class="keyword">泌</b>"中"泌"的正确读音是？',
+   opts:['mì','bì','mí','bí'],ans:0,
+   exp:'【泌】两音：①mì——分泌（液体缓慢流出义）；②Bì——泌阳（地名）。"分泌"读 mì。'},
+  {id:85,word:'姓缪',char:'缪',
+   text:'"姓<b class="keyword">缪</b>"中"缪"的正确读音是？',
+   opts:['miào','miù','móu','miǎo'],ans:2,
+   exp:'【缪】三音：①Miào——姓缪（作姓氏时读 Miào）；②miù——纰缪（错误义）；③móu——未雨绸缪（事先筹谋义）。"姓缪"读 Miào。'},
+  {id:86,word:'未雨绸缪',char:'缪',
+   text:'"未雨绸<b class="keyword">缪</b>"中"缪"的正确读音是？',
+   opts:['miào','miù','móu','miǔ'],ans:2,
+   exp:'【缪】三音：①móu——未雨绸缪（事先筹备义）；②miù——纰缪（错误）；③Miào——姓氏。"未雨绸缪"读 móu。'},
+  {id:87,word:'模具',char:'模',
+   text:'"<b class="keyword">模</b>具"中"模"的正确读音是？',
+   opts:['mó','mú','mō','mò'],ans:1,
+   exp:'【模】两音：①mó——模范、模型（仿照、样式义）；②mú——模具、模样、装模作样（铸造器具义）。"模具"读 mú。'},
+  {id:88,word:'摩拳擦掌',char:'摩',
+   text:'"<b class="keyword">摩</b>拳擦掌"中"摩"的正确读音是？',
+   opts:['mā','mó','mō','mà'],ans:1,
+   exp:'【摩】两音：①mó——摩擦、摩拳擦掌（摩擦、接触义）；②mā——摩挲（suō）（用手轻抚义）。"摩拳擦掌"读 mó。'},
+
+  // ── N ──────────────────────────────────────────
+  {id:89,word:'难兄难弟',char:'难',
+   text:'"<b class="keyword">难</b>兄难弟"（贬义）中"难"的正确读音是？',
+   opts:['nán','nàn','náng','nǎn'],ans:1,
+   exp:'【难】两音：①nán——难过、难兄难弟（贬义，同样糟糕）；②nàn——苦难、难民（灾难义）。贬义的"难兄难弟"读 nán。'},
+  {id:90,word:'患难兄弟',char:'难',
+   text:'"患<b class="keyword">难</b>兄弟"中"难"的正确读音是？',
+   opts:['nán','nàn','náng','nǎn'],ans:1,
+   exp:'【难】两音：①nàn——患难兄弟（共同承担苦难，灾难义）；②nán——难题（困难义）。"患难兄弟"读 nàn。'},
+  {id:91,word:'宁可',char:'宁',
+   text:'"<b class="keyword">宁</b>可"中"宁"的正确读音是？',
+   opts:['níng','nìng','nǐng','nīng'],ans:1,
+   exp:'【宁】两音：①níng——安宁、宁静（平静义）；②nìng——宁可、宁愿、宁死不屈（情愿、宁肯义）。"宁可"读 nìng。'},
+  {id:92,word:'拧螺丝',char:'拧',
+   text:'"<b class="keyword">拧</b>螺丝"中"拧"的正确读音是？',
+   opts:['níng','nǐng','nìng','nīng'],ans:1,
+   exp:'【拧】三音：①níng——拧毛巾（旋转绞义）；②nǐng——拧螺丝（旋转固定义）；③nìng——脾气拧（固执义）。"拧螺丝"读 nǐng。'},
+  {id:93,word:'发疟子',char:'疟',
+   text:'"发<b class="keyword">疟</b>子"中"疟"的正确读音是？',
+   opts:['nüè','yào','nuè','yuē'],ans:1,
+   exp:'【疟】两音：①nüè——疟疾（正式医学读音）；②yào——发疟子（口语读法）。"发疟子"口语读 yào。'},
+
+  // ── P ──────────────────────────────────────────
+  {id:94,word:'排除',char:'排',
+   text:'"<b class="keyword">排</b>除"中"排"的正确读音是？',
+   opts:['pái','pǎi','pāi','páng'],ans:0,
+   exp:'【排】两音：①pái——排除、排队（排列义）；②pǎi——排子车（方言）。"排除"读 pái。'},
+  {id:95,word:'迫不及待',char:'迫',
+   text:'"<b class="keyword">迫</b>不及待"中"迫"的正确读音是？',
+   opts:['pǎi','pò','pāi','pó'],ans:1,
+   exp:'【迫】两音：①pǎi——迫击炮（特定词）；②pò——逼迫、迫不及待（紧迫逼近义）。"迫不及待"读 pò。'},
+  {id:96,word:'心广体胖',char:'胖',
+   text:'"心广体<b class="keyword">胖</b>"中"胖"的正确读音是？',
+   opts:['pàng','pán','pāng','páng'],ans:1,
+   exp:'【胖】两音：①pán——心广体胖（舒泰安适义，成语专用）；②pàng——肥胖（体型肥义）。"心广体胖"读 pán。'},
+  {id:97,word:'朴刀',char:'朴',
+   text:'"<b class="keyword">朴</b>刀"中"朴"的正确读音是？',
+   opts:['pǔ','pō','pò','Piáo'],ans:1,
+   exp:'【朴】四音：①Piáo——姓朴；②pō——朴刀（古代兵器，一种刀）；③pò——朴硝（化学品）；④pǔ——朴素（质朴义）。"朴刀"读 pō。'},
+  {id:98,word:'撇开',char:'撇',
+   text:'"<b class="keyword">撇</b>开"中"撇"的正确读音是？',
+   opts:['piē','piě','piè','pì'],ans:0,
+   exp:'【撇】两音：①piē——撇开、撇弃（抛开不顾义）；②piě——撇嘴（嘴角下拉义）。"撇开"读 piē。'},
+
+  // ── Q ──────────────────────────────────────────
+  {id:99,word:'栖居',char:'栖',
+   text:'"<b class="keyword">栖</b>居"中"栖"的正确读音是？',
+   opts:['qī','xī','qǐ','xǐ'],ans:0,
+   exp:'【栖】两音：①qī——栖居、栖息（停留居住义）；②xī——栖栖（形容不安定）。"栖居"读 qī。'},
+  {id:100,word:'蹊径',char:'蹊',
+   text:'"<b class="keyword">蹊</b>径"中"蹊"的正确读音是？',
+   opts:['xī','qī','qí','xǐ'],ans:0,
+   exp:'【蹊】两音：①qī——蹊跷（奇怪义）；②xī——蹊径（小路义）。"蹊径"读 xī。'},
+  {id:101,word:'纤维',char:'纤',
+   text:'"<b class="keyword">纤</b>维"中"纤"的正确读音是？',
+   opts:['qiàn','xiān','qiān','xiǎn'],ans:1,
+   exp:'【纤】两音：①qiàn——纤夫（拉船的人）；②xiān——纤维、纤细（细小义）。"纤维"读 xiān。'},
+  {id:102,word:'悄然',char:'悄',
+   text:'"<b class="keyword">悄</b>然"中"悄"的正确读音是？',
+   opts:['qiǎo','qiāo','qiào','qiáo'],ans:1,
+   exp:'【悄】两音：①qiāo——静悄悄（寂静义）；②qiǎo——悄然、悄无声息（忧愁或默默义）。"悄然"读 qiǎo。'},
+  {id:103,word:'雀跃',char:'雀',
+   text:'"<b class="keyword">雀</b>跃"中"雀"的正确读音是？',
+   opts:['qiāo','qiǎo','què','qiào'],ans:2,
+   exp:'【雀】三音：①qiāo——雀子（口语，雀斑）；②qiǎo——家雀儿（麻雀口语）；③què——雀跃、麻雀（正式义）。"雀跃"读 què。'},
+  {id:104,word:'翘首以待',char:'翘',
+   text:'"<b class="keyword">翘</b>首以待"中"翘"的正确读音是？',
+   opts:['qiào','qiáo','qiǎo','qiōu'],ans:1,
+   exp:'【翘】两音：①qiáo——翘首以待（抬头望义）；②qiào——翘尾巴（上翘义）。"翘首以待"读 qiáo。'},
+  {id:105,word:'切磋',char:'切',
+   text:'"<b class="keyword">切</b>磋"中"切"的正确读音是？',
+   opts:['qiē','qiè','qié','qiě'],ans:1,
+   exp:'【切】两音：①qiē——切磋、切割（切开义）；②qiè——急切、切脉、切题（贴近、符合义）。"切磋"是共同研究，读 qiē。'},
+
+  // ── S ──────────────────────────────────────────
+  {id:106,word:'瓶塞',char:'塞',
+   text:'"瓶<b class="keyword">塞</b>"中"塞"的正确读音是？',
+   opts:['sài','sāi','sè','sǎi'],ans:1,
+   exp:'【塞】三音：①sāi——活塞、瓶塞（填充堵住义）；②sài——边塞、塞翁失马（边境义）；③sè——堵塞（不通义）。"瓶塞"读 sāi。'},
+  {id:107,word:'懒散',char:'散',
+   text:'"懒<b class="keyword">散</b>"中"散"的正确读音是？',
+   opts:['sàn','sǎn','sān','sáng'],ans:1,
+   exp:'【散】两音：①sǎn——懒散、散漫（不集中、自由义）；②sàn——散布、散失（分散开义）。"懒散"读 sǎn。'},
+  {id:108,word:'丧乱',char:'丧',
+   text:'"<b class="keyword">丧</b>乱"中"丧"的正确读音是？',
+   opts:['sāng','sàng','sǎng','sáng'],ans:0,
+   exp:'【丧】两音：①sāng——丧乱、丧葬、丧钟（与死亡葬礼有关义）；②sàng——丧失、丧气（失去、垂头义）。"丧乱"读 sāng。'},
+  {id:109,word:'落色',char:'色',
+   text:'"落<b class="keyword">色</b>"中"色"的正确读音是？',
+   opts:['sè','shǎi','shāi','sé'],ans:1,
+   exp:'【色】两音：①sè——色彩、气色（一般义）；②shǎi——掉色、落色、色子（口语，颜色脱落义）。"落色"读 shǎi。'},
+  {id:110,word:'煞白',char:'煞',
+   text:'"<b class="keyword">煞</b>白"中"煞"的正确读音是？',
+   opts:['shā','shà','sā','sà'],ans:1,
+   exp:'【煞】两音：①shā——煞笔、煞尾（停止义）；②shà——煞白、恶煞、煞费苦心（极、很义）。"煞白"是极白义，读 shà。'},
+  {id:111,word:'厦门',char:'厦',
+   text:'"<b class="keyword">厦</b>门"中"厦"的正确读音是？',
+   opts:['shà','Xià','shā','xiā'],ans:1,
+   exp:'【厦】两音：①shà——广厦、高楼大厦（大屋义）；②Xià——厦门（地名专用）。"厦门"读 Xià。'},
+  {id:112,word:'折本',char:'折',
+   text:'"<b class="keyword">折</b>本"中"折"的正确读音是？',
+   opts:['zhé','shé','zhē','zhě'],ans:1,
+   exp:'【折】三音：①shé——折本、折跟头（亏损、跌倒义）；②zhē——折腾（反复义）；③zhé——折合、折扣（折叠、折算义）。"折本"读 shé。'},
+  {id:113,word:'舍弃',char:'舍',
+   text:'"<b class="keyword">舍</b>弃"中"舍"的正确读音是？',
+   opts:['shè','shě','shē','shé'],ans:1,
+   exp:'【舍】两音：①shě——舍弃、施舍、舍己为人（放弃义）；②shè——校舍、退避三舍（房屋义）。"舍弃"读 shě。'},
+  {id:114,word:'反省',char:'省',
+   text:'"反<b class="keyword">省</b>"中"省"的正确读音是？',
+   opts:['shěng','xǐng','shéng','xìng'],ans:1,
+   exp:'【省】两音：①shěng——节省、省份（节约、行政区义）；②xǐng——反省、省亲（检察、探望义）。"反省"读 xǐng。'},
+  {id:115,word:'博闻强识',char:'识',
+   text:'"博闻强<b class="keyword">识</b>"中"识"的正确读音是？',
+   opts:['shí','zhì','shì','zhí'],ans:1,
+   exp:'【识】两音：①shí——识别、识字（认识义）；②zhì——博闻强识（记忆义，同"志"）。"博闻强识"读 zhì。'},
+  {id:116,word:'数见不鲜',char:'数',
+   text:'"<b class="keyword">数</b>见不鲜"中"数"的正确读音是？',
+   opts:['shǔ','shù','shuò','shū'],ans:2,
+   exp:'【数】三音：①shǔ——数落、数典忘祖（列举义）；②shù——数字（数量义）；③shuò——数见不鲜（屡次义）。"数见不鲜"读 shuò。'},
+  {id:117,word:'游说',char:'说',
+   text:'"游<b class="keyword">说</b>"中"说"的正确读音是？',
+   opts:['shuō','shuì','shuí','yuè'],ans:1,
+   exp:'【说】两音：①shuō——说话、说客（讲述义）；②shuì——游说（劝说义，音同"税"）。"游说"读 shuì。'},
+  {id:118,word:'星宿',char:'宿',
+   text:'"星<b class="keyword">宿</b>"中"宿"的正确读音是？',
+   opts:['sù','xiǔ','xiù','suǒ'],ans:2,
+   exp:'【宿】三音：①sù——宿舍（住宿义）；②xiǔ——一宿（量词，一夜）；③xiù——星宿（天文中的星座名义）。"星宿"读 xiù。'},
+  {id:119,word:'毛遂自荐',char:'遂',
+   text:'"毛<b class="keyword">遂</b>自荐"中"遂"的正确读音是？',
+   opts:['suí','suì','sùi','sǔi'],ans:1,
+   exp:'【遂】两音：①suí——半身不遂（顺从、如意义）；②suì——遂心、遂愿、毛遂自荐（达成义）。"毛遂自荐"中"遂"是人名兼达成义，读 suì。'},
+
+  // ── T ──────────────────────────────────────────
+  {id:120,word:'舌苔',char:'苔',
+   text:'"舌<b class="keyword">苔</b>"中"苔"的正确读音是？',
+   opts:['tāi','tái','tǎi','tài'],ans:0,
+   exp:'【苔】两音：①tāi——舌苔（舌面上的苔状物）；②tái——苔藓（植物名）。"舌苔"读 tāi。'},
+  {id:121,word:'妥帖',char:'帖',
+   text:'"妥<b class="keyword">帖</b>"中"帖"的正确读音是？',
+   opts:['tiě','tiē','tiè','tiě'],ans:1,
+   exp:'【帖】三音：①tiē——妥帖（妥当贴切义）；②tiě——请帖子（邀请义）；③tiè——字帖（书法范本义）。"妥帖"读 tiē。'},
+
+  // ── W ──────────────────────────────────────────
+  {id:122,word:'瓦刀',char:'瓦',
+   text:'"<b class="keyword">瓦</b>刀"中"瓦"的正确读音是？',
+   opts:['wǎ','wà','wā','wá'],ans:1,
+   exp:'【瓦】两音：①wǎ——瓦当（屋瓦义）；②wà——瓦刀（泥瓦工具，方言义）。"瓦刀"读 wà。'},
+  {id:123,word:'委蛇',char:'委',
+   text:'"虚与<b class="keyword">委</b>蛇"中"委"的正确读音是？',
+   opts:['wěi','wēi','wéi','wèi'],ans:1,
+   exp:'【委】两音：①wěi——委托、委曲（弯曲、托付义）；②wēi——委蛇（wēi yí，敷衍应付义）。"虚与委蛇"读 wēi。'},
+  {id:124,word:'马尾罗',char:'尾',
+   text:'"马<b class="keyword">尾</b>罗"中"尾"的正确读音是？',
+   opts:['wěi','yǐ','wèi','yī'],ans:1,
+   exp:'【尾】两音：①wěi——尾巴（动物尾义）；②yǐ——马尾罗（用马尾制作的筛子）。"马尾罗"读 yǐ。'},
+  {id:125,word:'少尉',char:'尉',
+   text:'"少<b class="keyword">尉</b>"中"尉"的正确读音是？',
+   opts:['wèi','yù','yūn','wéi'],ans:0,
+   exp:'【尉】两音：①wèi——少尉、太尉（军衔职官义）；②yù——尉迟（复姓）。"少尉"读 wèi。'},
+
+  // ── X ──────────────────────────────────────────
+  {id:126,word:'寡廉鲜耻',char:'鲜',
+   text:'"寡廉<b class="keyword">鲜</b>耻"中"鲜"的正确读音是？',
+   opts:['xiān','xiǎn','xiàn','xián'],ans:1,
+   exp:'【鲜】两音：①xiān——鲜美、鲜明（新鲜义）；②xiǎn——鲜见、寡廉鲜耻（少义，书面语）。"寡廉鲜耻"读 xiǎn。'},
+  {id:127,word:'削足适履',char:'削',
+   text:'"<b class="keyword">削</b>足适履"中"削"的正确读音是？',
+   opts:['xiāo','xuē','xiǎo','xuě'],ans:1,
+   exp:'【削】两音：①xiāo——削铅笔、刀削面（切削义）；②xuē——剥削、削减、削足适履（减少、削弱义）。"削足适履"读 xuē。'},
+  {id:128,word:'心血',char:'血',
+   text:'"心<b class="keyword">血</b>"中"血"的正确读音是？',
+   opts:['xuè','xiě','xuě','xiè'],ans:0,
+   exp:'【血】两音：①xuè——心血、贫血、血汗（书面义）；②xiě——血淋淋、一针见血（口语义）。"心血"读 xuè。'},
+  {id:129,word:'气喘吁吁',char:'吁',
+   text:'"气喘<b class="keyword">吁</b>吁"中"吁"的正确读音是？',
+   opts:['xū','yù','yū','xú'],ans:0,
+   exp:'【吁】两音：①xū——气喘吁吁、长吁短叹（叹气义）；②yù——呼吁（呼号义）。"气喘吁吁"读 xū。'},
+
+  // ── Y ──────────────────────────────────────────
+  {id:130,word:'哑然',char:'哑',
+   text:'"<b class="keyword">哑</b>然"中"哑"的正确读音是？',
+   opts:['yā','yǎ','yà','yá'],ans:1,
+   exp:'【哑】两音：①yā——哑哑（拟声词，婴儿声）；②yǎ——哑然失笑、哑巴（不能说话义）。"哑然"读 yǎ。'},
+  {id:131,word:'倾轧',char:'轧',
+   text:'"倾<b class="keyword">轧</b>"中"轧"的正确读音是？',
+   opts:['yà','zhá','gá','yǎ'],ans:0,
+   exp:'【轧】三音：①yà——倾轧（排挤压制义）；②zhá——轧钢（碾压义）；③gá——轧场（chǎng）（方言，轧场地）。"倾轧"读 yà。'},
+  {id:132,word:'狼吞虎咽',char:'咽',
+   text:'"狼吞虎<b class="keyword">咽</b>"中"咽"的正确读音是？',
+   opts:['yān','yàn','yè','yǎn'],ans:1,
+   exp:'【咽】三音：①yān——咽喉（喉咙义）；②yàn——狼吞虎咽、咽下（吞咽动作义）；③yè——哽咽（哭泣呜咽义）。"狼吞虎咽"读 yàn。'},
+  {id:133,word:'股肱',char:'股',
+   text:'"<b class="keyword">股</b>肱"中"股"的正确读音是？',
+   opts:['yān','yǐn','gǔ','gū'],ans:0,
+   exp:'【殷】两音：①yān——殷红（yān hóng，深红色义）；②yīn——殷实（富足义）、殷殷（热情义）。注意"殷红"专读 yān。'},
+  {id:134,word:'殷红',char:'殷',
+   text:'"<b class="keyword">殷</b>红"中"殷"的正确读音是？',
+   opts:['yīn','yān','yǐn','yéng'],ans:1,
+   exp:'【殷】两音：①yān——殷红（深红色义，特殊读音）；②yīn——殷实、殷殷（富裕、热情义）。"殷红"读 yān，这是常考易错点。'},
+  {id:135,word:'钥匙',char:'钥',
+   text:'"<b class="keyword">钥</b>匙"中"钥"的正确读音是？',
+   opts:['yào','yuè','yāo','yǒu'],ans:0,
+   exp:'【钥】两音：①yào——钥匙（开锁工具义）；②yuè——锁钥（书面语，关键义）。"钥匙"读 yào。'},
+  {id:136,word:'应届',char:'应',
+   text:'"<b class="keyword">应</b>届"中"应"的正确读音是？',
+   opts:['yīng','yìng','yíng','yǐng'],ans:0,
+   exp:'【应】两音：①yīng——应该、应届、应有尽有（助动词，理应义）；②yìng——应变、应付（回应义）。"应届"读 yīng。'},
+  {id:137,word:'佣金',char:'佣',
+   text:'"<b class="keyword">佣</b>金"中"佣"的正确读音是？',
+   opts:['yōng','yòng','yóng','yǔng'],ans:1,
+   exp:'【佣】两音：①yōng——雇佣（受雇义）；②yòng——佣金（中间人报酬义）。"佣金"读 yòng。'},
+  {id:138,word:'熨帖',char:'熨',
+   text:'"<b class="keyword">熨</b>帖"中"熨"的正确读音是？',
+   opts:['yùn','yù','wèi','yū'],ans:1,
+   exp:'【熨】两音：①yù——熨帖（贴切舒适义，书面语）；②yùn——熨烫（用熨斗烫平义）。"熨帖"读 yù。'},
+  {id:139,word:'日晕',char:'晕',
+   text:'"日<b class="keyword">晕</b>"中"晕"的正确读音是？',
+   opts:['yūn','yùn','yǐn','yǔn'],ans:1,
+   exp:'【晕】两音：①yūn——晕倒、晕厥（昏迷义）；②yùn——日晕、月晕、晕车（光圈、模糊义）。"日晕"是太阳周围光圈，读 yùn。'},
+
+  // ── Z ──────────────────────────────────────────
+  {id:140,word:'扎染',char:'扎',
+   text:'"<b class="keyword">扎</b>染"中"扎"的正确读音是？',
+   opts:['zā','zhā','zhá','zǎ'],ans:0,
+   exp:'【扎】三音：①zā——扎染、扎实（捆绑义）；②zhā——扎根、扎实（刺入义）；③zhá——挣扎（挣扎义）。"扎染"读 zā。'},
+  {id:141,word:'装载',char:'载',
+   text:'"装<b class="keyword">载</b>"中"载"的正确读音是？',
+   opts:['zǎi','zài','zāi','zái'],ans:1,
+   exp:'【载】两音：①zǎi——登载、一年半载（记录、年义）；②zài——装载、载歌载舞（运输承载义）。"装载"读 zài。'},
+  {id:142,word:'择菜',char:'择',
+   text:'"<b class="keyword">择</b>菜"中"择"的正确读音是？',
+   opts:['zé','zhái','zhē','zě'],ans:1,
+   exp:'【择】两音：①zé——选择（挑选义）；②zhái——择菜、择席（摘除、挑剔义，口语）。"择菜"读 zhái。'},
+  {id:143,word:'头昏脑涨',char:'涨',
+   text:'"头昏脑<b class="keyword">涨</b>"中"涨"的正确读音是？',
+   opts:['zhǎng','zhàng','zhāng','záng'],ans:1,
+   exp:'【涨】两音：①zhǎng——涨落、水涨船高（水位升高义）；②zhàng——头昏脑涨、泡涨（膨胀充血义）。"头昏脑涨"读 zhàng。'},
+  {id:144,word:'着凉',char:'着',
+   text:'"<b class="keyword">着</b>凉"中"着"的正确读音是？',
+   opts:['zháo','zhuó','zhāo','zhe'],ans:0,
+   exp:'【着】四音：①zhāo——着数（棋步义）；②zháo——着急、着迷、着凉（接触达到义）；③zhuó——着落、着重（动词，附着落实义）；④zhe——走着（助词）。"着凉"读 zháo。'},
+  {id:145,word:'正月',char:'正',
+   text:'"<b class="keyword">正</b>月"中"正"的正确读音是？',
+   opts:['zhèng','zhēng','zhěng','zhóng'],ans:1,
+   exp:'【正】两音：①zhēng——正月（农历一月，特殊读音）；②zhèng——正常、正派（正确义）。"正月"读 zhēng，是常考易错点。'},
+  {id:146,word:'中毒',char:'中',
+   text:'"<b class="keyword">中</b>毒"中"中"的正确读音是？',
+   opts:['zhōng','zhòng','zhǒng','zhōu'],ans:1,
+   exp:'【中】两音：①zhōng——中立、中间（中央义）；②zhòng——中毒、中奖、中肯（受到、击中义）。"中毒"读 zhòng。'},
+  {id:147,word:'耕种',char:'种',
+   text:'"耕<b class="keyword">种</b>"中"种"的正确读音是？',
+   opts:['zhǒng','zhòng','zhōng','zòng'],ans:1,
+   exp:'【种】两音：①zhǒng——种类、品种（名词义）；②zhòng——耕种、播种（动词，种植义）。"耕种"读 zhòng。'},
+  {id:148,word:'压轴戏',char:'轴',
+   text:'"压<b class="keyword">轴</b>戏"中"轴"的正确读音是？',
+   opts:['zhóu','zhòu','zhōu','zhǒu'],ans:1,
+   exp:'【轴】两音：①zhóu——画轴、轮轴（轴线义）；②zhòu——压轴戏、大轴子（戏曲演出顺序义，最后的重头戏）。"压轴戏"读 zhòu。'},
+  {id:149,word:'转圈',char:'转',
+   text:'"<b class="keyword">转</b>圈"中"转"的正确读音是？',
+   opts:['zhuǎn','zhuàn','zhuān','zhǔan'],ans:1,
+   exp:'【转】两音：①zhuǎn——转运、转变（改变方向义）；②zhuàn——转圈、转动（旋转义）。"转圈"读 zhuàn。'},
+  {id:150,word:'钻牛角尖',char:'钻',
+   text:'"<b class="keyword">钻</b>牛角尖"中"钻"的正确读音是？',
+   opts:['zuān','zuàn','zuǎn','zuán'],ans:0,
+   exp:'【钻】两音：①zuān——钻探、钻牛角尖（穿入钻研义）；②zuàn——钻床、钻机（名词，打孔工具义）。"钻牛角尖"读 zuān。'},
+];
+
+// ════════════════════════════════ 字形题库 ════════════════════════════════
+
+// ════════════════════════════════════════════════════
+// 字形题库（完整版，共60题）
+// 题型：四选一，找出含错别字的选项
+// ════════════════════════════════════════════════════
+const XQ = [
+  // ── 两字词语 ──────────────────────────────────────
+  {id:1,q:'找出含有错别字的词语：',
+   opts:['安详','妨碍','重叠','粗旷'],ans:3,wrong:'粗旷',right:'粗犷',
+   exp:'【粗犷】"犷"指粗野豪放，"旷"指空旷。"粗旷"是高频错别字，正确写法为"粗犷"。'},
+  {id:2,q:'找出含有错别字的词语：',
+   opts:['辐射','松弛','脉搏','家俱'],ans:3,wrong:'家俱',right:'家具',
+   exp:'【家具】"具"指器具，"俱"指全、都（如"万事俱备"）。"家俱"是极常见错别字，正确为"家具"。'},
+  {id:3,q:'找出含有错别字的词语：',
+   opts:['气概','追朔','精萃','偶尔'],ans:1,wrong:'追朔',right:'追溯',
+   exp:'【追溯】"溯"指逆水而行，引申为回顾过去；"朔"指农历初一。"追朔"错，正确为"追溯"。'},
+  {id:4,q:'找出含有错别字的词语：',
+   opts:['坐落','痉挛','平添','雾淞'],ans:3,wrong:'雾淞',right:'雾凇',
+   exp:'【雾凇】"凇"指水汽在树枝上凝结成的冰花；"淞"是水名（吴淞江）。"雾淞"错，正确为"雾凇"。'},
+  {id:5,q:'找出含有错别字的词语：',
+   opts:['增值','青睐','遂道','旋律'],ans:2,wrong:'遂道',right:'隧道',
+   exp:'【隧道】"隧"指地下通道；"遂"指顺从、实现（如"遂愿"）。"遂道"是高频错别字，正确为"隧道"。'},
+  {id:6,q:'找出含有错别字的词语：',
+   opts:['赝品','发韧','元宵','九霄'],ans:1,wrong:'发韧',right:'发轫',
+   exp:'【发轫】"轫"是古代刹车用的木块，拔去轫木即出发，引申为开始。"韧"指韧性。正确为"发轫"。'},
+  {id:7,q:'找出含有错别字的词语：',
+   opts:['荧光','急燥','赃款','坐镇'],ans:1,wrong:'急燥',right:'急躁',
+   exp:'【急躁】"躁"字从足，心急气躁；"燥"字从火，干燥。两字极易混淆。正确为"急躁"。'},
+  {id:8,q:'找出含有错别字的词语：',
+   opts:['峻工','编纂','恪守','蛰伏'],ans:0,wrong:'峻工',right:'竣工',
+   exp:'【竣工】"竣"指完毕（竣工、竣事）；"峻"指高峻、严峻。"峻工"是高频错别字，正确为"竣工"。'},
+  {id:9,q:'找出含有错别字的词语：',
+   opts:['震憾','直言','经纬','陈规'],ans:0,wrong:'震憾',right:'震撼',
+   exp:'【震撼】"撼"从手，指摇动（撼动、震撼）；"憾"从心，指遗憾（遗憾、抱憾）。"震憾"错，正确为"震撼"。'},
+  {id:10,q:'找出含有错别字的词语：',
+   opts:['渊源','音迅','俯视','抱怨'],ans:1,wrong:'音迅',right:'音讯',
+   exp:'【音讯】"讯"指消息、信息（讯息、通讯）；"迅"指快速（迅速、迅猛）。"音迅"错，正确为"音讯"。'},
+  {id:11,q:'找出含有错别字的词语：',
+   opts:['浪费','刻画','晋升','留连'],ans:3,wrong:'留连',right:'流连',
+   exp:'【流连】"流连"指留恋不舍，"留连"是常见错别字。注意"刻画"也可写"刻划"，但规范用字为"刻画"。'},
+  {id:12,q:'找出含有错别字的词语：',
+   opts:['迁徒','擅长','留恋','参与'],ans:0,wrong:'迁徒',right:'迁徙',
+   exp:'【迁徙】"徙"指迁移（迁徙、流徙）；"徒"指徒弟、徒步，无迁移义。"迁徒"是常见错别字。'},
+  // ── 三字词语 ──────────────────────────────────────
+  {id:13,q:'找出含有错别字的词语：',
+   opts:['莫须有','破天荒','黄梁梦','白炽灯'],ans:2,wrong:'黄梁梦',right:'黄粱梦',
+   exp:'【黄粱梦】"粱"指高粱（粮食）；"梁"指梁木、桥梁。黄粱米煮饭，典出唐传奇，正确为"黄粱梦"。'},
+  {id:14,q:'找出含有错别字的词语：',
+   opts:['度假村','压轴戏','唱倒彩','坐标系'],ans:2,wrong:'唱倒彩',right:'喝倒彩',
+   exp:'【喝倒彩】表示起哄、嘘声，应用"喝"（喝彩、喝倒彩）。"唱倒彩"是错别字，正确为"喝倒彩"。'},
+  {id:15,q:'找出含有错别字的词语：',
+   opts:['圆舞曲','满堂彩','舶来品','混合物'],ans:0,wrong:'圆舞曲',right:'圆舞曲',
+   exp:'【舶来品】"舶"指海船（船舶），"舶来品"指从海外进口的商品，正确写法。注意不要写成"泊来品"。此组四个均正确。',
+   allCorrect:true},
+  {id:16,q:'找出含有错别字的词语：',
+   opts:['明信片','文绉绉','照相机','座右铭'],ans:1,wrong:'文绉绉',right:'文质彬彬',
+   exp:'【文质彬彬】形容人文雅有礼。但"文绉绉"另是一词，指说话、举止文雅的样子，写法正确。此组四个均正确。',
+   allCorrect:true},
+  {id:17,q:'找出含有错别字的词语：',
+   opts:['鱼水情','笑咪咪','林荫道','水蒸气'],ans:1,wrong:'笑咪咪',right:'笑眯眯',
+   exp:'【笑眯眯】形容眼睛微微眯起而笑，应用"眯"（眯眼）。"咪"是象声词（猫咪）。"笑咪咪"错，正确为"笑眯眯"。'},
+  {id:18,q:'找出含有错别字的词语：',
+   opts:['订计划','黄澄澄','绿茵场','冠名权'],ans:1,wrong:'黄澄澄',right:'黄澄澄',
+   exp:'【绿茵场】"茵"指草垫、草坪（绿草如茵），正确写法为"绿茵场"，不要写成"绿荫场"。此组"黄澄澄"也正确。',
+   allCorrect:true},
+  {id:19,q:'找出含有错别字的词语：',
+   opts:['唱双簧','跑龙套','碰钉子','辩证法'],ans:3,wrong:'辩证法',right:'辩证法',
+   exp:'【碰钉子】四个均正确。注意"唱双簧"不写"唱双黄"，"跑龙套"不写"跑龙椎"，"碰钉子"不写"碰订子"。',
+   allCorrect:true},
+  {id:20,q:'找出含有错别字的词语：',
+   opts:['水龙头','挖墙角','雄赳赳','荧光屏'],ans:1,wrong:'挖墙角',right:'挖墙脚',
+   exp:'【挖墙脚】指暗中破坏别人基础，应用"脚"（脚下，地基）。"角"另有角落义，但此处固定写法为"挖墙脚"。'},
+  {id:21,q:'找出含有错别字的词语：',
+   opts:['保鲜膜','博士后','喜盈门','口头禅'],ans:0,wrong:'保鲜膜',right:'保鲜膜',
+   exp:'【倒计时】四个均正确。注意"博士后"不写"博士侯"，"口头禅"不写"口头蝉"，"倒计时"不写"倒记时"。',
+   allCorrect:true},
+  // ── 四字词语（成语）──────────────────────────────
+  {id:22,q:'找出含有错别字的成语：',
+   opts:['唉声叹气','按兵不动','黯然失色','飞扬拔扈'],ans:3,wrong:'飞扬拔扈',right:'飞扬跋扈',
+   exp:'【飞扬跋扈】"跋扈"指专横暴戾，"拔"无此义。"飞扬拔扈"是常见错别字，正确为"飞扬跋扈"。'},
+  {id:23,q:'找出含有错别字的成语：',
+   opts:['敝帚自珍','略见一斑','斑师回朝','英雄辈出'],ans:2,wrong:'斑师回朝',right:'班师回朝',
+   exp:'【班师回朝】"班"指调回军队（班师），"斑"指斑点、斑纹，字义不符。"斑师回朝"错，正确为"班师回朝"。'},
+  {id:24,q:'找出含有错别字的成语：',
+   opts:['信心倍增','白璧微瑕','金碧辉煌','筚路蓝缕'],ans:0,wrong:'信心倍增',right:'信心倍增',
+   exp:'【筚路蓝缕】"筚路"指柴车，"蓝缕"指破衣，形容创业艰辛。此组四个均正确，注意"白璧微瑕"不写"白壁微瑕"。',
+   allCorrect:true},
+  {id:25,q:'找出含有错别字的成语：',
+   opts:['明辨是非','按部就班','无精打采','张灯结彩'],ans:0,wrong:'明辨是非',right:'明辨是非',
+   exp:'【按部就班】"部"指部署、部分；不写"按步就班"。"张灯结彩"不写"张灯结采"。此组四个均正确。',
+   allCorrect:true},
+  {id:26,q:'找出含有错别字的成语：',
+   opts:['瞠目结舌','计日程功','纵横驰骋','一愁莫展'],ans:3,wrong:'一愁莫展',right:'一筹莫展',
+   exp:'【一筹莫展】"筹"指计策、筹划，一点计策也施展不开。"愁"指忧愁，字义不符。正确为"一筹莫展"。'},
+  {id:27,q:'找出含有错别字的成语：',
+   opts:['鞠躬尽瘁','措手不及','披星戴月','穷兵黩武'],ans:0,wrong:'鞠躬尽瘁',right:'鞠躬尽瘁',
+   exp:'【措手不及】"措"指安排、处置（措手不及）；不写"错手不及"。此组四个均正确。',
+   allCorrect:true},
+  {id:28,q:'找出含有错别字的成语：',
+   opts:['流言蜚语','发愤图强','奋发有为','名列前茅'],ans:0,wrong:'流言蜚语',right:'流言蜚语',
+   exp:'【发愤图强】"愤"指激愤、奋发（发愤图强）；"奋"指振作（奋发有为）。两词均正确，意思相近。此组均正确。',
+   allCorrect:true},
+  {id:29,q:'找出含有错别字的成语：',
+   opts:['如梗在喉','沽名钓誉','事必躬亲','蛊惑人心'],ans:0,wrong:'如梗在喉',right:'如鲠在喉',
+   exp:'【如鲠在喉】"鲠"指鱼刺（鱼鲠），鱼刺卡喉咙，形容心里有话说不出。"梗"指梗塞，字义有别，正确为"如鲠在喉"。'},
+  {id:30,q:'找出含有错别字的成语：',
+   opts:['一丘之貉','老奸巨猾','焕然一新','涣然冰释'],ans:0,wrong:'一丘之貉',right:'一丘之貉',
+   exp:'【焕然一新】"焕"指光彩焕发；【涣然冰释】"涣"指散开消融。此组均正确，注意"焕"与"涣"的区别。',
+   allCorrect:true},
+  {id:31,q:'找出含有错别字的成语：',
+   opts:['和衷共济','随声附和','貌合神离','前俯后仰'],ans:3,wrong:'前俯后仰',right:'前仰后合',
+   exp:'【前仰后合】形容笑得身体前后摇动，固定说法为"前仰后合"，不是"前俯后仰"。'},
+  {id:32,q:'找出含有错别字的成语：',
+   opts:['拾人牙慧','无稽之谈','畸形发展','愤世嫉俗'],ans:3,wrong:'愤世嫉俗',right:'愤世嫉俗',
+   exp:'【拾人牙慧】"慧"指智慧，拾取别人的只言片语。此组四个均正确，注意"无稽之谈"不写"无机之谈"。',
+   allCorrect:true},
+  {id:33,q:'找出含有错别字的成语：',
+   opts:['迫不急待','故伎重演','既往不咎','汗流浃背'],ans:0,wrong:'迫不急待',right:'迫不及待',
+   exp:'【迫不及待】"及"指来得及，形容急迫得不能等待。"急"字虽近义但写法错误，正确为"迫不及待"。'},
+  {id:34,q:'找出含有错别字的成语：',
+   opts:['艰苦奋斗','精兵简政','弱不禁风','噤若寒蝉'],ans:0,wrong:'艰苦奋斗',right:'艰苦奋斗',
+   exp:'【噤若寒蝉】"噤"指闭口不言，"蝉"在寒冬不鸣，此成语形容不敢发声。此组四个均正确。',
+   allCorrect:true},
+  {id:35,q:'找出含有错别字的成语：',
+   opts:['笑容可掬','绝无仅有','同仇敌忾','功亏一篑'],ans:0,wrong:'笑容可掬',right:'笑容可掬',
+   exp:'【功亏一篑】"篑"指装土的竹筐，差一筐土功亏，形容差最后一步而失败。此组四个均正确。',
+   allCorrect:true},
+  {id:36,q:'找出含有错别字的成语：',
+   opts:['不寒而栗','厉行节约','雷厉风行','变本加励'],ans:3,wrong:'变本加励',right:'变本加厉',
+   exp:'【变本加厉】"厉"指猛烈、严厉（变本加厉）；"励"指激励（励志、奖励），字义不符。正确为"变本加厉"。'},
+  {id:37,q:'找出含有错别字的成语：',
+   opts:['浮想联翩','流连忘返','寥寥无几','流芳百世'],ans:0,wrong:'浮想联翩',right:'浮想联翩',
+   exp:'【流连忘返】"连"指连续（不写"恋"）；"翩"指轻快飞舞。此组四个均正确。',
+   allCorrect:true},
+  {id:38,q:'找出含有错别字的成语：',
+   opts:['美仑美奂','满腹经纶','蒙昧无知','个中三昧'],ans:0,wrong:'美仑美奂',right:'美轮美奂',
+   exp:'【美轮美奂】"轮"指高大（轮囷）；"奂"指鲜明众多。形容建筑华丽壮观，正确为"美轮美奂"，不写"美仑美奂"。'},
+  {id:39,q:'找出含有错别字的成语：',
+   opts:['弥天大谎','秘而不宣','绵里藏针','勉为其难'],ans:0,wrong:'弥天大谎',right:'弥天大谎',
+   exp:'【秘而不宣】"秘"指秘密（秘而不宣）；不写"密而不宣"。此组四个均正确。',
+   allCorrect:true},
+  {id:40,q:'找出含有错别字的成语：',
+   opts:['死不暝目','苦思冥想','漠不关心','墨守成规'],ans:0,wrong:'死不暝目',right:'死不瞑目',
+   exp:'【死不瞑目】"瞑"指闭上眼睛（瞑目），"暝"指天色昏暗（暝色）。"死不暝目"是错别字，正确为"死不瞑目"。'},
+  {id:41,q:'找出含有错别字的成语：',
+   opts:['略有俄获','出奇制胜','出其不意','提纲挈领'],ans:0,wrong:'略有俄获',right:'略有斩获',
+   exp:'【略有斩获】"斩获"指战场上斩杀敌人取得战利品，引申为取得成果。"俄获"无此词，正确为"略有斩获"。'},
+  {id:42,q:'找出含有错别字的成语：',
+   opts:['委曲求全','理屈词穷','当仁不让','惹是生非'],ans:0,wrong:'委曲求全',right:'委曲求全',
+   exp:'【委曲求全】"委曲"指曲折迁就（不写"委屈"）；【理屈词穷】"屈"指理亏（不写"曲"）。此组四个均正确。',
+   allCorrect:true},
+  {id:43,q:'找出含有错别字的成语：',
+   opts:['纵横捭阖','民生凋敝','关怀备至','刚复自用'],ans:3,wrong:'刚复自用',right:'刚愎自用',
+   exp:'【刚愎自用】"愎"指固执任性（刚愎）；"复"指重复、回复，字义不符。"刚复自用"是常见错别字，正确为"刚愎自用"。'},
+  {id:44,q:'找出含有错别字的成语：',
+   opts:['为虎作伥','得不偿失','川流不息','相形见拙'],ans:3,wrong:'相形见拙',right:'相形见绌',
+   exp:'【相形见绌】"绌"指不足、短缺（拮绌）；"拙"指笨拙。两者意近但"相形见绌"是固定成语，正确为"相形见绌"。'},
+  {id:45,q:'找出含有错别字的成语：',
+   opts:['病入膏肓','和盘托出','天网恢恢','融会贯通'],ans:0,wrong:'病入膏肓',right:'病入膏肓',
+   exp:'【和盘托出】"和"指连同、一起（和盘托出，全部说出）；不写"和盘拖出"。此组四个均正确。',
+   allCorrect:true},
+  {id:46,q:'找出含有错别字的成语：',
+   opts:['声名狼藉','若即若离','草菅人命','汗流浃背'],ans:0,wrong:'声名狼藉',right:'声名狼藉',
+   exp:'【草菅人命】"菅"是一种野草（茅草），视人命如草芥，正确写法为"草菅人命"，不写"草管人命"。此组均正确。',
+   allCorrect:true},
+  {id:47,q:'找出含有错别字的成语：',
+   opts:['泾渭分明','万籁无声','鞭辟入里','笑容可鞠'],ans:3,wrong:'笑容可鞠',right:'笑容可掬',
+   exp:'【笑容可掬】"掬"指双手捧取（笑容满面可以捧起来），形容笑容满面。"鞠"指鞠躬，字义不符，正确为"笑容可掬"。'},
+  {id:48,q:'找出含有错别字的成语：',
+   opts:['励精图治','再接再厉','雷厉风行','变本加厉'],ans:0,wrong:'励精图治',right:'励精图治',
+   exp:'【励精图治】"励"指振奋、激励，"图"指谋求，"治"指治理，此组四个"厉/励"用法均正确，注意辨别场合。',
+   allCorrect:true},
+  {id:49,q:'找出含有错别字的成语：',
+   opts:['语无伦次','光怪陆离','所向披靡','磬竹难书'],ans:3,wrong:'磬竹难书',right:'罄竹难书',
+   exp:'【罄竹难书】"罄"指用尽、耗尽（罄竹难书，竹子用尽也写不完）；"磬"是乐器名，字义不符。正确为"罄竹难书"。'},
+  {id:50,q:'找出含有错别字的成语：',
+   opts:['莫名其妙','剑拔弩张','如法炮制','不名一文'],ans:0,wrong:'莫名其妙',right:'莫名其妙',
+   exp:'【不名一文】"名"指占有（不名一文，一文钱也没有）；"鸣"字则指声音，固定用法为"不名一文"。此组均正确。',
+   allCorrect:true},
+  {id:51,q:'找出含有错别字的成语：',
+   opts:['出尔反尔','要言不繁','穷兵黩武','呼天抢地'],ans:1,wrong:'要言不繁',right:'要言不烦',
+   exp:'【要言不烦】"烦"指繁琐（言简意赅不烦冗）；"繁"虽近义，但此成语固定写法为"烦"。正确为"要言不烦"。'},
+  {id:52,q:'找出含有错别字的成语：',
+   opts:['忐忑不安','沽名钓誉','事必躬亲','一诺千斤'],ans:3,wrong:'一诺千斤',right:'一诺千金',
+   exp:'【一诺千金】形容说话算数，价值千金，固定用"金"（金钱、黄金义）。"斤"指重量单位，字义不符，正确为"一诺千金"。'},
+  {id:53,q:'找出含有错别字的成语：',
+   opts:['焦燥不安','阴谋诡计','引吭高歌','病入膏肓'],ans:0,wrong:'焦燥不安',right:'焦躁不安',
+   exp:'【焦躁不安】"躁"指性情急躁（焦躁），从足；"燥"指干燥，从火。"焦燥不安"是常见错别字，正确为"焦躁不安"。'},
+  {id:54,q:'找出含有错别字的成语：',
+   opts:['有恃无恐','各行其是','委屈求全','继往开来'],ans:2,wrong:'委屈求全',right:'委曲求全',
+   exp:'【委曲求全】"委曲"指弯曲迂回、勉强迁就（不是心里受委屈）；"委屈"是情绪词。固定成语应为"委曲求全"。'},
+  {id:55,q:'找出含有错别字的成语：',
+   opts:['并行不悖','关怀备至','箪路蓝缕','纵横捭阖'],ans:2,wrong:'箪路蓝缕',right:'筚路蓝缕',
+   exp:'【筚路蓝缕】"筚"指荆条编的柴车（筚路）；"箪"指竹制盛饭器（箪食瓢饮）。"箪路蓝缕"错，正确为"筚路蓝缕"。'},
+  {id:56,q:'找出含有错别字的成语：',
+   opts:['嘻笑怒骂','鞠躬尽瘁','涸泽而渔','卧薪尝胆'],ans:0,wrong:'嘻笑怒骂',right:'嬉笑怒骂',
+   exp:'【嬉笑怒骂】"嬉"指嬉戏玩耍（嬉笑）；"嘻"是笑声（嘻嘻），两字形近易混，正确为"嬉笑怒骂"。'},
+  {id:57,q:'找出含有错别字的成语：',
+   opts:['相辅相成','金榜题名','铤而走险','一鼓作气'],ans:1,wrong:'金榜题名',right:'金榜题名',
+   exp:'【铤而走险】"铤"指快速奔走（铤而走险）；不写"挺而走险"（"挺"指挺立）。此组四个均正确。',
+   allCorrect:true},
+  {id:58,q:'找出含有错别字的成语：',
+   opts:['莫衷一是','再接再励','脍炙人口','毛遂自荐'],ans:1,wrong:'再接再励',right:'再接再厉',
+   exp:'【再接再厉】"厉"指磨快（磨刀霍霍），古代斗鸡前磨利鸡嘴，引申为继续努力。"励"指激励，字义不同，正确为"再接再厉"。'},
+  {id:59,q:'找出含有错别字的成语：',
+   opts:['良莠不齐','融汇贯通','不落窠臼','煞费苦心'],ans:1,wrong:'融汇贯通',right:'融会贯通',
+   exp:'【融会贯通】"会"指领会、理解（融会贯通，融合理解）；"汇"指汇集（汇聚）。"融汇贯通"是常见错别字，正确为"融会贯通"。'},
+  {id:60,q:'找出含有错别字的成语：',
+   opts:['赴汤蹈火','披荆斩棘','破斧沉舟','一蹴而就'],ans:2,wrong:'破斧沉舟',right:'破釜沉舟',
+   exp:'【破釜沉舟】"釜"指锅（釜底抽薪），砸锅沉船，比喻下定决心。"斧"指斧头，字义不符，正确为"破釜沉舟"。'},
+
+  // ── 新增混合题（二字＋三字＋四字混搭）──────────────
+  {id:61,q:'找出含有错别字的词语：',
+   opts:['寒暄','凑合','明星效应','人才倍出'],ans:3,wrong:'人才倍出',right:'人才辈出',
+   exp:'【人才辈出】"辈"指一批批（辈出：一代接一代涌现）；"倍"指倍数、加倍。"人才倍出"是常见错别字，正确为"人才辈出"。'},
+  {id:62,q:'找出含有错别字的词语：',
+   opts:['针贬时弊','度假胜地','喜出望外','博士后'],ans:0,wrong:'针贬时弊',right:'针砭时弊',
+   exp:'【针砭时弊】"砭"是古代石针，针砭指用石针刺穴治病，引申为指出缺点。"贬"指贬低，字义不符，正确为"针砭时弊"。'},
+  {id:63,q:'找出含有错别字的词语：',
+   opts:['装祯','走廊','哗众取宠','别出心裁'],ans:0,wrong:'装祯',right:'装帧',
+   exp:'【装帧】"帧"指书画的幅面、装订形式（装帧设计）；"祯"指吉祥（祯祥）。"装祯"是常见错别字，正确为"装帧"。'},
+  {id:64,q:'找出含有错别字的词语：',
+   opts:['脉搏','义气用事','世外桃源','满腹经纶'],ans:1,wrong:'义气用事',right:'意气用事',
+   exp:'【意气用事】"意气"指情绪冲动（意气用事，凭感情行事）；"义气"指重情义（讲义气）。"义气用事"是常见错别字。'},
+  {id:65,q:'找出含有错别字的词语：',
+   opts:['凌晨','自立更生','世外桃源','百战不殆'],ans:1,wrong:'自立更生',right:'自力更生',
+   exp:'【自力更生】"力"指依靠自身力量（自力更生）；"立"指建立（自立门户是另一词）。"自立更生"是常见错别字。'},
+  {id:66,q:'找出含有错别字的词语：',
+   opts:['赋予','娇生惯养','金刚钻','不可思议'],ans:2,wrong:'金刚钻',right:'金刚钻',
+   exp:'【娇生惯养】"娇"指娇惯（娇生惯养）；不写"骄生惯养"（"骄"指骄傲）。此组四个均正确。',
+   allCorrect:true},
+  {id:67,q:'找出含有错别字的词语：',
+   opts:['膨胀','烟幕弹','无微不至','甘拜下风'],ans:1,wrong:'烟幕弹',right:'烟幕弹',
+   exp:'【无微不至】"至"指到达、周全（无微不至）；不写"无微不致"。此组四个均正确。',
+   allCorrect:true},
+  {id:68,q:'找出含有错别字的词语：',
+   opts:['蜂拥','炫耀','名符其实','礼尚往来'],ans:2,wrong:'名符其实',right:'名副其实',
+   exp:'【名副其实】"副"指符合（名副其实，名声与实际相符）；"符"虽有符合义，但此成语固定用"副"，正确为"名副其实"。'},
+  {id:69,q:'找出含有错别字的词语：',
+   opts:['坐镇','走投无路','出类拔萃','绿草如荫'],ans:3,wrong:'绿草如荫',right:'绿草如茵',
+   exp:'【绿草如茵】"茵"指草垫、绿草（绿草如茵）；"荫"指树荫、庇护（树荫、荫蔽）。"绿草如荫"是错别字，正确为"绿草如茵"。'},
+  {id:70,q:'找出含有错别字的词语：',
+   opts:['端详','名信片','开门揖盗','轻而易举'],ans:1,wrong:'名信片',right:'明信片',
+   exp:'【明信片】"明"指明信（公开、不加封套的信件）；"名"指名字、名称，字义不符。"名信片"是常见错别字，正确为"明信片"。'},
+  {id:71,q:'找出含有错别字的词语：',
+   opts:['精湛','珠连璧合','嘉宾','响彻云霄'],ans:1,wrong:'珠连璧合',right:'珠联璧合',
+   exp:'【珠联璧合】"联"指联结（珠联璧合，珍珠和美玉结合在一起）；"连"虽近义，但成语固定写"联"，正确为"珠联璧合"。'},
+  {id:72,q:'找出含有错别字的词语：',
+   opts:['报怨','暗然失色','座无虚席','司空见惯'],ans:1,wrong:'暗然失色',right:'黯然失色',
+   exp:'【黯然失色】"黯然"指暗淡无光（黯然，颜色昏暗）；"暗然"中"暗"指黑暗、秘密，无此固定词。正确为"黯然失色"。'},
+  {id:73,q:'找出含有错别字的词语：',
+   opts:['枯燥','烂竽充数','优哉游哉','扬长避短'],ans:1,wrong:'烂竽充数',right:'滥竽充数',
+   exp:'【滥竽充数】"滥"指不加选择、过多（滥竽充数，以次充好）；"烂"指腐烂，字义不符。正确为"滥竽充数"。'},
+  {id:74,q:'找出含有错别字的词语：',
+   opts:['坐落','世外桃园','察言观色','处心积虑'],ans:1,wrong:'世外桃园',right:'世外桃源',
+   exp:'【世外桃源】出自陶渊明《桃花源记》，"源"指水源处，指与世隔绝的理想境地。"园"指园子，字义不符，正确为"世外桃源"。'},
+  {id:75,q:'找出含有错别字的词语：',
+   opts:['恳切','金壁辉煌','优柔寡断','旁征博引'],ans:1,wrong:'金壁辉煌',right:'金碧辉煌',
+   exp:'【金碧辉煌】"碧"指青绿色（金碧，金色与青绿色交相辉映）；"壁"指墙壁，字义不符。正确为"金碧辉煌"。'},
+  {id:76,q:'找出含有错别字的词语：',
+   opts:['精粹','察颜观色','首屈一指','当之无愧'],ans:1,wrong:'察颜观色',right:'察言观色',
+   exp:'【察言观色】"言"指言语（察言，观察别人说的话）；"颜"指颜色、容颜（察颜是另一种说法，但规范成语用"察言观色"）。'},
+  {id:77,q:'找出含有错别字的词语：',
+   opts:['蛰伏','气宇轩扬','摩肩接踵','慷慨激昂'],ans:1,wrong:'气宇轩扬',right:'气宇轩昂',
+   exp:'【气宇轩昂】"轩昂"指高扬、精神焕发（气宇轩昂）；"扬"虽有向上义，但成语固定为"轩昂"，不写"轩扬"。'},
+  {id:78,q:'找出含有错别字的词语：',
+   opts:['辨别','老生常谈','寸草春辉','鬼斧神工'],ans:2,wrong:'寸草春辉',right:'寸草春晖',
+   exp:'【寸草春晖】出自孟郊《游子吟》，"晖"指阳光（春晖，春天的阳光），比喻母恩。"辉"指光辉，近义但固定写法为"晖"。'},
+  {id:79,q:'找出含有错别字的词语：',
+   opts:['驰骋','弄巧成拙','锋芒毕露','功成名就'],ans:1,wrong:'弄巧成拙',right:'弄巧成拙',
+   exp:'【锋芒毕露】"毕"指全部（毕露，全部显露）；不写"锋芒必露"。此组四个均正确。',
+   allCorrect:true},
+  {id:80,q:'找出含有错别字的词语：',
+   opts:['编篡','绿荫场','一如既往','忧心忡忡'],ans:0,wrong:'编篡',right:'编纂',
+   exp:'【编纂】"纂"指编写整理（编纂、纂修）；"篡"指篡位夺权（篡改、篡位）。"编篡"是常见错别字，正确为"编纂"。'},
+  {id:81,q:'找出含有错别字的词语：',
+   opts:['脉膊','渡假区','好高骛远','循序渐进'],ans:0,wrong:'脉膊',right:'脉搏',
+   exp:'【脉搏】"搏"指搏动（脉搏跳动）；"膊"指臂膊（胳臂膊），字义不符。"脉膊"是高频错别字，正确为"脉搏"。'},
+  {id:82,q:'找出含有错别字的词语：',
+   opts:['渡假区','蜂涌而至','克敌制胜','名正言顺'],ans:1,wrong:'蜂涌而至',right:'蜂拥而至',
+   exp:'【蜂拥而至】"拥"指拥挤涌动（蜂拥，像蜜蜂一样拥挤涌来）；"涌"有涌出义，但成语固定为"蜂拥而至"。'},
+  {id:83,q:'找出含有错别字的词语：',
+   opts:['恭维','渡假区','水泄不通','积毁销骨'],ans:1,wrong:'渡假区',right:'度假区',
+   exp:'【度假区】"度"指度过（度假，度过假期）；"渡"指渡过水面（渡河、渡船）。"渡假区"是常见错别字，正确为"度假区"。'},
+  {id:84,q:'找出含有错别字的词语：',
+   opts:['蜕变','旁若无人','出神入化','稗官野史'],ans:3,wrong:'稗官野史',right:'稗官野史',
+   exp:'【出神入化】"化"指出神入化，技艺达到极高境界，四个均正确。注意"稗官"不写"裨官"，"野史"不写"冶史"。',
+   allCorrect:true},
+  {id:85,q:'找出含有错别字的词语：',
+   opts:['缘故','摩拳擦掌','各行其是','欢心鼓舞'],ans:3,wrong:'欢心鼓舞',right:'欢欣鼓舞',
+   exp:'【欢欣鼓舞】"欣"指欣喜（欢欣，欢快喜悦）；"心"指内心，"欢心"是另一词。固定成语为"欢欣鼓舞"，不写"欢心鼓舞"。'},
+  {id:86,q:'找出含有错别字的词语：',
+   opts:['凋零','文身','平心而论','殚精竭虑'],ans:1,wrong:'文身',right:'纹身',
+   exp:'【纹身】"纹"指花纹、纹路（纹身，在皮肤上刺画花纹）；"文"指文字、文章，无此义。"文身"是常见错别字，正确为"纹身"。'},
+  {id:87,q:'找出含有错别字的词语：',
+   opts:['赔偿','出奇制胜','伶牙俐齿','旁敲侧击'],ans:2,wrong:'伶牙俐齿',right:'伶牙俐齿',
+   exp:'【旁敲侧击】"击"指敲击（旁敲侧击，从旁边敲打）；不写"旁敲侧激"。此组四个均正确。',
+   allCorrect:true},
+  {id:88,q:'找出含有错别字的词语：',
+   opts:['桀骜','再接再厉','不胫而走','反璞归真'],ans:3,wrong:'反璞归真',right:'返璞归真',
+   exp:'【返璞归真】"返"指返回（返璞，返回质朴本真）；"反"指相反、翻转。"反璞归真"是常见错别字，正确为"返璞归真"。'},
+  {id:89,q:'找出含有错别字的词语：',
+   opts:['恣意','哗众取宠','心旷神怡','矫揉造作'],ans:2,wrong:'心旷神怡',right:'心旷神怡',
+   exp:'【矫揉造作】"矫"指矫正扭曲（矫揉造作，装腔作势）；不写"娇揉造作"（"娇"指娇嫩）。此组四个均正确。',
+   allCorrect:true},
+  {id:90,q:'找出含有错别字的词语：',
+   opts:['喧嚣','精简','以逸待劳','汗马功绩'],ans:3,wrong:'汗马功绩',right:'汗马功勋',
+   exp:'【汗马功勋】"勋"指功勋（汗马功勋，战马奔驰流汗，比喻战功）；"绩"指成绩、功绩，但此成语固定用"勋"，正确为"汗马功勋"。'},
+  {id:91,q:'找出含有错别字的词语：',
+   opts:['决窍','绝无仅有','兴高采烈','扑朔迷离'],ans:0,wrong:'决窍',right:'诀窍',
+   exp:'【诀窍】"诀"指方法、秘诀（诀窍，关键技巧）；"决"指决定、决断，字义不符。"决窍"是常见错别字，正确为"诀窍"。'},
+  {id:92,q:'找出含有错别字的词语：',
+   opts:['蔓延','集思广益','自惭形秽','不落巢臼'],ans:3,wrong:'不落巢臼',right:'不落窠臼',
+   exp:'【不落窠臼】"窠臼"指固定的格式（窠：鸟巢；臼：舂米器），"不落窠臼"指不落俗套。"巢"虽是鸟巢义，但固定写法为"窠臼"。'},
+  {id:93,q:'找出含有错别字的词语：',
+   opts:['宣泄','大相径庭','豁然开朗','一泻千里'],ans:0,wrong:'宣泄',right:'宣泄',
+   exp:'【大相径庭】"径"指小路（大相径庭，差别很大）；不写"大相径情"。此组四个均正确。',
+   allCorrect:true},
+  {id:94,q:'找出含有错别字的词语：',
+   opts:['协奏曲','礼上往来','墨守陈规','趋之若鹜'],ans:1,wrong:'礼上往来',right:'礼尚往来',
+   exp:'【礼尚往来】"尚"指崇尚、讲究（礼尚往来，讲究以礼相待）；"上"指方向，字义不符。"礼上往来"是常见错别字。'},
+  {id:95,q:'找出含有错别字的词语：',
+   opts:['嘻皮笑脸','奋不顾身','出类拔萃','人才济济'],ans:0,wrong:'嘻皮笑脸',right:'嬉皮笑脸',
+   exp:'【嬉皮笑脸】"嬉"指嬉戏（嬉皮笑脸，嬉笑玩闹）；"嘻"是笑声（嘻嘻哈哈）。"嘻皮笑脸"是常见错别字，正确为"嬉皮笑脸"。'},
+  {id:96,q:'找出含有错别字的词语：',
+   opts:['凑合','口蜜腹箭','重整旗鼓','高瞻远瞩'],ans:1,wrong:'口蜜腹箭',right:'口蜜腹剑',
+   exp:'【口蜜腹剑】"剑"指利剑（嘴上甜蜜、心里藏刀），"箭"虽也是武器但成语固定用"剑"，正确为"口蜜腹剑"。'},
+  {id:97,q:'找出含有错别字的词语：',
+   opts:['苍茫','谈笑风声','一帆风顺','言简意赅'],ans:1,wrong:'谈笑风声',right:'谈笑风生',
+   exp:'【谈笑风生】"生"指产生（谈笑风生，形容说话有风趣，笑声不断）；"声"指声音，字义不符。正确为"谈笑风生"。'},
+  {id:98,q:'找出含有错别字的词语：',
+   opts:['松弛','大材小用','焦头烂额','既成事实'],ans:3,wrong:'既成事实',right:'既成事实',
+   exp:'【焦头烂额】"焦"指烧焦（焦头烂额，形容十分狼狈）；不写"燋头烂额"。此组四个均正确。',
+   allCorrect:true},
+  {id:99,q:'找出含有错别字的词语：',
+   opts:['彗星','无所事事','声色俱厉','举一反三'],ans:0,wrong:'彗星',right:'彗星',
+   exp:'【声色俱厉】"厉"指严厉（声色俱厉，声音神色都很严厉）；不写"声色俱历"。此组四个均正确。',
+   allCorrect:true},
+  {id:100,q:'找出含有错别字的词语：',
+   opts:['装祯','恼羞成怒','卧薪尝胆','鹤立鸡群'],ans:0,wrong:'装祯',right:'装帧',
+   exp:'【装帧】"帧"是书籍、画幅的幅面装订形式；"祯"指吉祥（祯祥）。"装祯"是高频错别字，正确为"装帧"。'},
+];
+
+// ════════════════════════════════════════
+// 状态管理（含今日统计）
+// ════════════════════════════════════════
+function todayKey(){ return new Date().toISOString().slice(0,10); }
+
+function loadState(){try{return JSON.parse(localStorage.getItem('zy_s2')||'{}');}catch(e){return{};}}
+function saveState(s){localStorage.setItem('zy_s2',JSON.stringify(s));}
+function loadXState(){try{return JSON.parse(localStorage.getItem('zx_s1')||'{}');}catch(e){return{};}}
+function saveXState(s){localStorage.setItem('zx_s1',JSON.stringify(s));}
+
+function makeFreshState(){
+  return {totalAnswered:0,totalCorrect:0,wrongBank:{},seenIds:[],history:[],
+          today:{date:'',answered:0,correct:0,wrongIds:[]}};
+}
+function makeFreshXState(){
+  return {totalAnswered:0,totalCorrect:0,wrongBank:{},seenIds:[],history:[],
+          today:{date:'',answered:0,correct:0,wrongIds:[]}};
+}
+
+let state  = Object.assign(makeFreshState(),  loadState());
+let xstate = Object.assign(makeFreshXState(), loadXState());
+
+// 确保today结构存在且是今天
+function ensureToday(s){
+  const td = todayKey();
+  if(!s.today || s.today.date !== td){
+    s.today = {date:td, answered:0, correct:0, wrongIds:[]};
+  }
+  return s;
+}
+state  = ensureToday(state);
+xstate = ensureToday(xstate);
+
+// 字音会话
+let session  = {questions:[],index:0,correct:0,mode:'random',wrongInSession:[]};
+let lastMode = 'random';
+// 字形会话
+let xsession  = {questions:[],index:0,correct:0,mode:'random',wrongInSession:[]};
+let xlastMode = 'random';
+// 当前模块
+let currentModule = 'yin';
+
+// ════════════════════════════════════════
+// 通用工具
+// ════════════════════════════════════════
+function shuffle(a){
+  const r=[...a];
+  for(let i=r.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [r[i],r[j]]=[r[j],r[i]];
+  }
+  return r;
+}
+
+// ════════════════════════════════════════
+// 模块切换
+// ════════════════════════════════════════
+function switchModule(mod){
+  currentModule = mod;
+  document.getElementById('module-yin').style.display  = mod==='yin'  ? 'block' : 'none';
+  document.getElementById('module-xing').style.display = mod==='xing' ? 'block' : 'none';
+  document.getElementById('tab-yin').classList.toggle('active',  mod==='yin');
+  document.getElementById('tab-xing').classList.toggle('active', mod==='xing');
+  if(mod==='xing') updateXingHome();
+  else updateHome();
+}
+
+// ════════════════════════════════════════
+// 屏幕切换
+// ════════════════════════════════════════
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const m={home:0,wrong:1,stats:2};
+  if(m[name]!==undefined) document.querySelectorAll('.nav-btn')[m[name]].classList.add('active');
+  ({home:updateHome,wrong:updateWrongScreen,stats:updateStatsScreen}[name]||(_=>_))();
+  window.scrollTo(0,0);
+}
+
+// ════════════════════════════════════════
+// 字音 — 首页（今日统计）
+// ════════════════════════════════════════
+function updateHome(){
+  state = ensureToday(state);
+  const total   = Q.length;
+  const td      = state.today;
+  const tdAcc   = td.answered>0 ? Math.round(td.correct/td.answered*100)+'%' : '—';
+  const tdWrong = td.wrongIds ? td.wrongIds.length : 0;
+  const seen    = state.seenIds.length;
+  const pct     = Math.round((seen/total)*100);
+
+  document.getElementById('total-count').textContent  = total;
+  document.getElementById('stat-done').textContent    = td.answered;
+  document.getElementById('stat-acc').textContent     = tdAcc;
+  document.getElementById('stat-wrong').textContent   = tdWrong;
+  document.getElementById('seen-count').textContent   = seen;
+  document.getElementById('coverage-bar').style.width = pct+'%';
+  document.getElementById('coverage-pct').textContent = pct+'%';
+
+  // 收藏复习入口——根据收藏夹字音题数量显示
+  const yc = Object.keys(favBank.yin).length;
+  const wb = document.getElementById('wrong-mode-btn');
+  wb.style.display = yc>0 ? 'block' : 'none';
+  document.getElementById('wrong-badge').textContent = yc;
+}
+
+// ════════════════════════════════════════
+// 字音 — 答题
+// ════════════════════════════════════════
+function startQuiz(mode, count){
+  lastMode = mode;
+  let pool;
+  if(mode==='wrong'){
+    // 从收藏夹字音题出题
+    const ids = Object.keys(favBank.yin).map(Number);
+    pool = Q.filter(q=>ids.includes(q.id));
+    if(!pool.length){alert('收藏夹里还没有字音题，先收藏一些再来复习吧～');return;}
+  } else if(mode==='all'){
+    pool = [...Q];
+  } else {
+    pool = shuffle([...Q]).slice(0,count);
+  }
+  session.questions = (mode==='all') ? pool : shuffle(pool).slice(0,count);
+  session.questions.forEach(q=>delete q._answered);
+  session.index=0; session.correct=0; session.mode=mode; session.wrongInSession=[];
+  showScreen('quiz');
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q=session.questions[session.index];
+  const total=session.questions.length, idx=session.index;
+  document.getElementById('quiz-prog-fill').style.width=((idx/total)*100)+'%';
+  document.getElementById('quiz-prog-text').textContent=`${idx+1}/${total}`;
+  const isFaved = favBank.yin && favBank.yin[q.id];
+  const area=document.getElementById('question-area');
+  area.innerHTML=`
+    <div class="question-card" style="position:relative">
+      <button class="fav-btn ${isFaved?'faved':''}" id="fav-btn-yin" onclick="toggleFavYin(${q.id})" title="${isFaved?'取消收藏':'收藏此题'}">
+        ${isFaved?'⭐':'☆'}
+      </button>
+      <div class="question-num">字音辨析 · 第 ${idx+1} 题</div>
+      <div class="question-text">${q.text}</div>
+    </div>
+    <div class="options-list">
+      ${q.opts.map((o,i)=>`
+        <button class="option-btn" id="opt-${i}" onclick="answer(${i},${q.ans},${q.id})">
+          <div class="opt-letter">${'ABCD'[i]}</div>
+          <div class="opt-pinyin">${o}</div>
+        </button>`).join('')}
+    </div>
+    <div id="exp-area"></div>`;
+}
+
+function answer(chosen, ans, qid){
+  const q = session.questions.find(x=>x.id===qid);
+  if(q._answered) return;
+  q._answered = true;
+  const isCorrect = (chosen===ans);
+
+  document.querySelectorAll('.option-btn').forEach((el,i)=>{
+    el.classList.add('disabled');
+    if(i===ans)    el.classList.add('correct');
+    else if(i===chosen) el.classList.add('wrong-c');
+    else           el.classList.add('dim');
+  });
+
+  state = ensureToday(state);
+  state.today.answered++;
+  state.totalAnswered++;
+  if(isCorrect){
+    session.correct++;
+    state.today.correct++;
+    state.totalCorrect++;
+  } else {
+    const correctOpt = q.opts[ans];
+    const chosenOpt  = q.opts[chosen];
+    session.wrongInSession.push({word:q.word,char:q.char,myAns:chosenOpt,correctAns:correctOpt,exp:q.exp});
+    // 仅统计今日错题数，不再自动入库
+    if(!state.today.wrongIds) state.today.wrongIds=[];
+    if(!state.today.wrongIds.includes(qid)) state.today.wrongIds.push(qid);
+  }
+  if(!state.seenIds.includes(qid)) state.seenIds.push(qid);
+  saveState(state);
+
+  const isLast = session.index === session.questions.length-1;
+  const toast  = isCorrect ? '' :
+    `<div class="wrong-toast"><div class="toast-top">正确读音</div><div class="toast-answer">${q.opts[ans]}</div></div>`;
+  const expArea = document.getElementById('exp-area');
+  expArea.innerHTML=`${toast}
+    <div class="exp-card">
+      <div class="exp-label">📖 字音解析</div>
+      <div class="exp-result ${isCorrect?'ok':'fail'}">${isCorrect?'✅ 回答正确！':'❌ 回答错误，建议收藏此题'}</div>
+      <div class="exp-text">${q.exp}</div>
+      <button class="next-btn" onclick="${isLast?'finishQuiz()':'nextQuestion()'}">
+        ${isLast?'查看本次成绩':'下一题 →'}
+      </button>
+    </div>`;
+  expArea.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function nextQuestion(){ session.index++; renderQuestion(); window.scrollTo(0,0); }
+
+function finishQuiz(){
+  const total=session.questions.length, cor=session.correct;
+  const score=Math.round((cor/total)*100);
+  state.history.unshift({
+    date:new Date().toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}),
+    total, correct:cor, mode:session.mode
+  });
+  if(state.history.length>20) state.history=state.history.slice(0,20);
+  saveState(state);
+
+  document.getElementById('res-score').textContent   = score;
+  document.getElementById('res-total').textContent   = total;
+  document.getElementById('res-correct').textContent = cor;
+  document.getElementById('res-wrong').textContent   = total-cor;
+  const ranks=[[90,'🏆 优秀！多音字高手'],[75,'👍 良好，继续加油'],[60,'📚 及格，还需努力'],[0,'💪 多刷几遍，加油！']];
+  document.getElementById('res-rank').textContent = ranks.find(([s])=>score>=s)[1];
+
+  const sumEl=document.getElementById('err-summary');
+  const ws=session.wrongInSession;
+  if(!ws.length){
+    sumEl.innerHTML=`<div class="no-err-box">🎉 本次全部答对，零错题！</div>`;
+  } else {
+    const items=ws.map(w=>`
+      <div class="err-item">
+        <div class="err-item-word">「<span class="kw">${w.word}</span>」中"${w.char}"的读音</div>
+        <div class="err-ans-row my"><span class="lb">我的答案：</span>${w.myAns}</div>
+        <div class="err-ans-row cor"><span class="lb">正确读音：</span>${w.correctAns}</div>
+        <div class="err-item-exp">${w.exp}</div>
+      </div>`).join('');
+    sumEl.innerHTML=`<div class="err-summary-title">本次错题总结<span class="err-count-tag">共 ${ws.length} 题</span></div>${items}`;
+  }
+  showScreen('result');
+}
+
+function retryQuiz(){ startQuiz(lastMode, 20); }
+function quitQuiz(){ if(confirm('确定退出本次练习？')) showScreen('home'); }
+
+// ════════════════════════════════════════
+// 字音 — 错题本 & 统计
+// ════════════════════════════════════════
+// ════════════════════════════════════════
+// 收藏系统
+// ════════════════════════════════════════
+function loadFavBank(){try{return JSON.parse(localStorage.getItem('fav_bank')||'{"yin":{},"xing":{}}');}catch(e){return{yin:{},xing:{}};}}
+function saveFavBank(){localStorage.setItem('fav_bank',JSON.stringify(favBank));}
+let favBank = loadFavBank();
+if(!favBank.yin)  favBank.yin={};
+if(!favBank.xing) favBank.xing={};
+
+let currentFavTab = 'yin';
+
+// 显示悬浮提示
+function showFavToast(msg){
+  const el=document.getElementById('fav-toast');
+  el.textContent=msg;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t=setTimeout(()=>el.classList.remove('show'),1800);
+}
+
+// 字音收藏切换
+function toggleFavYin(qid){
+  const q = Q.find(x=>x.id===qid);
+  if(!q) return;
+  const btn = document.getElementById('fav-btn-yin');
+  if(favBank.yin[qid]){
+    delete favBank.yin[qid];
+    if(btn){ btn.textContent='☆'; btn.classList.remove('faved'); }
+    showFavToast('已取消收藏');
+  } else {
+    favBank.yin[qid]={
+      id:qid, word:q.word, char:q.char,
+      text:q.text, opts:q.opts, ans:q.ans, exp:q.exp,
+      savedAt:Date.now()
+    };
+    if(btn){ btn.textContent='⭐'; btn.classList.add('faved'); }
+    showFavToast('⭐ 已收藏到字音收藏夹');
+  }
+  saveFavBank();
+  updateFavBadge();
+}
+
+// 字形收藏切换
+function toggleFavXing(qid){
+  const q = XQ.find(x=>x.id===qid);
+  if(!q) return;
+  const btn = document.getElementById('fav-btn-xing');
+  if(favBank.xing[qid]){
+    delete favBank.xing[qid];
+    if(btn){ btn.textContent='☆'; btn.classList.remove('faved'); }
+    showFavToast('已取消收藏');
+  } else {
+    favBank.xing[qid]={
+      id:qid, q:q.q, opts:q.opts, ans:q.ans,
+      wrong:q.wrong||'', right:q.right||'', exp:q.exp,
+      savedAt:Date.now()
+    };
+    if(btn){ btn.textContent='⭐'; btn.classList.add('faved'); }
+    showFavToast('⭐ 已收藏到字形收藏夹');
+  }
+  saveFavBank();
+  updateFavBadge();
+}
+
+// 从收藏页移除
+function removeFav(type, qid){
+  delete favBank[type][qid];
+  saveFavBank();
+  updateFavBadge();
+  updateWrongScreen();
+}
+
+// 更新收藏数量角标（复用wrong-badge的nav）
+function updateFavBadge(){
+  const total = Object.keys(favBank.yin).length + Object.keys(favBank.xing).length;
+  // 首页错题复习按钮：改为展示收藏数
+  const wb = document.getElementById('wrong-mode-btn');
+  const xwb = document.getElementById('xwrong-mode-btn');
+  const yc = Object.keys(favBank.yin).length;
+  const xc = Object.keys(favBank.xing).length;
+  if(wb){ wb.style.display = yc>0?'block':'none'; document.getElementById('wrong-badge').textContent=yc; }
+  if(xwb){ xwb.style.display = xc>0?'block':'none'; document.getElementById('xwrong-badge').textContent=xc; }
+}
+
+// 切换收藏页tab
+function switchFavTab(tab){
+  currentFavTab = tab;
+  document.getElementById('fav-tab-yin').classList.toggle('active', tab==='yin');
+  document.getElementById('fav-tab-xing').classList.toggle('active', tab==='xing');
+  renderFavList();
+}
+
+// 渲染收藏列表
+function updateWrongScreen(){
+  renderFavList();
+}
+
+function renderFavList(){
+  const list = document.getElementById('fav-list');
+  const items = Object.values(favBank[currentFavTab])
+    .sort((a,b)=>b.savedAt-a.savedAt);
+
+  if(!items.length){
+    list.innerHTML=`<div class="empty-state">
+      <div class="empty-icon">${currentFavTab==='yin'?'🔊':'✍️'}</div>
+      <div class="empty-text">暂无收藏<br><span style="font-size:13px;color:#bbb">答题时点击右上角 ☆ 收藏题目</span></div>
+    </div>`;
+    return;
+  }
+
+  if(currentFavTab==='yin'){
+    list.innerHTML = items.map(w=>`
+      <div class="fav-item fav-item-yin">
+        <button class="fav-remove-btn" onclick="removeFav('yin',${w.id})" title="取消收藏">✕</button>
+        <div class="fav-item-title">「<span class="kw">${w.word}</span>」中"${w.char}"的读音</div>
+        <div class="fav-ans-row cor"><span class="lb">正确读音：</span>${w.opts[w.ans]}</div>
+        <div class="fav-item-detail">${w.exp}</div>
+      </div>`).join('');
+  } else {
+    list.innerHTML = items.map(w=>`
+      <div class="fav-item fav-item-xing">
+        <button class="fav-remove-btn" onclick="removeFav('xing',${w.id})" title="取消收藏">✕</button>
+        <div class="fav-item-title"><span class="kw-xing">✗ ${w.wrong}</span> → <span style="color:var(--correct)">✓ ${w.right}</span></div>
+        <div class="fav-item-detail">${w.exp}</div>
+      </div>`).join('');
+  }
+}
+
+// 清空当前tab收藏
+function clearFav(){
+  const label = currentFavTab==='yin' ? '字音' : '字形';
+  if(!Object.keys(favBank[currentFavTab]).length) return;
+  if(confirm(`确定清空所有${label}收藏？`)){
+    favBank[currentFavTab]={};
+    saveFavBank();
+    updateFavBadge();
+    renderFavList();
+  }
+}
+
+// 兼容旧函数名（首页错题复习按钮 → 改为从收藏刷题）
+function clearWrong(){ clearFav(); }
+
+function updateStatsScreen(){
+  const done=state.totalAnswered, cor=state.totalCorrect, err=done-cor;
+  const pct=done>0?Math.round(cor/done*100):0;
+  document.getElementById('acc-ring').style.setProperty('--pct',pct+'%');
+  document.getElementById('acc-ring-num').textContent=pct+'%';
+  document.getElementById('acc-big').textContent=pct+'%';
+  document.getElementById('acc-done').textContent=done;
+  document.getElementById('acc-cor').textContent=cor;
+  document.getElementById('acc-err').textContent=err;
+  const h=document.getElementById('history-list');
+  if(!state.history.length){ h.innerHTML='<div style="color:#aaa;font-size:13px;padding:10px 0">暂无练习记录</div>'; return; }
+  h.innerHTML=state.history.map(r=>{
+    const sc=Math.round(r.correct/r.total*100);
+    const cls=sc>=90?'high':sc>=60?'mid':'low';
+    const ml={random:'字音随机',all:'全部',wrong:'错题'}[r.mode]||'练习';
+    return `<div class="history-item">
+      <div><div style="font-size:14px;font-weight:600">${ml}练习 · ${r.total}题</div><div class="history-date">${r.date}</div></div>
+      <div class="history-score ${cls}">${sc}分</div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════
+// 字形 — 首页（今日统计）
+// ════════════════════════════════════════
+function updateXingHome(){
+  xstate = ensureToday(xstate);
+  const total   = XQ.length;
+  const td      = xstate.today;
+  const tdAcc   = td.answered>0 ? Math.round(td.correct/td.answered*100)+'%' : '—';
+  const tdWrong = td.wrongIds ? td.wrongIds.length : 0;
+  const seen    = xstate.seenIds.length;
+  const pct     = Math.round((seen/total)*100);
+
+  document.getElementById('xing-total-count').textContent  = total;
+  document.getElementById('xstat-done').textContent        = td.answered;
+  document.getElementById('xstat-acc').textContent         = tdAcc;
+  document.getElementById('xstat-wrong').textContent       = tdWrong;
+  document.getElementById('xseen-count').textContent       = seen;
+  document.getElementById('xcoverage-bar').style.width     = pct+'%';
+  document.getElementById('xcoverage-pct').textContent     = pct+'%';
+  document.getElementById('xing-progress-tip').textContent = total;
+
+  // 收藏复习入口——根据收藏夹字形题数量
+  const xc  = Object.keys(favBank.xing).length;
+  const wb  = document.getElementById('xwrong-mode-btn');
+  wb.style.display = xc>0 ? 'block' : 'none';
+  document.getElementById('xwrong-badge').textContent = xc;
+}
+
+// ════════════════════════════════════════
+// 字形 — 答题
+// ════════════════════════════════════════
+function startXingQuiz(mode, count){
+  xlastMode = mode;
+  let pool;
+  if(mode==='wrong'){
+    // 从收藏夹字形题出题
+    const ids = Object.keys(favBank.xing).map(Number);
+    pool = XQ.filter(q=>ids.includes(q.id));
+    if(!pool.length){alert('收藏夹里还没有字形题，先收藏一些再来复习吧～');return;}
+  } else if(mode==='all'){
+    pool = [...XQ];
+  } else {
+    pool = shuffle([...XQ]).slice(0,count);
+  }
+  xsession.questions = (mode==='all') ? pool : shuffle(pool).slice(0,Math.min(count,pool.length));
+  xsession.questions.forEach(q=>delete q._answered);
+  xsession.index=0; xsession.correct=0; xsession.mode=mode; xsession.wrongInSession=[];
+  showScreen('xquiz');
+  renderXingQuestion();
+}
+
+function renderXingQuestion(){
+  const q=xsession.questions[xsession.index];
+  const total=xsession.questions.length, idx=xsession.index;
+  document.getElementById('xquiz-prog-fill').style.width=((idx/total)*100)+'%';
+  document.getElementById('xquiz-prog-text').textContent=`${idx+1}/${total}`;
+  const shuffled=shuffle(q.opts.map((o,i)=>({o,i})));
+  const isFaved = favBank.xing && favBank.xing[q.id];
+  const area=document.getElementById('xquestion-area');
+  area.innerHTML=`
+    <div class="xing-question-card" style="position:relative">
+      <button class="fav-btn ${isFaved?'faved':''}" id="fav-btn-xing" onclick="toggleFavXing(${q.id})" title="${isFaved?'取消收藏':'收藏此题'}">
+        ${isFaved?'⭐':'☆'}
+      </button>
+      <div class="question-num">字形辨析 · 第 ${idx+1} 题</div>
+      <div class="question-text" style="margin-bottom:14px;padding-right:40px">${q.q}</div>
+      <div class="xing-words-grid">
+        ${shuffled.map((item,si)=>`
+          <div class="xing-opt" id="xopt-${si}" data-orig="${item.i}" onclick="answerXing(${si},${item.i},${q.ans},${q.id})">
+            <div class="xo-label">${'ABCD'[si]}</div>
+            <div class="xo-word">${item.o}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div id="xexp-area"></div>`;
+}
+
+function answerXing(si, origIdx, ans, qid){
+  const q = xsession.questions.find(x=>x.id===qid);
+  if(q._answered) return;
+  q._answered = true;
+  const isCorrect = (origIdx===ans);
+
+  document.querySelectorAll('.xing-opt').forEach((el,i)=>{
+    el.classList.add('disabled');
+    const orig=parseInt(el.dataset.orig);
+    if(orig===ans)         el.classList.add('correct');
+    else if(i===si&&!isCorrect) el.classList.add('wrong-c');
+    else                   el.classList.add('dim');
+  });
+
+  xstate = ensureToday(xstate);
+  xstate.today.answered++;
+  xstate.totalAnswered++;
+  if(isCorrect){
+    xsession.correct++;
+    xstate.today.correct++;
+    xstate.totalCorrect++;
+  } else {
+    xsession.wrongInSession.push({id:qid,question:q.q,wrong:q.wrong,right:q.right,exp:q.exp});
+    // 仅统计今日错题数，不再自动入库
+    if(!xstate.today.wrongIds) xstate.today.wrongIds=[];
+    if(!xstate.today.wrongIds.includes(qid)) xstate.today.wrongIds.push(qid);
+  }
+  if(!xstate.seenIds.includes(qid)) xstate.seenIds.push(qid);
+  saveXState(xstate);
+
+  const isLast = xsession.index===xsession.questions.length-1;
+  const expArea = document.getElementById('xexp-area');
+  expArea.innerHTML=`
+    <div class="exp-card" style="border-left-color:var(--sage)">
+      <div class="exp-label">📖 字形解析</div>
+      <div class="exp-result ${isCorrect?'ok':'fail'}">${isCorrect?'✅ 回答正确！':'❌ 回答错误，建议收藏此题'}</div>
+      ${!isCorrect?`<div style="font-size:13px;margin:6px 0;padding:6px 10px;background:#f0f7f2;border-radius:8px"><span style="color:var(--wrong)">✗ 错：${q.wrong}</span>　→　<span style="color:var(--correct)">✓ 正：${q.right}</span></div>`:''}
+      <div class="exp-text">${q.exp}</div>
+      <button class="next-btn" style="background:var(--sage)" onclick="${isLast?'finishXingQuiz()':'nextXingQuestion()'}">
+        ${isLast?'查看本次成绩':'下一题 →'}
+      </button>
+    </div>`;
+  expArea.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function nextXingQuestion(){ xsession.index++; renderXingQuestion(); window.scrollTo(0,0); }
+
+function finishXingQuiz(){
+  const total=xsession.questions.length, cor=xsession.correct;
+  const score=Math.round((cor/total)*100);
+  xstate.history.unshift({
+    date:new Date().toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}),
+    total, correct:cor, mode:xsession.mode
+  });
+  if(xstate.history.length>20) xstate.history=xstate.history.slice(0,20);
+  saveXState(xstate);
+
+  document.getElementById('xres-score').textContent   = score;
+  document.getElementById('xres-total').textContent   = total;
+  document.getElementById('xres-correct').textContent = cor;
+  document.getElementById('xres-wrong').textContent   = total-cor;
+  const ranks=[[90,'🏆 优秀！字形高手'],[75,'👍 良好，继续加油'],[60,'📚 及格，还需努力'],[0,'💪 多刷几遍，加油！']];
+  document.getElementById('xres-rank').textContent = ranks.find(([s])=>score>=s)[1];
+
+  const sumEl=document.getElementById('xerr-summary');
+  const ws=xsession.wrongInSession;
+  if(!ws.length){
+    sumEl.innerHTML=`<div class="no-err-box">🎉 本次全部答对，零错题！</div>`;
+  } else {
+    const items=ws.map(w=>`
+      <div class="err-item">
+        <div class="err-item-word">易错：<span class="kw">${w.wrong}</span> → <span style="color:var(--correct)">${w.right}</span></div>
+        <div class="err-item-exp">${w.exp}</div>
+      </div>`).join('');
+    sumEl.innerHTML=`<div class="err-summary-title">本次错题总结<span class="err-count-tag">共 ${ws.length} 题</span></div>${items}`;
+  }
+  showScreen('xresult');
+}
+
+function retryXingQuiz(){ startXingQuiz(xlastMode, 15); }
+function quitXingQuiz(){ if(confirm('确定退出本次练习？')) backToXingHome(); }
+function backToXingHome(){ showScreen('home'); setTimeout(()=>switchModule('xing'), 50); }
+
+// ════════════════════════════════════════
+// 初始化
+// ════════════════════════════════════════
+updateHome();
+</script>
+</body>
+</html>
