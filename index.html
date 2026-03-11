@@ -78,19 +78,16 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .option-btn.wrong-c .opt-pinyin{color:var(--wrong);}
 .option-btn.dim{opacity:0.3;pointer-events:none;}
 .option-btn.disabled{pointer-events:none;}
-/* 排除按钮 */
-.option-btn{position:relative;}
-.opt-content{display:flex;align-items:center;gap:14px;flex:1;min-width:0;}
-.opt-elim-btn{flex-shrink:0;width:28px;height:28px;border-radius:50%;border:1.5px solid #e5c0c0;background:white;color:#e08080;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;-webkit-tap-highlight-color:transparent;z-index:2;}
+/* ── 字音排除按钮 ── */
+.opt-elim-btn{flex-shrink:0;width:30px;height:30px;border-radius:50%;border:1.5px solid #e5c0c0;background:white;color:#e08080;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;-webkit-tap-highlight-color:transparent;line-height:1;padding:0;}
 .opt-elim-btn:hover{background:#fce4e4;border-color:var(--wrong);color:var(--wrong);}
-.opt-elim-btn:active{transform:scale(0.9);}
-.option-btn.eliminated{background:#fdf0f0;border-color:#e5c0c0;opacity:0.6;}
+.opt-elim-btn:active{transform:scale(0.88);}
+.option-btn.eliminated{background:#fdf0f0;border-color:#e5c0c0;}
 .option-btn.eliminated .opt-letter{background:#f0c0c0;color:white;}
 .option-btn.eliminated .opt-pinyin{text-decoration:line-through;color:#cc8888;}
-.option-btn.eliminated .opt-elim-btn{background:#fce4e4;border-color:var(--wrong);color:var(--wrong);}
-.option-btn.eliminated .opt-elim-btn::after{content:'已排除';}
-.option-btn.eliminated .opt-elim-btn{font-size:9px;width:36px;border-radius:8px;}
+.option-btn.eliminated .opt-elim-btn{background:#fce4e4;border-color:var(--wrong);color:var(--wrong);font-size:9px;width:36px;border-radius:7px;}
 .opt-elim-btn::after{content:'✕';}
+.option-btn.eliminated .opt-elim-btn::after{content:'排除';}
 
 /* WRONG TOAST */
 .wrong-toast{background:var(--wrong);color:white;border-radius:12px;padding:14px 18px;margin-top:14px;animation:bounceIn 0.35s cubic-bezier(0.34,1.56,0.64,1);}
@@ -205,6 +202,17 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .xing-opt.wrong-c .xo-word{color:var(--wrong);}
 .xing-opt.dim{opacity:0.3;pointer-events:none;}
 .xing-opt.disabled{pointer-events:none;}
+/* ── 字形排除按钮 ── */
+.xing-opt{position:relative;}
+.xo-elim-btn{position:absolute;top:5px;right:5px;width:22px;height:22px;border-radius:50%;border:1.5px solid #e5c0c0;background:white;color:#e08080;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;-webkit-tap-highlight-color:transparent;z-index:2;line-height:1;padding:0;}
+.xo-elim-btn:hover{background:#fce4e4;border-color:var(--wrong);color:var(--wrong);}
+.xo-elim-btn:active{transform:scale(0.88);}
+.xo-elim-btn::after{content:'✕';}
+.xing-opt.xelim{background:#fdf0f0;border-color:#e5c0c0;}
+.xing-opt.xelim .xo-label{background:#f0c0c0;color:white;}
+.xing-opt.xelim .xo-word{text-decoration:line-through;color:#cc8888;}
+.xing-opt.xelim .xo-elim-btn{background:#fce4e4;border-color:var(--wrong);color:var(--wrong);font-size:9px;width:28px;border-radius:6px;}
+.xing-opt.xelim .xo-elim-btn::after{content:'排除';}
 
 /* 错字高亮 */
 .err-char{color:var(--wrong);border-bottom:2px solid var(--wrong);}
@@ -1094,338 +1102,338 @@ const Q = [
 const XQ = [
   // ── 两字词语 ──────────────────────────────────────
   {id:1,q:'找出含有错别字的词语：',
-   opts:['安详','妨碍','重叠','粗旷'],ans:3,wrong:'粗旷',right:'粗犷',
+   opts:['重叠','妨碍','安详','粗旷'],ans:3,wrong:'粗旷',right:'粗犷',
    exp:'【粗犷】"犷"指粗野豪放，"旷"指空旷。"粗旷"是高频错别字，正确写法为"粗犷"。'},
   {id:2,q:'找出含有错别字的词语：',
-   opts:['辐射','松弛','脉搏','家俱'],ans:3,wrong:'家俱',right:'家具',
+   opts:['家俱','松弛','脉搏','辐射'],ans:0,wrong:'家俱',right:'家具',
    exp:'【家具】"具"指器具，"俱"指全、都（如"万事俱备"）。"家俱"是极常见错别字，正确为"家具"。'},
   {id:3,q:'找出含有错别字的词语：',
-   opts:['气概','追朔','精萃','偶尔'],ans:1,wrong:'追朔',right:'追溯',
+   opts:['气概','精萃','追朔','偶尔'],ans:2,wrong:'追朔',right:'追溯',
    exp:'【追溯】"溯"指逆水而行，引申为回顾过去；"朔"指农历初一。"追朔"错，正确为"追溯"。'},
   {id:4,q:'找出含有错别字的词语：',
-   opts:['坐落','痉挛','平添','雾淞'],ans:3,wrong:'雾淞',right:'雾凇',
+   opts:['雾淞','平添','坐落','痉挛'],ans:0,wrong:'雾淞',right:'雾凇',
    exp:'【雾凇】"凇"指水汽在树枝上凝结成的冰花；"淞"是水名（吴淞江）。"雾淞"错，正确为"雾凇"。'},
   {id:5,q:'找出含有错别字的词语：',
-   opts:['增值','青睐','遂道','旋律'],ans:2,wrong:'遂道',right:'隧道',
+   opts:['遂道','旋律','增值','青睐'],ans:0,wrong:'遂道',right:'隧道',
    exp:'【隧道】"隧"指地下通道；"遂"指顺从、实现（如"遂愿"）。"遂道"是高频错别字，正确为"隧道"。'},
   {id:6,q:'找出含有错别字的词语：',
-   opts:['赝品','发韧','元宵','九霄'],ans:1,wrong:'发韧',right:'发轫',
+   opts:['九霄','赝品','发韧','元宵'],ans:2,wrong:'发韧',right:'发轫',
    exp:'【发轫】"轫"是古代刹车用的木块，拔去轫木即出发，引申为开始。"韧"指韧性。正确为"发轫"。'},
   {id:7,q:'找出含有错别字的词语：',
-   opts:['荧光','急燥','赃款','坐镇'],ans:1,wrong:'急燥',right:'急躁',
+   opts:['赃款','荧光','坐镇','急燥'],ans:3,wrong:'急燥',right:'急躁',
    exp:'【急躁】"躁"字从足，心急气躁；"燥"字从火，干燥。两字极易混淆。正确为"急躁"。'},
   {id:8,q:'找出含有错别字的词语：',
-   opts:['峻工','编纂','恪守','蛰伏'],ans:0,wrong:'峻工',right:'竣工',
+   opts:['编纂','峻工','恪守','蛰伏'],ans:1,wrong:'峻工',right:'竣工',
    exp:'【竣工】"竣"指完毕（竣工、竣事）；"峻"指高峻、严峻。"峻工"是高频错别字，正确为"竣工"。'},
   {id:9,q:'找出含有错别字的词语：',
-   opts:['震憾','直言','经纬','陈规'],ans:0,wrong:'震憾',right:'震撼',
+   opts:['经纬','陈规','直言','震憾'],ans:3,wrong:'震憾',right:'震撼',
    exp:'【震撼】"撼"从手，指摇动（撼动、震撼）；"憾"从心，指遗憾（遗憾、抱憾）。"震憾"错，正确为"震撼"。'},
   {id:10,q:'找出含有错别字的词语：',
-   opts:['渊源','音迅','俯视','抱怨'],ans:1,wrong:'音迅',right:'音讯',
+   opts:['抱怨','渊源','音迅','俯视'],ans:2,wrong:'音迅',right:'音讯',
    exp:'【音讯】"讯"指消息、信息（讯息、通讯）；"迅"指快速（迅速、迅猛）。"音迅"错，正确为"音讯"。'},
   {id:11,q:'找出含有错别字的词语：',
-   opts:['浪费','刻画','晋升','留连'],ans:3,wrong:'留连',right:'流连',
+   opts:['浪费','留连','晋升','刻画'],ans:1,wrong:'留连',right:'流连',
    exp:'【流连】"流连"指留恋不舍，"留连"是常见错别字。注意"刻画"也可写"刻划"，但规范用字为"刻画"。'},
   {id:12,q:'找出含有错别字的词语：',
-   opts:['迁徒','擅长','留恋','参与'],ans:0,wrong:'迁徒',right:'迁徙',
+   opts:['擅长','迁徒','参与','留恋'],ans:1,wrong:'迁徒',right:'迁徙',
    exp:'【迁徙】"徙"指迁移（迁徙、流徙）；"徒"指徒弟、徒步，无迁移义。"迁徒"是常见错别字。'},
   // ── 三字词语 ──────────────────────────────────────
   {id:13,q:'找出含有错别字的词语：',
-   opts:['莫须有','破天荒','黄梁梦','白炽灯'],ans:2,wrong:'黄梁梦',right:'黄粱梦',
+   opts:['莫须有','白炽灯','黄梁梦','破天荒'],ans:2,wrong:'黄梁梦',right:'黄粱梦',
    exp:'【黄粱梦】"粱"指高粱（粮食）；"梁"指梁木、桥梁。黄粱米煮饭，典出唐传奇，正确为"黄粱梦"。'},
   {id:14,q:'找出含有错别字的词语：',
-   opts:['度假村','压轴戏','唱倒彩','坐标系'],ans:2,wrong:'唱倒彩',right:'喝倒彩',
+   opts:['坐标系','度假村','唱倒彩','压轴戏'],ans:2,wrong:'唱倒彩',right:'喝倒彩',
    exp:'【喝倒彩】表示起哄、嘘声，应用"喝"（喝彩、喝倒彩）。"唱倒彩"是错别字，正确为"喝倒彩"。'},
   {id:15,q:'找出含有错别字的词语：',
-   opts:['圆舞曲','满堂彩','舶来品','混合物'],ans:0,wrong:'圆舞曲',right:'圆舞曲',
+   opts:['舶来品','混合物','满堂彩','圆舞曲'],ans:3,wrong:'圆舞曲',right:'圆舞曲',
    exp:'【舶来品】"舶"指海船（船舶），"舶来品"指从海外进口的商品，正确写法。注意不要写成"泊来品"。此组四个均正确。',
    allCorrect:true},
   {id:16,q:'找出含有错别字的词语：',
-   opts:['明信片','文绉绉','照相机','座右铭'],ans:1,wrong:'文绉绉',right:'文质彬彬',
+   opts:['文绉绉','明信片','座右铭','照相机'],ans:0,wrong:'文绉绉',right:'文质彬彬',
    exp:'【文质彬彬】形容人文雅有礼。但"文绉绉"另是一词，指说话、举止文雅的样子，写法正确。此组四个均正确。',
    allCorrect:true},
   {id:17,q:'找出含有错别字的词语：',
-   opts:['鱼水情','笑咪咪','林荫道','水蒸气'],ans:1,wrong:'笑咪咪',right:'笑眯眯',
+   opts:['水蒸气','鱼水情','林荫道','笑咪咪'],ans:3,wrong:'笑咪咪',right:'笑眯眯',
    exp:'【笑眯眯】形容眼睛微微眯起而笑，应用"眯"（眯眼）。"咪"是象声词（猫咪）。"笑咪咪"错，正确为"笑眯眯"。'},
   {id:18,q:'找出含有错别字的词语：',
-   opts:['订计划','黄澄澄','绿茵场','冠名权'],ans:1,wrong:'黄澄澄',right:'黄澄澄',
+   opts:['冠名权','订计划','绿茵场','黄澄澄'],ans:3,wrong:'黄澄澄',right:'黄澄澄',
    exp:'【绿茵场】"茵"指草垫、草坪（绿草如茵），正确写法为"绿茵场"，不要写成"绿荫场"。此组"黄澄澄"也正确。',
    allCorrect:true},
   {id:19,q:'找出含有错别字的词语：',
-   opts:['唱双簧','跑龙套','碰钉子','辩证法'],ans:3,wrong:'辩证法',right:'辩证法',
+   opts:['辩证法','唱双簧','跑龙套','碰钉子'],ans:0,wrong:'辩证法',right:'辩证法',
    exp:'【碰钉子】四个均正确。注意"唱双簧"不写"唱双黄"，"跑龙套"不写"跑龙椎"，"碰钉子"不写"碰订子"。',
    allCorrect:true},
   {id:20,q:'找出含有错别字的词语：',
-   opts:['水龙头','挖墙角','雄赳赳','荧光屏'],ans:1,wrong:'挖墙角',right:'挖墙脚',
+   opts:['挖墙角','荧光屏','雄赳赳','水龙头'],ans:0,wrong:'挖墙角',right:'挖墙脚',
    exp:'【挖墙脚】指暗中破坏别人基础，应用"脚"（脚下，地基）。"角"另有角落义，但此处固定写法为"挖墙脚"。'},
   {id:21,q:'找出含有错别字的词语：',
-   opts:['保鲜膜','博士后','喜盈门','口头禅'],ans:0,wrong:'保鲜膜',right:'保鲜膜',
+   opts:['喜盈门','保鲜膜','口头禅','博士后'],ans:1,wrong:'保鲜膜',right:'保鲜膜',
    exp:'【倒计时】四个均正确。注意"博士后"不写"博士侯"，"口头禅"不写"口头蝉"，"倒计时"不写"倒记时"。',
    allCorrect:true},
   // ── 四字词语（成语）──────────────────────────────
   {id:22,q:'找出含有错别字的成语：',
-   opts:['唉声叹气','按兵不动','黯然失色','飞扬拔扈'],ans:3,wrong:'飞扬拔扈',right:'飞扬跋扈',
+   opts:['飞扬拔扈','唉声叹气','黯然失色','按兵不动'],ans:0,wrong:'飞扬拔扈',right:'飞扬跋扈',
    exp:'【飞扬跋扈】"跋扈"指专横暴戾，"拔"无此义。"飞扬拔扈"是常见错别字，正确为"飞扬跋扈"。'},
   {id:23,q:'找出含有错别字的成语：',
-   opts:['敝帚自珍','略见一斑','斑师回朝','英雄辈出'],ans:2,wrong:'斑师回朝',right:'班师回朝',
+   opts:['英雄辈出','敝帚自珍','斑师回朝','略见一斑'],ans:2,wrong:'斑师回朝',right:'班师回朝',
    exp:'【班师回朝】"班"指调回军队（班师），"斑"指斑点、斑纹，字义不符。"斑师回朝"错，正确为"班师回朝"。'},
   {id:24,q:'找出含有错别字的成语：',
-   opts:['信心倍增','白璧微瑕','金碧辉煌','筚路蓝缕'],ans:0,wrong:'信心倍增',right:'信心倍增',
+   opts:['信心倍增','白璧微瑕','筚路蓝缕','金碧辉煌'],ans:0,wrong:'信心倍增',right:'信心倍增',
    exp:'【筚路蓝缕】"筚路"指柴车，"蓝缕"指破衣，形容创业艰辛。此组四个均正确，注意"白璧微瑕"不写"白壁微瑕"。',
    allCorrect:true},
   {id:25,q:'找出含有错别字的成语：',
-   opts:['明辨是非','按部就班','无精打采','张灯结彩'],ans:0,wrong:'明辨是非',right:'明辨是非',
+   opts:['张灯结彩','按部就班','无精打采','明辨是非'],ans:3,wrong:'明辨是非',right:'明辨是非',
    exp:'【按部就班】"部"指部署、部分；不写"按步就班"。"张灯结彩"不写"张灯结采"。此组四个均正确。',
    allCorrect:true},
   {id:26,q:'找出含有错别字的成语：',
-   opts:['瞠目结舌','计日程功','纵横驰骋','一愁莫展'],ans:3,wrong:'一愁莫展',right:'一筹莫展',
+   opts:['瞠目结舌','一愁莫展','计日程功','纵横驰骋'],ans:1,wrong:'一愁莫展',right:'一筹莫展',
    exp:'【一筹莫展】"筹"指计策、筹划，一点计策也施展不开。"愁"指忧愁，字义不符。正确为"一筹莫展"。'},
   {id:27,q:'找出含有错别字的成语：',
-   opts:['鞠躬尽瘁','措手不及','披星戴月','穷兵黩武'],ans:0,wrong:'鞠躬尽瘁',right:'鞠躬尽瘁',
+   opts:['措手不及','披星戴月','穷兵黩武','鞠躬尽瘁'],ans:3,wrong:'鞠躬尽瘁',right:'鞠躬尽瘁',
    exp:'【措手不及】"措"指安排、处置（措手不及）；不写"错手不及"。此组四个均正确。',
    allCorrect:true},
   {id:28,q:'找出含有错别字的成语：',
-   opts:['流言蜚语','发愤图强','奋发有为','名列前茅'],ans:0,wrong:'流言蜚语',right:'流言蜚语',
+   opts:['名列前茅','发愤图强','流言蜚语','奋发有为'],ans:2,wrong:'流言蜚语',right:'流言蜚语',
    exp:'【发愤图强】"愤"指激愤、奋发（发愤图强）；"奋"指振作（奋发有为）。两词均正确，意思相近。此组均正确。',
    allCorrect:true},
   {id:29,q:'找出含有错别字的成语：',
-   opts:['如梗在喉','沽名钓誉','事必躬亲','蛊惑人心'],ans:0,wrong:'如梗在喉',right:'如鲠在喉',
+   opts:['沽名钓誉','蛊惑人心','如梗在喉','事必躬亲'],ans:2,wrong:'如梗在喉',right:'如鲠在喉',
    exp:'【如鲠在喉】"鲠"指鱼刺（鱼鲠），鱼刺卡喉咙，形容心里有话说不出。"梗"指梗塞，字义有别，正确为"如鲠在喉"。'},
   {id:30,q:'找出含有错别字的成语：',
-   opts:['一丘之貉','老奸巨猾','焕然一新','涣然冰释'],ans:0,wrong:'一丘之貉',right:'一丘之貉',
+   opts:['一丘之貉','老奸巨猾','涣然冰释','焕然一新'],ans:0,wrong:'一丘之貉',right:'一丘之貉',
    exp:'【焕然一新】"焕"指光彩焕发；【涣然冰释】"涣"指散开消融。此组均正确，注意"焕"与"涣"的区别。',
    allCorrect:true},
   {id:31,q:'找出含有错别字的成语：',
-   opts:['和衷共济','随声附和','貌合神离','前俯后仰'],ans:3,wrong:'前俯后仰',right:'前仰后合',
+   opts:['前俯后仰','随声附和','和衷共济','貌合神离'],ans:0,wrong:'前俯后仰',right:'前仰后合',
    exp:'【前仰后合】形容笑得身体前后摇动，固定说法为"前仰后合"，不是"前俯后仰"。'},
   {id:32,q:'找出含有错别字的成语：',
-   opts:['拾人牙慧','无稽之谈','畸形发展','愤世嫉俗'],ans:3,wrong:'愤世嫉俗',right:'愤世嫉俗',
+   opts:['拾人牙慧','畸形发展','愤世嫉俗','无稽之谈'],ans:2,wrong:'愤世嫉俗',right:'愤世嫉俗',
    exp:'【拾人牙慧】"慧"指智慧，拾取别人的只言片语。此组四个均正确，注意"无稽之谈"不写"无机之谈"。',
    allCorrect:true},
   {id:33,q:'找出含有错别字的成语：',
-   opts:['迫不急待','故伎重演','既往不咎','汗流浃背'],ans:0,wrong:'迫不急待',right:'迫不及待',
+   opts:['故伎重演','既往不咎','迫不急待','汗流浃背'],ans:2,wrong:'迫不急待',right:'迫不及待',
    exp:'【迫不及待】"及"指来得及，形容急迫得不能等待。"急"字虽近义但写法错误，正确为"迫不及待"。'},
   {id:34,q:'找出含有错别字的成语：',
-   opts:['艰苦奋斗','精兵简政','弱不禁风','噤若寒蝉'],ans:0,wrong:'艰苦奋斗',right:'艰苦奋斗',
+   opts:['噤若寒蝉','弱不禁风','艰苦奋斗','精兵简政'],ans:2,wrong:'艰苦奋斗',right:'艰苦奋斗',
    exp:'【噤若寒蝉】"噤"指闭口不言，"蝉"在寒冬不鸣，此成语形容不敢发声。此组四个均正确。',
    allCorrect:true},
   {id:35,q:'找出含有错别字的成语：',
-   opts:['笑容可掬','绝无仅有','同仇敌忾','功亏一篑'],ans:0,wrong:'笑容可掬',right:'笑容可掬',
+   opts:['功亏一篑','笑容可掬','绝无仅有','同仇敌忾'],ans:1,wrong:'笑容可掬',right:'笑容可掬',
    exp:'【功亏一篑】"篑"指装土的竹筐，差一筐土功亏，形容差最后一步而失败。此组四个均正确。',
    allCorrect:true},
   {id:36,q:'找出含有错别字的成语：',
-   opts:['不寒而栗','厉行节约','雷厉风行','变本加励'],ans:3,wrong:'变本加励',right:'变本加厉',
+   opts:['雷厉风行','变本加励','不寒而栗','厉行节约'],ans:1,wrong:'变本加励',right:'变本加厉',
    exp:'【变本加厉】"厉"指猛烈、严厉（变本加厉）；"励"指激励（励志、奖励），字义不符。正确为"变本加厉"。'},
   {id:37,q:'找出含有错别字的成语：',
-   opts:['浮想联翩','流连忘返','寥寥无几','流芳百世'],ans:0,wrong:'浮想联翩',right:'浮想联翩',
+   opts:['流连忘返','浮想联翩','寥寥无几','流芳百世'],ans:1,wrong:'浮想联翩',right:'浮想联翩',
    exp:'【流连忘返】"连"指连续（不写"恋"）；"翩"指轻快飞舞。此组四个均正确。',
    allCorrect:true},
   {id:38,q:'找出含有错别字的成语：',
    opts:['美仑美奂','满腹经纶','蒙昧无知','个中三昧'],ans:0,wrong:'美仑美奂',right:'美轮美奂',
    exp:'【美轮美奂】"轮"指高大（轮囷）；"奂"指鲜明众多。形容建筑华丽壮观，正确为"美轮美奂"，不写"美仑美奂"。'},
   {id:39,q:'找出含有错别字的成语：',
-   opts:['弥天大谎','秘而不宣','绵里藏针','勉为其难'],ans:0,wrong:'弥天大谎',right:'弥天大谎',
+   opts:['弥天大谎','绵里藏针','勉为其难','秘而不宣'],ans:0,wrong:'弥天大谎',right:'弥天大谎',
    exp:'【秘而不宣】"秘"指秘密（秘而不宣）；不写"密而不宣"。此组四个均正确。',
    allCorrect:true},
   {id:40,q:'找出含有错别字的成语：',
    opts:['死不暝目','苦思冥想','漠不关心','墨守成规'],ans:0,wrong:'死不暝目',right:'死不瞑目',
    exp:'【死不瞑目】"瞑"指闭上眼睛（瞑目），"暝"指天色昏暗（暝色）。"死不暝目"是错别字，正确为"死不瞑目"。'},
   {id:41,q:'找出含有错别字的成语：',
-   opts:['略有俄获','出奇制胜','出其不意','提纲挈领'],ans:0,wrong:'略有俄获',right:'略有斩获',
+   opts:['出奇制胜','略有俄获','出其不意','提纲挈领'],ans:1,wrong:'略有俄获',right:'略有斩获',
    exp:'【略有斩获】"斩获"指战场上斩杀敌人取得战利品，引申为取得成果。"俄获"无此词，正确为"略有斩获"。'},
   {id:42,q:'找出含有错别字的成语：',
-   opts:['委曲求全','理屈词穷','当仁不让','惹是生非'],ans:0,wrong:'委曲求全',right:'委曲求全',
+   opts:['当仁不让','理屈词穷','惹是生非','委曲求全'],ans:3,wrong:'委曲求全',right:'委曲求全',
    exp:'【委曲求全】"委曲"指曲折迁就（不写"委屈"）；【理屈词穷】"屈"指理亏（不写"曲"）。此组四个均正确。',
    allCorrect:true},
   {id:43,q:'找出含有错别字的成语：',
-   opts:['纵横捭阖','民生凋敝','关怀备至','刚复自用'],ans:3,wrong:'刚复自用',right:'刚愎自用',
+   opts:['纵横捭阖','关怀备至','民生凋敝','刚复自用'],ans:3,wrong:'刚复自用',right:'刚愎自用',
    exp:'【刚愎自用】"愎"指固执任性（刚愎）；"复"指重复、回复，字义不符。"刚复自用"是常见错别字，正确为"刚愎自用"。'},
   {id:44,q:'找出含有错别字的成语：',
-   opts:['为虎作伥','得不偿失','川流不息','相形见拙'],ans:3,wrong:'相形见拙',right:'相形见绌',
+   opts:['为虎作伥','得不偿失','相形见拙','川流不息'],ans:2,wrong:'相形见拙',right:'相形见绌',
    exp:'【相形见绌】"绌"指不足、短缺（拮绌）；"拙"指笨拙。两者意近但"相形见绌"是固定成语，正确为"相形见绌"。'},
   {id:45,q:'找出含有错别字的成语：',
-   opts:['病入膏肓','和盘托出','天网恢恢','融会贯通'],ans:0,wrong:'病入膏肓',right:'病入膏肓',
+   opts:['天网恢恢','病入膏肓','融会贯通','和盘托出'],ans:1,wrong:'病入膏肓',right:'病入膏肓',
    exp:'【和盘托出】"和"指连同、一起（和盘托出，全部说出）；不写"和盘拖出"。此组四个均正确。',
    allCorrect:true},
   {id:46,q:'找出含有错别字的成语：',
-   opts:['声名狼藉','若即若离','草菅人命','汗流浃背'],ans:0,wrong:'声名狼藉',right:'声名狼藉',
+   opts:['草菅人命','若即若离','声名狼藉','汗流浃背'],ans:2,wrong:'声名狼藉',right:'声名狼藉',
    exp:'【草菅人命】"菅"是一种野草（茅草），视人命如草芥，正确写法为"草菅人命"，不写"草管人命"。此组均正确。',
    allCorrect:true},
   {id:47,q:'找出含有错别字的成语：',
-   opts:['泾渭分明','万籁无声','鞭辟入里','笑容可鞠'],ans:3,wrong:'笑容可鞠',right:'笑容可掬',
+   opts:['鞭辟入里','笑容可鞠','万籁无声','泾渭分明'],ans:1,wrong:'笑容可鞠',right:'笑容可掬',
    exp:'【笑容可掬】"掬"指双手捧取（笑容满面可以捧起来），形容笑容满面。"鞠"指鞠躬，字义不符，正确为"笑容可掬"。'},
   {id:48,q:'找出含有错别字的成语：',
-   opts:['励精图治','再接再厉','雷厉风行','变本加厉'],ans:0,wrong:'励精图治',right:'励精图治',
+   opts:['雷厉风行','再接再厉','励精图治','变本加厉'],ans:2,wrong:'励精图治',right:'励精图治',
    exp:'【励精图治】"励"指振奋、激励，"图"指谋求，"治"指治理，此组四个"厉/励"用法均正确，注意辨别场合。',
    allCorrect:true},
   {id:49,q:'找出含有错别字的成语：',
-   opts:['语无伦次','光怪陆离','所向披靡','磬竹难书'],ans:3,wrong:'磬竹难书',right:'罄竹难书',
+   opts:['磬竹难书','语无伦次','光怪陆离','所向披靡'],ans:0,wrong:'磬竹难书',right:'罄竹难书',
    exp:'【罄竹难书】"罄"指用尽、耗尽（罄竹难书，竹子用尽也写不完）；"磬"是乐器名，字义不符。正确为"罄竹难书"。'},
   {id:50,q:'找出含有错别字的成语：',
-   opts:['莫名其妙','剑拔弩张','如法炮制','不名一文'],ans:0,wrong:'莫名其妙',right:'莫名其妙',
+   opts:['不名一文','如法炮制','莫名其妙','剑拔弩张'],ans:2,wrong:'莫名其妙',right:'莫名其妙',
    exp:'【不名一文】"名"指占有（不名一文，一文钱也没有）；"鸣"字则指声音，固定用法为"不名一文"。此组均正确。',
    allCorrect:true},
   {id:51,q:'找出含有错别字的成语：',
-   opts:['出尔反尔','要言不繁','穷兵黩武','呼天抢地'],ans:1,wrong:'要言不繁',right:'要言不烦',
+   opts:['要言不繁','出尔反尔','穷兵黩武','呼天抢地'],ans:0,wrong:'要言不繁',right:'要言不烦',
    exp:'【要言不烦】"烦"指繁琐（言简意赅不烦冗）；"繁"虽近义，但此成语固定写法为"烦"。正确为"要言不烦"。'},
   {id:52,q:'找出含有错别字的成语：',
-   opts:['忐忑不安','沽名钓誉','事必躬亲','一诺千斤'],ans:3,wrong:'一诺千斤',right:'一诺千金',
+   opts:['忐忑不安','事必躬亲','一诺千斤','沽名钓誉'],ans:2,wrong:'一诺千斤',right:'一诺千金',
    exp:'【一诺千金】形容说话算数，价值千金，固定用"金"（金钱、黄金义）。"斤"指重量单位，字义不符，正确为"一诺千金"。'},
   {id:53,q:'找出含有错别字的成语：',
-   opts:['焦燥不安','阴谋诡计','引吭高歌','病入膏肓'],ans:0,wrong:'焦燥不安',right:'焦躁不安',
+   opts:['引吭高歌','焦燥不安','病入膏肓','阴谋诡计'],ans:1,wrong:'焦燥不安',right:'焦躁不安',
    exp:'【焦躁不安】"躁"指性情急躁（焦躁），从足；"燥"指干燥，从火。"焦燥不安"是常见错别字，正确为"焦躁不安"。'},
   {id:54,q:'找出含有错别字的成语：',
-   opts:['有恃无恐','各行其是','委屈求全','继往开来'],ans:2,wrong:'委屈求全',right:'委曲求全',
+   opts:['委屈求全','继往开来','各行其是','有恃无恐'],ans:0,wrong:'委屈求全',right:'委曲求全',
    exp:'【委曲求全】"委曲"指弯曲迂回、勉强迁就（不是心里受委屈）；"委屈"是情绪词。固定成语应为"委曲求全"。'},
   {id:55,q:'找出含有错别字的成语：',
-   opts:['并行不悖','关怀备至','箪路蓝缕','纵横捭阖'],ans:2,wrong:'箪路蓝缕',right:'筚路蓝缕',
+   opts:['关怀备至','箪路蓝缕','纵横捭阖','并行不悖'],ans:1,wrong:'箪路蓝缕',right:'筚路蓝缕',
    exp:'【筚路蓝缕】"筚"指荆条编的柴车（筚路）；"箪"指竹制盛饭器（箪食瓢饮）。"箪路蓝缕"错，正确为"筚路蓝缕"。'},
   {id:56,q:'找出含有错别字的成语：',
-   opts:['嘻笑怒骂','鞠躬尽瘁','涸泽而渔','卧薪尝胆'],ans:0,wrong:'嘻笑怒骂',right:'嬉笑怒骂',
+   opts:['卧薪尝胆','涸泽而渔','鞠躬尽瘁','嘻笑怒骂'],ans:3,wrong:'嘻笑怒骂',right:'嬉笑怒骂',
    exp:'【嬉笑怒骂】"嬉"指嬉戏玩耍（嬉笑）；"嘻"是笑声（嘻嘻），两字形近易混，正确为"嬉笑怒骂"。'},
   {id:57,q:'找出含有错别字的成语：',
-   opts:['相辅相成','金榜题名','铤而走险','一鼓作气'],ans:1,wrong:'金榜题名',right:'金榜题名',
+   opts:['相辅相成','一鼓作气','金榜题名','铤而走险'],ans:2,wrong:'金榜题名',right:'金榜题名',
    exp:'【铤而走险】"铤"指快速奔走（铤而走险）；不写"挺而走险"（"挺"指挺立）。此组四个均正确。',
    allCorrect:true},
   {id:58,q:'找出含有错别字的成语：',
-   opts:['莫衷一是','再接再励','脍炙人口','毛遂自荐'],ans:1,wrong:'再接再励',right:'再接再厉',
+   opts:['莫衷一是','脍炙人口','再接再励','毛遂自荐'],ans:2,wrong:'再接再励',right:'再接再厉',
    exp:'【再接再厉】"厉"指磨快（磨刀霍霍），古代斗鸡前磨利鸡嘴，引申为继续努力。"励"指激励，字义不同，正确为"再接再厉"。'},
   {id:59,q:'找出含有错别字的成语：',
-   opts:['良莠不齐','融汇贯通','不落窠臼','煞费苦心'],ans:1,wrong:'融汇贯通',right:'融会贯通',
+   opts:['融汇贯通','不落窠臼','煞费苦心','良莠不齐'],ans:0,wrong:'融汇贯通',right:'融会贯通',
    exp:'【融会贯通】"会"指领会、理解（融会贯通，融合理解）；"汇"指汇集（汇聚）。"融汇贯通"是常见错别字，正确为"融会贯通"。'},
   {id:60,q:'找出含有错别字的成语：',
-   opts:['赴汤蹈火','披荆斩棘','破斧沉舟','一蹴而就'],ans:2,wrong:'破斧沉舟',right:'破釜沉舟',
+   opts:['破斧沉舟','赴汤蹈火','一蹴而就','披荆斩棘'],ans:0,wrong:'破斧沉舟',right:'破釜沉舟',
    exp:'【破釜沉舟】"釜"指锅（釜底抽薪），砸锅沉船，比喻下定决心。"斧"指斧头，字义不符，正确为"破釜沉舟"。'},
 
   // ── 新增混合题（二字＋三字＋四字混搭）──────────────
   {id:61,q:'找出含有错别字的词语：',
-   opts:['寒暄','凑合','明星效应','人才倍出'],ans:3,wrong:'人才倍出',right:'人才辈出',
+   opts:['明星效应','凑合','寒暄','人才倍出'],ans:3,wrong:'人才倍出',right:'人才辈出',
    exp:'【人才辈出】"辈"指一批批（辈出：一代接一代涌现）；"倍"指倍数、加倍。"人才倍出"是常见错别字，正确为"人才辈出"。'},
   {id:62,q:'找出含有错别字的词语：',
-   opts:['针贬时弊','度假胜地','喜出望外','博士后'],ans:0,wrong:'针贬时弊',right:'针砭时弊',
+   opts:['针贬时弊','度假胜地','博士后','喜出望外'],ans:0,wrong:'针贬时弊',right:'针砭时弊',
    exp:'【针砭时弊】"砭"是古代石针，针砭指用石针刺穴治病，引申为指出缺点。"贬"指贬低，字义不符，正确为"针砭时弊"。'},
   {id:63,q:'找出含有错别字的词语：',
-   opts:['装祯','走廊','哗众取宠','别出心裁'],ans:0,wrong:'装祯',right:'装帧',
+   opts:['哗众取宠','装祯','别出心裁','走廊'],ans:1,wrong:'装祯',right:'装帧',
    exp:'【装帧】"帧"指书画的幅面、装订形式（装帧设计）；"祯"指吉祥（祯祥）。"装祯"是常见错别字，正确为"装帧"。'},
   {id:64,q:'找出含有错别字的词语：',
-   opts:['脉搏','义气用事','世外桃源','满腹经纶'],ans:1,wrong:'义气用事',right:'意气用事',
+   opts:['脉搏','义气用事','满腹经纶','世外桃源'],ans:1,wrong:'义气用事',right:'意气用事',
    exp:'【意气用事】"意气"指情绪冲动（意气用事，凭感情行事）；"义气"指重情义（讲义气）。"义气用事"是常见错别字。'},
   {id:65,q:'找出含有错别字的词语：',
-   opts:['凌晨','自立更生','世外桃源','百战不殆'],ans:1,wrong:'自立更生',right:'自力更生',
+   opts:['自立更生','百战不殆','凌晨','世外桃源'],ans:0,wrong:'自立更生',right:'自力更生',
    exp:'【自力更生】"力"指依靠自身力量（自力更生）；"立"指建立（自立门户是另一词）。"自立更生"是常见错别字。'},
   {id:66,q:'找出含有错别字的词语：',
-   opts:['赋予','娇生惯养','金刚钻','不可思议'],ans:2,wrong:'金刚钻',right:'金刚钻',
+   opts:['赋予','不可思议','娇生惯养','金刚钻'],ans:3,wrong:'金刚钻',right:'金刚钻',
    exp:'【娇生惯养】"娇"指娇惯（娇生惯养）；不写"骄生惯养"（"骄"指骄傲）。此组四个均正确。',
    allCorrect:true},
   {id:67,q:'找出含有错别字的词语：',
-   opts:['膨胀','烟幕弹','无微不至','甘拜下风'],ans:1,wrong:'烟幕弹',right:'烟幕弹',
+   opts:['甘拜下风','烟幕弹','无微不至','膨胀'],ans:1,wrong:'烟幕弹',right:'烟幕弹',
    exp:'【无微不至】"至"指到达、周全（无微不至）；不写"无微不致"。此组四个均正确。',
    allCorrect:true},
   {id:68,q:'找出含有错别字的词语：',
-   opts:['蜂拥','炫耀','名符其实','礼尚往来'],ans:2,wrong:'名符其实',right:'名副其实',
+   opts:['蜂拥','礼尚往来','名符其实','炫耀'],ans:2,wrong:'名符其实',right:'名副其实',
    exp:'【名副其实】"副"指符合（名副其实，名声与实际相符）；"符"虽有符合义，但此成语固定用"副"，正确为"名副其实"。'},
   {id:69,q:'找出含有错别字的词语：',
-   opts:['坐镇','走投无路','出类拔萃','绿草如荫'],ans:3,wrong:'绿草如荫',right:'绿草如茵',
+   opts:['出类拔萃','走投无路','坐镇','绿草如荫'],ans:3,wrong:'绿草如荫',right:'绿草如茵',
    exp:'【绿草如茵】"茵"指草垫、绿草（绿草如茵）；"荫"指树荫、庇护（树荫、荫蔽）。"绿草如荫"是错别字，正确为"绿草如茵"。'},
   {id:70,q:'找出含有错别字的词语：',
-   opts:['端详','名信片','开门揖盗','轻而易举'],ans:1,wrong:'名信片',right:'明信片',
+   opts:['端详','开门揖盗','轻而易举','名信片'],ans:3,wrong:'名信片',right:'明信片',
    exp:'【明信片】"明"指明信（公开、不加封套的信件）；"名"指名字、名称，字义不符。"名信片"是常见错别字，正确为"明信片"。'},
   {id:71,q:'找出含有错别字的词语：',
-   opts:['精湛','珠连璧合','嘉宾','响彻云霄'],ans:1,wrong:'珠连璧合',right:'珠联璧合',
+   opts:['珠连璧合','嘉宾','精湛','响彻云霄'],ans:0,wrong:'珠连璧合',right:'珠联璧合',
    exp:'【珠联璧合】"联"指联结（珠联璧合，珍珠和美玉结合在一起）；"连"虽近义，但成语固定写"联"，正确为"珠联璧合"。'},
   {id:72,q:'找出含有错别字的词语：',
-   opts:['报怨','暗然失色','座无虚席','司空见惯'],ans:1,wrong:'暗然失色',right:'黯然失色',
+   opts:['座无虚席','暗然失色','司空见惯','报怨'],ans:1,wrong:'暗然失色',right:'黯然失色',
    exp:'【黯然失色】"黯然"指暗淡无光（黯然，颜色昏暗）；"暗然"中"暗"指黑暗、秘密，无此固定词。正确为"黯然失色"。'},
   {id:73,q:'找出含有错别字的词语：',
-   opts:['枯燥','烂竽充数','优哉游哉','扬长避短'],ans:1,wrong:'烂竽充数',right:'滥竽充数',
+   opts:['扬长避短','枯燥','优哉游哉','烂竽充数'],ans:3,wrong:'烂竽充数',right:'滥竽充数',
    exp:'【滥竽充数】"滥"指不加选择、过多（滥竽充数，以次充好）；"烂"指腐烂，字义不符。正确为"滥竽充数"。'},
   {id:74,q:'找出含有错别字的词语：',
-   opts:['坐落','世外桃园','察言观色','处心积虑'],ans:1,wrong:'世外桃园',right:'世外桃源',
+   opts:['处心积虑','察言观色','世外桃园','坐落'],ans:2,wrong:'世外桃园',right:'世外桃源',
    exp:'【世外桃源】出自陶渊明《桃花源记》，"源"指水源处，指与世隔绝的理想境地。"园"指园子，字义不符，正确为"世外桃源"。'},
   {id:75,q:'找出含有错别字的词语：',
-   opts:['恳切','金壁辉煌','优柔寡断','旁征博引'],ans:1,wrong:'金壁辉煌',right:'金碧辉煌',
+   opts:['金壁辉煌','旁征博引','恳切','优柔寡断'],ans:0,wrong:'金壁辉煌',right:'金碧辉煌',
    exp:'【金碧辉煌】"碧"指青绿色（金碧，金色与青绿色交相辉映）；"壁"指墙壁，字义不符。正确为"金碧辉煌"。'},
   {id:76,q:'找出含有错别字的词语：',
-   opts:['精粹','察颜观色','首屈一指','当之无愧'],ans:1,wrong:'察颜观色',right:'察言观色',
+   opts:['当之无愧','精粹','首屈一指','察颜观色'],ans:3,wrong:'察颜观色',right:'察言观色',
    exp:'【察言观色】"言"指言语（察言，观察别人说的话）；"颜"指颜色、容颜（察颜是另一种说法，但规范成语用"察言观色"）。'},
   {id:77,q:'找出含有错别字的词语：',
-   opts:['蛰伏','气宇轩扬','摩肩接踵','慷慨激昂'],ans:1,wrong:'气宇轩扬',right:'气宇轩昂',
+   opts:['蛰伏','摩肩接踵','慷慨激昂','气宇轩扬'],ans:3,wrong:'气宇轩扬',right:'气宇轩昂',
    exp:'【气宇轩昂】"轩昂"指高扬、精神焕发（气宇轩昂）；"扬"虽有向上义，但成语固定为"轩昂"，不写"轩扬"。'},
   {id:78,q:'找出含有错别字的词语：',
-   opts:['辨别','老生常谈','寸草春辉','鬼斧神工'],ans:2,wrong:'寸草春辉',right:'寸草春晖',
+   opts:['老生常谈','寸草春辉','辨别','鬼斧神工'],ans:1,wrong:'寸草春辉',right:'寸草春晖',
    exp:'【寸草春晖】出自孟郊《游子吟》，"晖"指阳光（春晖，春天的阳光），比喻母恩。"辉"指光辉，近义但固定写法为"晖"。'},
   {id:79,q:'找出含有错别字的词语：',
    opts:['驰骋','弄巧成拙','锋芒毕露','功成名就'],ans:1,wrong:'弄巧成拙',right:'弄巧成拙',
    exp:'【锋芒毕露】"毕"指全部（毕露，全部显露）；不写"锋芒必露"。此组四个均正确。',
    allCorrect:true},
   {id:80,q:'找出含有错别字的词语：',
-   opts:['编篡','绿荫场','一如既往','忧心忡忡'],ans:0,wrong:'编篡',right:'编纂',
+   opts:['绿荫场','忧心忡忡','一如既往','编篡'],ans:3,wrong:'编篡',right:'编纂',
    exp:'【编纂】"纂"指编写整理（编纂、纂修）；"篡"指篡位夺权（篡改、篡位）。"编篡"是常见错别字，正确为"编纂"。'},
   {id:81,q:'找出含有错别字的词语：',
-   opts:['脉膊','渡假区','好高骛远','循序渐进'],ans:0,wrong:'脉膊',right:'脉搏',
+   opts:['好高骛远','循序渐进','渡假区','脉膊'],ans:3,wrong:'脉膊',right:'脉搏',
    exp:'【脉搏】"搏"指搏动（脉搏跳动）；"膊"指臂膊（胳臂膊），字义不符。"脉膊"是高频错别字，正确为"脉搏"。'},
   {id:82,q:'找出含有错别字的词语：',
-   opts:['渡假区','蜂涌而至','克敌制胜','名正言顺'],ans:1,wrong:'蜂涌而至',right:'蜂拥而至',
+   opts:['克敌制胜','渡假区','蜂涌而至','名正言顺'],ans:2,wrong:'蜂涌而至',right:'蜂拥而至',
    exp:'【蜂拥而至】"拥"指拥挤涌动（蜂拥，像蜜蜂一样拥挤涌来）；"涌"有涌出义，但成语固定为"蜂拥而至"。'},
   {id:83,q:'找出含有错别字的词语：',
-   opts:['恭维','渡假区','水泄不通','积毁销骨'],ans:1,wrong:'渡假区',right:'度假区',
+   opts:['积毁销骨','恭维','水泄不通','渡假区'],ans:3,wrong:'渡假区',right:'度假区',
    exp:'【度假区】"度"指度过（度假，度过假期）；"渡"指渡过水面（渡河、渡船）。"渡假区"是常见错别字，正确为"度假区"。'},
   {id:84,q:'找出含有错别字的词语：',
-   opts:['蜕变','旁若无人','出神入化','稗官野史'],ans:3,wrong:'稗官野史',right:'稗官野史',
+   opts:['出神入化','旁若无人','稗官野史','蜕变'],ans:2,wrong:'稗官野史',right:'稗官野史',
    exp:'【出神入化】"化"指出神入化，技艺达到极高境界，四个均正确。注意"稗官"不写"裨官"，"野史"不写"冶史"。',
    allCorrect:true},
   {id:85,q:'找出含有错别字的词语：',
-   opts:['缘故','摩拳擦掌','各行其是','欢心鼓舞'],ans:3,wrong:'欢心鼓舞',right:'欢欣鼓舞',
+   opts:['摩拳擦掌','缘故','各行其是','欢心鼓舞'],ans:3,wrong:'欢心鼓舞',right:'欢欣鼓舞',
    exp:'【欢欣鼓舞】"欣"指欣喜（欢欣，欢快喜悦）；"心"指内心，"欢心"是另一词。固定成语为"欢欣鼓舞"，不写"欢心鼓舞"。'},
   {id:86,q:'找出含有错别字的词语：',
-   opts:['凋零','文身','平心而论','殚精竭虑'],ans:1,wrong:'文身',right:'纹身',
+   opts:['凋零','平心而论','殚精竭虑','文身'],ans:3,wrong:'文身',right:'纹身',
    exp:'【纹身】"纹"指花纹、纹路（纹身，在皮肤上刺画花纹）；"文"指文字、文章，无此义。"文身"是常见错别字，正确为"纹身"。'},
   {id:87,q:'找出含有错别字的词语：',
-   opts:['赔偿','出奇制胜','伶牙俐齿','旁敲侧击'],ans:2,wrong:'伶牙俐齿',right:'伶牙俐齿',
+   opts:['旁敲侧击','出奇制胜','伶牙俐齿','赔偿'],ans:2,wrong:'伶牙俐齿',right:'伶牙俐齿',
    exp:'【旁敲侧击】"击"指敲击（旁敲侧击，从旁边敲打）；不写"旁敲侧激"。此组四个均正确。',
    allCorrect:true},
   {id:88,q:'找出含有错别字的词语：',
-   opts:['桀骜','再接再厉','不胫而走','反璞归真'],ans:3,wrong:'反璞归真',right:'返璞归真',
+   opts:['不胫而走','再接再厉','桀骜','反璞归真'],ans:3,wrong:'反璞归真',right:'返璞归真',
    exp:'【返璞归真】"返"指返回（返璞，返回质朴本真）；"反"指相反、翻转。"反璞归真"是常见错别字，正确为"返璞归真"。'},
   {id:89,q:'找出含有错别字的词语：',
-   opts:['恣意','哗众取宠','心旷神怡','矫揉造作'],ans:2,wrong:'心旷神怡',right:'心旷神怡',
+   opts:['哗众取宠','矫揉造作','心旷神怡','恣意'],ans:2,wrong:'心旷神怡',right:'心旷神怡',
    exp:'【矫揉造作】"矫"指矫正扭曲（矫揉造作，装腔作势）；不写"娇揉造作"（"娇"指娇嫩）。此组四个均正确。',
    allCorrect:true},
   {id:90,q:'找出含有错别字的词语：',
-   opts:['喧嚣','精简','以逸待劳','汗马功绩'],ans:3,wrong:'汗马功绩',right:'汗马功勋',
+   opts:['以逸待劳','汗马功绩','精简','喧嚣'],ans:1,wrong:'汗马功绩',right:'汗马功勋',
    exp:'【汗马功勋】"勋"指功勋（汗马功勋，战马奔驰流汗，比喻战功）；"绩"指成绩、功绩，但此成语固定用"勋"，正确为"汗马功勋"。'},
   {id:91,q:'找出含有错别字的词语：',
-   opts:['决窍','绝无仅有','兴高采烈','扑朔迷离'],ans:0,wrong:'决窍',right:'诀窍',
+   opts:['扑朔迷离','决窍','兴高采烈','绝无仅有'],ans:1,wrong:'决窍',right:'诀窍',
    exp:'【诀窍】"诀"指方法、秘诀（诀窍，关键技巧）；"决"指决定、决断，字义不符。"决窍"是常见错别字，正确为"诀窍"。'},
   {id:92,q:'找出含有错别字的词语：',
-   opts:['蔓延','集思广益','自惭形秽','不落巢臼'],ans:3,wrong:'不落巢臼',right:'不落窠臼',
+   opts:['不落巢臼','蔓延','自惭形秽','集思广益'],ans:0,wrong:'不落巢臼',right:'不落窠臼',
    exp:'【不落窠臼】"窠臼"指固定的格式（窠：鸟巢；臼：舂米器），"不落窠臼"指不落俗套。"巢"虽是鸟巢义，但固定写法为"窠臼"。'},
   {id:93,q:'找出含有错别字的词语：',
-   opts:['宣泄','大相径庭','豁然开朗','一泻千里'],ans:0,wrong:'宣泄',right:'宣泄',
+   opts:['宣泄','豁然开朗','一泻千里','大相径庭'],ans:0,wrong:'宣泄',right:'宣泄',
    exp:'【大相径庭】"径"指小路（大相径庭，差别很大）；不写"大相径情"。此组四个均正确。',
    allCorrect:true},
   {id:94,q:'找出含有错别字的词语：',
-   opts:['协奏曲','礼上往来','墨守陈规','趋之若鹜'],ans:1,wrong:'礼上往来',right:'礼尚往来',
+   opts:['墨守陈规','礼上往来','协奏曲','趋之若鹜'],ans:1,wrong:'礼上往来',right:'礼尚往来',
    exp:'【礼尚往来】"尚"指崇尚、讲究（礼尚往来，讲究以礼相待）；"上"指方向，字义不符。"礼上往来"是常见错别字。'},
   {id:95,q:'找出含有错别字的词语：',
-   opts:['嘻皮笑脸','奋不顾身','出类拔萃','人才济济'],ans:0,wrong:'嘻皮笑脸',right:'嬉皮笑脸',
+   opts:['奋不顾身','嘻皮笑脸','出类拔萃','人才济济'],ans:1,wrong:'嘻皮笑脸',right:'嬉皮笑脸',
    exp:'【嬉皮笑脸】"嬉"指嬉戏（嬉皮笑脸，嬉笑玩闹）；"嘻"是笑声（嘻嘻哈哈）。"嘻皮笑脸"是常见错别字，正确为"嬉皮笑脸"。'},
   {id:96,q:'找出含有错别字的词语：',
-   opts:['凑合','口蜜腹箭','重整旗鼓','高瞻远瞩'],ans:1,wrong:'口蜜腹箭',right:'口蜜腹剑',
+   opts:['口蜜腹箭','重整旗鼓','凑合','高瞻远瞩'],ans:0,wrong:'口蜜腹箭',right:'口蜜腹剑',
    exp:'【口蜜腹剑】"剑"指利剑（嘴上甜蜜、心里藏刀），"箭"虽也是武器但成语固定用"剑"，正确为"口蜜腹剑"。'},
   {id:97,q:'找出含有错别字的词语：',
-   opts:['苍茫','谈笑风声','一帆风顺','言简意赅'],ans:1,wrong:'谈笑风声',right:'谈笑风生',
+   opts:['一帆风顺','苍茫','言简意赅','谈笑风声'],ans:3,wrong:'谈笑风声',right:'谈笑风生',
    exp:'【谈笑风生】"生"指产生（谈笑风生，形容说话有风趣，笑声不断）；"声"指声音，字义不符。正确为"谈笑风生"。'},
   {id:98,q:'找出含有错别字的词语：',
-   opts:['松弛','大材小用','焦头烂额','既成事实'],ans:3,wrong:'既成事实',right:'既成事实',
+   opts:['大材小用','既成事实','松弛','焦头烂额'],ans:1,wrong:'既成事实',right:'既成事实',
    exp:'【焦头烂额】"焦"指烧焦（焦头烂额，形容十分狼狈）；不写"燋头烂额"。此组四个均正确。',
    allCorrect:true},
   {id:99,q:'找出含有错别字的词语：',
-   opts:['彗星','无所事事','声色俱厉','举一反三'],ans:0,wrong:'彗星',right:'彗星',
+   opts:['声色俱厉','彗星','举一反三','无所事事'],ans:1,wrong:'彗星',right:'彗星',
    exp:'【声色俱厉】"厉"指严厉（声色俱厉，声音神色都很严厉）；不写"声色俱历"。此组四个均正确。',
    allCorrect:true},
   {id:100,q:'找出含有错别字的词语：',
-   opts:['装祯','恼羞成怒','卧薪尝胆','鹤立鸡群'],ans:0,wrong:'装祯',right:'装帧',
+   opts:['卧薪尝胆','恼羞成怒','装祯','鹤立鸡群'],ans:2,wrong:'装祯',right:'装帧',
    exp:'【装帧】"帧"是书籍、画幅的幅面装订形式；"祯"指吉祥（祯祥）。"装祯"是高频错别字，正确为"装帧"。'},
 ];
 
@@ -1577,20 +1585,20 @@ function renderQuestion(){
     <div class="options-list">
       ${q.opts.map((o,i)=>`
         <button class="option-btn" id="opt-${i}" onclick="answer(${i},${q.ans},${q.id})">
-          <div class="opt-content">
-            <div class="opt-letter">${'ABCD'[i]}</div>
-            <div class="opt-pinyin">${o}</div>
-          </div>
-          <span class="opt-elim-btn" id="elim-${i}" onclick="toggleElim(event,${i})" title="标记排除此选项"></span>
+          <div class="opt-letter">${'ABCD'[i]}</div>
+          <div class="opt-pinyin" style="flex:1">${o}</div>
+          <button class="opt-elim-btn" id="elim-${i}" onclick="toggleElim(event,${i})" title="标记排除此选项"></button>
         </button>`).join('')}
     </div>
     <div id="exp-area"></div>`;
 }
 
+// ── 字音排除按钮 ──────────────────────────────────────
 function toggleElim(e, i){
-  e.stopPropagation(); // 阻止触发选项答题
+  e.stopPropagation();
   const btn = document.getElementById('opt-'+i);
-  if(!btn || btn.classList.contains('disabled') || btn.classList.contains('correct') || btn.classList.contains('wrong-c') || btn.classList.contains('dim')) return;
+  if(!btn) return;
+  if(btn.classList.contains('disabled')||btn.classList.contains('correct')||btn.classList.contains('wrong-c')||btn.classList.contains('dim')) return;
   btn.classList.toggle('eliminated');
 }
 
@@ -1601,13 +1609,12 @@ function answer(chosen, ans, qid){
   const isCorrect = (chosen===ans);
 
   document.querySelectorAll('.option-btn').forEach((el,i)=>{
-    el.classList.remove('eliminated'); // 答题后清除排除标记
+    el.classList.remove('eliminated');
     el.classList.add('disabled');
     if(i===ans)    el.classList.add('correct');
     else if(i===chosen) el.classList.add('wrong-c');
     else           el.classList.add('dim');
   });
-  // 隐藏所有排除按钮
   document.querySelectorAll('.opt-elim-btn').forEach(b=>b.style.display='none');
 
   state = ensureToday(state);
@@ -1920,12 +1927,22 @@ function renderXingQuestion(){
       <div class="xing-words-grid">
         ${shuffled.map((item,si)=>`
           <div class="xing-opt" id="xopt-${si}" data-orig="${item.i}" onclick="answerXing(${si},${item.i},${q.ans},${q.id})">
+            <button class="xo-elim-btn" id="xelim-${si}" onclick="toggleXElim(event,${si})" title="排除此选项"></button>
             <div class="xo-label">${'ABCD'[si]}</div>
             <div class="xo-word">${item.o}</div>
           </div>`).join('')}
       </div>
     </div>
     <div id="xexp-area"></div>`;
+}
+
+// ── 字形排除按钮 ──────────────────────────────────────
+function toggleXElim(e, si){
+  e.stopPropagation();
+  const opt = document.getElementById('xopt-'+si);
+  if(!opt) return;
+  if(opt.classList.contains('disabled')||opt.classList.contains('correct')||opt.classList.contains('wrong-c')||opt.classList.contains('dim')) return;
+  opt.classList.toggle('xelim');
 }
 
 function answerXing(si, origIdx, ans, qid){
@@ -1935,12 +1952,14 @@ function answerXing(si, origIdx, ans, qid){
   const isCorrect = (origIdx===ans);
 
   document.querySelectorAll('.xing-opt').forEach((el,i)=>{
+    el.classList.remove('xelim');
     el.classList.add('disabled');
     const orig=parseInt(el.dataset.orig);
     if(orig===ans)         el.classList.add('correct');
     else if(i===si&&!isCorrect) el.classList.add('wrong-c');
     else                   el.classList.add('dim');
   });
+  document.querySelectorAll('.xo-elim-btn').forEach(b=>b.style.display='none');
 
   xstate = ensureToday(xstate);
   xstate.today.answered++;
