@@ -78,16 +78,6 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .option-btn.wrong-c .opt-pinyin{color:var(--wrong);}
 .option-btn.dim{opacity:0.3;pointer-events:none;}
 .option-btn.disabled{pointer-events:none;}
-/* ── 字音排除按钮 ── */
-.opt-elim-btn{flex-shrink:0;width:30px;height:30px;border-radius:50%;border:1.5px solid #e5c0c0;background:white;color:#e08080;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;-webkit-tap-highlight-color:transparent;line-height:1;padding:0;}
-.opt-elim-btn:hover{background:#fce4e4;border-color:var(--wrong);color:var(--wrong);}
-.opt-elim-btn:active{transform:scale(0.88);}
-.option-btn.eliminated{background:#fdf0f0;border-color:#e5c0c0;}
-.option-btn.eliminated .opt-letter{background:#f0c0c0;color:white;}
-.option-btn.eliminated .opt-pinyin{text-decoration:line-through;color:#cc8888;}
-.option-btn.eliminated .opt-elim-btn{background:#fce4e4;border-color:var(--wrong);color:var(--wrong);font-size:9px;width:36px;border-radius:7px;}
-.opt-elim-btn::after{content:'✕';}
-.option-btn.eliminated .opt-elim-btn::after{content:'排除';}
 
 /* WRONG TOAST */
 .wrong-toast{background:var(--wrong);color:white;border-radius:12px;padding:14px 18px;margin-top:14px;animation:bounceIn 0.35s cubic-bezier(0.34,1.56,0.64,1);}
@@ -175,11 +165,20 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-thumb{background:#ccc;border-radius:99px;}
 
-/* ── MODULE SWITCHER ── */
-.module-tab-bar{display:flex;background:var(--paper2);border-radius:12px;padding:4px;margin-bottom:20px;gap:4px;}
-.module-tab{flex:1;padding:10px 6px;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans SC',sans-serif;background:transparent;color:#888;transition:all 0.2s;}
+/* ── MODULE SWITCHER (四宫格) ── */
+.module-tab-bar{display:grid;grid-template-columns:1fr 1fr;background:var(--paper2);border-radius:12px;padding:4px;margin-bottom:20px;gap:4px;}
+.module-tab{padding:10px 6px;border:none;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans SC',sans-serif;background:transparent;color:#888;transition:all 0.2s;text-align:center;}
 .module-tab.active{background:var(--ink);color:var(--gold-light);}
 .module-tab .tab-icon{display:block;font-size:18px;margin-bottom:2px;}
+
+/* ── 标点符号主题 ── */
+:root{--blue:#1565c0;--blue-light:#42a5f5;--blue-bg:#e3f2fd;--blue-mid:#0d47a1;}
+.biao-hero-banner{background:linear-gradient(135deg,#0d47a1,#1976d2);border-radius:16px;padding:24px 20px;color:var(--paper);margin-bottom:20px;position:relative;overflow:hidden;}
+.biao-hero-banner::before{content:'，';position:absolute;right:-10px;top:-20px;font-family:'Noto Serif SC',serif;font-size:120px;color:rgba(255,255,255,0.07);line-height:1;pointer-events:none;}
+.biao-question-card{background:white;border-radius:16px;padding:22px 18px;box-shadow:0 4px 16px var(--shadow);margin-bottom:16px;border-left:4px solid var(--blue);}
+.biao-sentence{font-size:15px;line-height:2.2;font-family:'Noto Serif SC',serif;margin-bottom:18px;padding-right:40px;}
+.biao-kw{background:var(--blue-bg);border-radius:4px;padding:0 3px;color:var(--blue);font-weight:900;border-bottom:2px solid var(--blue);font-size:17px;}
+.fav-item-biao{border-left:3px solid var(--blue);}
 
 /* ── 字形 HOME ── */
 .xing-hero-banner{background:linear-gradient(135deg,#1a3a2a,#2d5a3d);border-radius:16px;padding:24px 20px;color:var(--paper);margin-bottom:20px;position:relative;overflow:hidden;}
@@ -202,17 +201,6 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .xing-opt.wrong-c .xo-word{color:var(--wrong);}
 .xing-opt.dim{opacity:0.3;pointer-events:none;}
 .xing-opt.disabled{pointer-events:none;}
-/* ── 字形排除按钮 ── */
-.xing-opt{position:relative;}
-.xo-elim-btn{position:absolute;top:5px;right:5px;width:22px;height:22px;border-radius:50%;border:1.5px solid #e5c0c0;background:white;color:#e08080;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;-webkit-tap-highlight-color:transparent;z-index:2;line-height:1;padding:0;}
-.xo-elim-btn:hover{background:#fce4e4;border-color:var(--wrong);color:var(--wrong);}
-.xo-elim-btn:active{transform:scale(0.88);}
-.xo-elim-btn::after{content:'✕';}
-.xing-opt.xelim{background:#fdf0f0;border-color:#e5c0c0;}
-.xing-opt.xelim .xo-label{background:#f0c0c0;color:white;}
-.xing-opt.xelim .xo-word{text-decoration:line-through;color:#cc8888;}
-.xing-opt.xelim .xo-elim-btn{background:#fce4e4;border-color:var(--wrong);color:var(--wrong);font-size:9px;width:28px;border-radius:6px;}
-.xing-opt.xelim .xo-elim-btn::after{content:'排除';}
 
 /* 错字高亮 */
 .err-char{color:var(--wrong);border-bottom:2px solid var(--wrong);}
@@ -244,6 +232,31 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .fav-type-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:99px;font-weight:600;margin-left:6px;vertical-align:middle;}
 .fav-type-badge.yin{background:#fce4e4;color:var(--wrong);}
 .fav-type-badge.xing{background:#d8f3dc;color:var(--correct);}
+.fav-type-badge.lian{background:#fff3e0;color:#e65100;}
+
+/* ── 关联词模块 ── */
+:root{--orange:#e65100;--orange-light:#ff6d00;--orange-bg:#fff3e0;--orange-mid:#bf360c;}
+.lian-hero-banner{background:linear-gradient(135deg,#bf360c,#e65100);border-radius:16px;padding:24px 20px;color:var(--paper);margin-bottom:20px;position:relative;overflow:hidden;}
+.lian-hero-banner::before{content:'联';position:absolute;right:-10px;top:-20px;font-family:'Noto Serif SC',serif;font-size:120px;color:rgba(255,255,255,0.06);line-height:1;pointer-events:none;}
+
+/* 关联词判断题卡片 */
+.lian-question-card{background:white;border-radius:16px;padding:22px 18px;box-shadow:0 4px 16px var(--shadow);margin-bottom:16px;border-left:4px solid var(--orange);}
+.lian-sentence{font-size:16px;line-height:2;font-family:'Noto Serif SC',serif;margin-bottom:18px;padding-right:40px;}
+.lian-kw{background:#fff3e0;border-radius:4px;padding:0 4px;color:var(--orange);font-weight:700;border-bottom:2px solid var(--orange);}
+.lian-judge-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.lian-judge-btn{border:1.5px solid #e5ddd0;border-radius:12px;padding:16px 10px;text-align:center;cursor:pointer;transition:all 0.15s;box-shadow:0 1px 4px var(--shadow);background:white;}
+.lian-judge-btn:active{transform:scale(0.98);}
+.lian-judge-btn .lj-icon{font-size:28px;display:block;margin-bottom:6px;}
+.lian-judge-btn .lj-label{font-size:14px;font-weight:700;color:var(--ink);}
+.lian-judge-btn.correct{background:var(--correct-bg);border-color:var(--correct);}
+.lian-judge-btn.correct .lj-label{color:var(--correct);}
+.lian-judge-btn.wrong-c{background:var(--wrong-bg);border-color:var(--wrong);}
+.lian-judge-btn.wrong-c .lj-label{color:var(--wrong);}
+.lian-judge-btn.dim{opacity:0.3;pointer-events:none;}
+.lian-judge-btn.disabled{pointer-events:none;}
+
+/* 收藏项关联词样式 */
+.fav-item-lian{border-left:3px solid var(--orange);}
 </style>
 </head>
 <body>
@@ -261,13 +274,19 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 <!-- HOME -->
 <div class="screen active" id="screen-home">
 
-  <!-- 模块切换Tab -->
+  <!-- 模块切换Tab（四宫格） -->
   <div class="module-tab-bar">
     <button class="module-tab active" id="tab-yin" onclick="switchModule('yin')">
       <span class="tab-icon">🔊</span>字音专练
     </button>
     <button class="module-tab" id="tab-xing" onclick="switchModule('xing')">
       <span class="tab-icon">✍️</span>字形专练
+    </button>
+    <button class="module-tab" id="tab-lian" onclick="switchModule('lian')">
+      <span class="tab-icon">🔗</span>关联词
+    </button>
+    <button class="module-tab" id="tab-biao" onclick="switchModule('biao')">
+      <span class="tab-icon">📌</span>标点符号
     </button>
   </div>
 
@@ -352,6 +371,90 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
     </div>
   </div>
 
+  <!-- 关联词模块首页 -->
+  <div id="module-lian" style="display:none">
+    <div class="lian-hero-banner">
+      <div class="hero-label">语文专项训练 · 关联词用法辨析</div>
+      <div class="hero-title">关联词专练<br>判断对错</div>
+      <div class="hero-sub">共 <span id="lian-total-count">0</span> 题 · 判断句中关联词用法是否正确</div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card gold"><div class="stat-num" id="lstat-done">0</div><div class="stat-label">今日已答</div></div>
+      <div class="stat-card green"><div class="stat-num" id="lstat-acc">—</div><div class="stat-label">今日正确率</div></div>
+      <div class="stat-card red"><div class="stat-num" id="lstat-wrong">0</div><div class="stat-label">今日错题数</div></div>
+    </div>
+    <div class="progress-section">
+      <div class="progress-title">题目覆盖进度</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="lcoverage-bar" style="width:0%;background:linear-gradient(90deg,var(--orange),#ffab40)"></div></div>
+      <div class="progress-text"><span>已见过 <span id="lseen-count">0</span> 题</span><span id="lcoverage-pct">0%</span></div>
+    </div>
+    <div class="mode-grid">
+      <button class="mode-btn primary" style="background:linear-gradient(135deg,#bf360c,#e65100)" onclick="startLianQuiz('random',20)">
+        <span class="icon">🎯</span>
+        <div class="name">随机刷题</div>
+        <div class="desc">每次 20 题乱序</div>
+      </button>
+      <button class="mode-btn" onclick="startLianQuiz('all',999)">
+        <span class="icon">📖</span>
+        <div class="name">全部刷完</div>
+        <div class="desc">按序全部练习</div>
+      </button>
+    </div>
+    <div class="mode-grid">
+      <button class="mode-btn" id="lwrong-mode-btn" onclick="startLianQuiz('wrong',999)" style="display:none">
+        <span class="icon">📌</span>
+        <div class="name">收藏复习</div>
+        <div class="desc">复习收藏的关联词题</div>
+        <span class="badge" id="lwrong-badge">0</span>
+      </button>
+    </div>
+    <div style="text-align:center;padding:12px;font-size:12px;color:#aaa;background:white;border-radius:10px;margin-top:4px;">
+      📝 共收录 <span id="lian-progress-tip">50</span> 题 · 并列/转折/递进/选择/条件/假设/因果等关系
+    </div>
+  </div>
+
+  <!-- 标点符号模块首页 -->
+  <div id="module-biao" style="display:none">
+    <div class="biao-hero-banner">
+      <div class="hero-label">语文专项训练 · 标点符号运用辨析</div>
+      <div class="hero-title">标点专练<br>判断对错</div>
+      <div class="hero-sub">共 <span id="biao-total-count">0</span> 题 · 判断句中标点符号使用是否正确</div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card gold"><div class="stat-num" id="bstat-done">0</div><div class="stat-label">今日已答</div></div>
+      <div class="stat-card green"><div class="stat-num" id="bstat-acc">—</div><div class="stat-label">今日正确率</div></div>
+      <div class="stat-card red"><div class="stat-num" id="bstat-wrong">0</div><div class="stat-label">今日错题数</div></div>
+    </div>
+    <div class="progress-section">
+      <div class="progress-title">题目覆盖进度</div>
+      <div class="progress-bar-wrap"><div class="progress-bar" id="bcoverage-bar" style="width:0%;background:linear-gradient(90deg,var(--blue),var(--blue-light))"></div></div>
+      <div class="progress-text"><span>已见过 <span id="bseen-count">0</span> 题</span><span id="bcoverage-pct">0%</span></div>
+    </div>
+    <div class="mode-grid">
+      <button class="mode-btn primary" style="background:linear-gradient(135deg,#0d47a1,#1976d2)" onclick="startBiaoQuiz('random',20)">
+        <span class="icon">🎯</span>
+        <div class="name">随机刷题</div>
+        <div class="desc">每次 20 题乱序</div>
+      </button>
+      <button class="mode-btn" onclick="startBiaoQuiz('all',999)">
+        <span class="icon">📖</span>
+        <div class="name">全部刷完</div>
+        <div class="desc">按序全部练习</div>
+      </button>
+    </div>
+    <div class="mode-grid">
+      <button class="mode-btn" id="bwrong-mode-btn" onclick="startBiaoQuiz('wrong',999)" style="display:none">
+        <span class="icon">📌</span>
+        <div class="name">收藏复习</div>
+        <div class="desc">复习收藏的标点题</div>
+        <span class="badge" id="bwrong-badge">0</span>
+      </button>
+    </div>
+    <div style="text-align:center;padding:12px;font-size:12px;color:#aaa;background:white;border-radius:10px;margin-top:4px;">
+      📝 共收录 <span id="biao-progress-tip">60</span> 题 · 句号/问号/逗号/顿号/引号/书名号等
+    </div>
+  </div>
+
 </div>
 
 <!-- QUIZ -->
@@ -412,6 +515,64 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   <div class="err-summary" id="xerr-summary"></div>
 </div>
 
+<!-- 关联词 QUIZ -->
+<div class="screen" id="screen-lquiz">
+  <div class="quiz-header">
+    <button class="quit-btn" onclick="quitLianQuiz()">✕</button>
+    <div class="quiz-prog-wrap"><div class="quiz-prog-fill" id="lquiz-prog-fill" style="background:var(--orange)"></div></div>
+    <div class="quiz-prog-text" id="lquiz-prog-text">1/20</div>
+  </div>
+  <div id="lquestion-area"></div>
+</div>
+
+<!-- 关联词 RESULT -->
+<div class="screen" id="screen-lresult">
+  <div class="result-hero" style="background:linear-gradient(135deg,#bf360c,#e65100)">
+    <div class="result-score" id="lres-score">0</div>
+    <div class="result-score-label">分</div>
+    <div class="result-rank" id="lres-rank">——</div>
+  </div>
+  <div class="result-stats">
+    <div class="result-stat"><div class="n" id="lres-total">0</div><div class="l">总题数</div></div>
+    <div class="result-stat ok"><div class="n" id="lres-correct">0</div><div class="l">答对</div></div>
+    <div class="result-stat fail"><div class="n" id="lres-wrong">0</div><div class="l">答错</div></div>
+  </div>
+  <div class="action-row">
+    <button class="action-btn secondary" onclick="backToLianHome()">返回首页</button>
+    <button class="action-btn primary" onclick="retryLianQuiz()" style="background:var(--orange)">再刷一次</button>
+  </div>
+  <div class="err-summary" id="lerr-summary"></div>
+</div>
+
+<!-- 标点 QUIZ -->
+<div class="screen" id="screen-bquiz">
+  <div class="quiz-header">
+    <button class="quit-btn" onclick="quitBiaoQuiz()">✕</button>
+    <div class="quiz-prog-wrap"><div class="quiz-prog-fill" id="bquiz-prog-fill" style="background:var(--blue)"></div></div>
+    <div class="quiz-prog-text" id="bquiz-prog-text">1/20</div>
+  </div>
+  <div id="bquestion-area"></div>
+</div>
+
+<!-- 标点 RESULT -->
+<div class="screen" id="screen-bresult">
+  <div class="result-hero" style="background:linear-gradient(135deg,#0d47a1,#1976d2)">
+    <div class="result-score" id="bres-score">0</div>
+    <div class="result-score-label">分</div>
+    <div class="result-rank" id="bres-rank">——</div>
+  </div>
+  <div class="result-stats">
+    <div class="result-stat"><div class="n" id="bres-total">0</div><div class="l">总题数</div></div>
+    <div class="result-stat ok"><div class="n" id="bres-correct">0</div><div class="l">答对</div></div>
+    <div class="result-stat fail"><div class="n" id="bres-wrong">0</div><div class="l">答错</div></div>
+  </div>
+  <div class="action-row">
+    <button class="action-btn secondary" onclick="backToBiaoHome()">返回首页</button>
+    <button class="action-btn primary" onclick="retryBiaoQuiz()" style="background:var(--blue)">再刷一次</button>
+  </div>
+  <div class="err-summary" id="berr-summary"></div>
+</div>
+
 <!-- 收藏夹 SCREEN -->
 <div class="screen" id="screen-wrong">
   <div class="screen-hdr">
@@ -420,8 +581,10 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
   </div>
   <!-- 收藏分类Tab -->
   <div class="fav-tab-bar">
-    <button class="fav-tab active" id="fav-tab-yin" onclick="switchFavTab('yin')">🔊 字音收藏</button>
-    <button class="fav-tab" id="fav-tab-xing" onclick="switchFavTab('xing')">✍️ 字形收藏</button>
+    <button class="fav-tab active" id="fav-tab-yin" onclick="switchFavTab('yin')">🔊 字音</button>
+    <button class="fav-tab" id="fav-tab-xing" onclick="switchFavTab('xing')">✍️ 字形</button>
+    <button class="fav-tab" id="fav-tab-lian" onclick="switchFavTab('lian')">🔗 关联词</button>
+    <button class="fav-tab" id="fav-tab-biao" onclick="switchFavTab('biao')">📌 标点</button>
   </div>
   <div id="fav-list"></div>
 </div>
@@ -459,29 +622,29 @@ const Q = [
    exp:'【腌】两音：①ā——腌臜（邋遢义）；②yān——腌肉、腌菜（用盐等保存食物）。"腌肉"读 yān。'},
   {id:2,word:'挨打',char:'挨',
    text:'"<b class="keyword">挨</b>打"中"挨"的正确读音是？',
-   opts:['ǎi','āi','ài','ái'],ans:3,
+   opts:['āi','ái','ǎi','ài'],ans:1,
    exp:'【挨】两音：①āi——挨边、挨个儿（靠近义）；②ái——挨打、挨饿（遭受义）。"挨打"读 ái。'},
   {id:3,word:'方兴未艾',char:'艾',
    text:'"方兴未<b class="keyword">艾</b>"中"艾"的正确读音是？',
-   opts:['ǎi','yì','ài','āi'],ans:2,
+   opts:['yì','ài','ǎi','āi'],ans:1,
    exp:'【艾】两音：①ài——方兴未艾（正在兴起未停止）；②yì——自怨自艾（悔恨、惩治）。"方兴未艾"读 ài。'},
   {id:4,word:'拗口',char:'拗',
    text:'"<b class="keyword">拗</b>口"中"拗"的正确读音是？',
-   opts:['ǎo','niù','āo','ào'],ans:3,
+   opts:['ǎo','ào','niù','āo'],ans:1,
    exp:'【拗】三音：①ǎo——拗断（折断）；②ào——拗口（不顺口）；③niù——执拗（固执）。"拗口"读 ào。'},
   {id:5,word:'执拗',char:'拗',
    text:'"执<b class="keyword">拗</b>"中"拗"的正确读音是？',
-   opts:['ào','niù','ǎo','niǔ'],ans:1,
+   opts:['ǎo','ào','niù','niǔ'],ans:2,
    exp:'【拗】三音：ǎo 拗断；ào 拗口；niù 执拗（固执倔强）。"执拗"读 niù。'},
 
   // ── B ──────────────────────────────────────────
   {id:6,word:'扒窃',char:'扒',
    text:'"<b class="keyword">扒</b>窃"中"扒"的正确读音是？',
-   opts:['pà','pá','bǎ','bā'],ans:1,
+   opts:['bā','pá','bǎ','pà'],ans:1,
    exp:'【扒】两音：①bā——扒皮、扒土（剥开义）；②pá——扒窃、扒手（偷窃义）。"扒窃"读 pá。'},
   {id:7,word:'刀把儿',char:'把',
    text:'"刀<b class="keyword">把</b>儿"中"把"的正确读音是？',
-   opts:['bā','bá','bǎ','bà'],ans:3,
+   opts:['bǎ','bà','bā','bá'],ans:1,
    exp:'【把】两音：①bǎ——把持、把握（握住义）；②bà——刀把儿、话把儿（器物的柄，名词义）。"刀把儿"读 bà。'},
   {id:8,word:'磅礴',char:'磅',
    text:'"<b class="keyword">磅</b>礴"中"磅"的正确读音是？',
@@ -489,247 +652,247 @@ const Q = [
    exp:'【磅】两音：①bàng——磅秤（英制重量单位）；②páng——磅礴（气势雄伟广大）。"磅礴"读 páng。'},
   {id:9,word:'炮羊肉',char:'炮',
    text:'"<b class="keyword">炮</b>羊肉"中"炮"的正确读音是？',
-   opts:['bào','bāo','pào','páo'],ans:1,
+   opts:['pào','páo','bāo','bào'],ans:2,
    exp:'【炮】三音：①bāo——炮羊肉（旺火急炒的烹调法）；②páo——炮烙（酷刑）；③pào——火炮（武器）。"炮羊肉"读 bāo。'},
   {id:10,word:'一曝十寒',char:'曝',
    text:'"一<b class="keyword">曝</b>十寒"中"曝"的正确读音是？',
-   opts:['pó','pù','bú','bào'],ans:1,
+   opts:['bào','pù','bú','pó'],ans:1,
    exp:'【曝】两音：①bào——曝光（摄影或揭露义）；②pù——曝晒、一曝十寒（暴晒义）。"一曝十寒"读 pù。'},
   {id:11,word:'背井离乡',char:'背',
    text:'"<b class="keyword">背</b>井离乡"中"背"的正确读音是？',
-   opts:['bì','bèi','bēi','bí'],ans:1,
+   opts:['bēi','bèi','bí','bì'],ans:1,
    exp:'【背】两音：①bēi——背包、背负（背负义）；②bèi——背影、背井离乡（离开、违背义）。"背井离乡"读 bèi。'},
   {id:12,word:'胳臂',char:'臂',
    text:'"胳<b class="keyword">臂</b>"中"臂"的正确读音是？',
-   opts:['bèi','bí','bei','bì'],ans:2,
+   opts:['bì','bei','bèi','bí'],ans:1,
    exp:'【臂】两音：①bei（轻声）——胳臂（口语）；②bì——手臂、臂力（书面语）。"胳臂"中"臂"读轻声 bei。'},
   {id:13,word:'投奔',char:'奔',
    text:'"投<b class="keyword">奔</b>"中"奔"的正确读音是？',
-   opts:['bèn','bén','bēn','běn'],ans:0,
+   opts:['bēn','bèn','bén','běn'],ans:1,
    exp:'【奔】两音：①bēn——奔波、奔跑（快速义）；②bèn——投奔、奔头儿（前往投靠义）。"投奔"读 bèn。'},
   {id:14,word:'屏气',char:'屏',
    text:'"<b class="keyword">屏</b>气"中"屏"的正确读音是？',
-   opts:['bīng','pīng','píng','bǐng'],ans:3,
+   opts:['píng','bǐng','pīng','bīng'],ans:1,
    exp:'【屏】两音：①bǐng——屏气、屏息（抑制、憋住义）；②píng——屏蔽、屏风（遮挡物义）。"屏气"读 bǐng。'},
 
   // ── C ──────────────────────────────────────────
   {id:15,word:'人参',char:'参',
    text:'"人<b class="keyword">参</b>"中"参"的正确读音是？',
-   opts:['cēn','sān','shēn','cān'],ans:2,
+   opts:['cān','cēn','shēn','sān'],ans:2,
    exp:'【参】三音：①cān——参观；②cēn——参差；③shēn——人参、海参（药材植物）。"人参"读 shēn。'},
   {id:16,word:'参差',char:'参',
    text:'"<b class="keyword">参</b>差"中"参"的正确读音是？',
-   opts:['cēn','sān','shēn','cān'],ans:0,
+   opts:['cān','shēn','cēn','sān'],ans:2,
    exp:'【参差】（cēn cī）高低长短不整齐。固定读 cēn，不读 cān。'},
   {id:17,word:'矿藏',char:'藏',
    text:'"矿<b class="keyword">藏</b>"中"藏"的正确读音是？',
-   opts:['zāng','zàng','cāng','cáng'],ans:3,
+   opts:['zàng','cáng','zāng','cāng'],ans:1,
    exp:'【藏】两音：①cáng——藏品、矿藏（储藏义）；②zàng——宝藏、西藏（名词或地名义）。"矿藏"读 cáng。'},
   {id:18,word:'出差',char:'差',
    text:'"出<b class="keyword">差</b>"中"差"的正确读音是？',
-   opts:['chāi','chā','cī','chà'],ans:0,
+   opts:['chā','chà','chāi','cī'],ans:2,
    exp:'【差】四音：chā偏差；chà差点儿；chāi出差（外出公务）；cī参差。"出差"读 chāi。'},
   {id:19,word:'刹那',char:'刹',
    text:'"<b class="keyword">刹</b>那"中"刹"的正确读音是？',
-   opts:['shà','chā','chà','shā'],ans:2,
+   opts:['shā','chà','shà','chā'],ans:1,
    exp:'【刹】两音：①chà——刹那、古刹（梵语音译）；②shā——刹车（使停止）。"刹那"读 chà。'},
   {id:20,word:'称职',char:'称',
    text:'"<b class="keyword">称</b>职"中"称"的正确读音是？',
-   opts:['chèn','chēng','chéng','chèng'],ans:0,
+   opts:['chēng','chèn','chéng','chèng'],ans:1,
    exp:'【称】两音：①chèn——称心、称职（相符合义）；②chēng——称呼、尊称（叫做义）。"称职"是胜任义，读 chèn。'},
   {id:21,word:'澄清泥水',char:'澄',
    text:'"<b class="keyword">澄</b>清泥水"（使沉淀）中"澄"的正确读音是？',
-   opts:['chéng','déng','chēng','dèng'],ans:3,
+   opts:['chéng','dèng','chēng','déng'],ans:1,
    exp:'【澄】两音：①chéng——澄清（形容清澈）；②dèng——澄清（使杂质沉淀的动作义）。此处是动作义，读 dèng。'},
   {id:22,word:'重复',char:'重',
    text:'"<b class="keyword">重</b>复"中"重"的正确读音是？',
-   opts:['zhòng','chōng','zhōng','chóng'],ans:3,
+   opts:['zhòng','chóng','zhōng','chōng'],ans:1,
    exp:'【重】两音：①chóng——重复、重叠（再次义）；②zhòng——重要、体重（分量义）。"重复"读 chóng。'},
 
   // ── D ──────────────────────────────────────────
   {id:23,word:'颠簸',char:'簸',
    text:'"颠<b class="keyword">簸</b>"中"簸"的正确读音是？',
-   opts:['bō','bǒ','bó','bò'],ans:1,
+   opts:['bò','bǒ','bō','bó'],ans:1,
    exp:'【簸】两音：①bǒ——颠簸（摇晃义）；②bò——簸箕（扬米去糠的工具）。"颠簸"读 bǒ。'},
   {id:24,word:'绰绰有余',char:'绰',
    text:'"绰<b class="keyword">绰</b>有余"中"绰"的正确读音是？',
-   opts:['zhuō','cháo','chāo','chuò'],ans:3,
+   opts:['chāo','chuò','zhuō','cháo'],ans:1,
    exp:'【绰】两音：①chāo——绰起（顺手拿取）；②chuò——绰绰有余、绰号（宽裕义）。"绰绰有余"读 chuò。'},
   {id:25,word:'扁舟',char:'扁',
    text:'"<b class="keyword">扁</b>舟"中"扁"的正确读音是？',
-   opts:['pián','biǎn','biān','piān'],ans:3,
+   opts:['biǎn','piān','biān','pián'],ans:1,
    exp:'【扁】两音：①biǎn——扁担、扁豆（扁平义）；②piān——扁舟（小船，书面语）。"扁舟"读 piān。'},
   {id:26,word:'复辟',char:'辟',
    text:'"复<b class="keyword">辟</b>"中"辟"的正确读音是？',
-   opts:['pí','pì','bí','bì'],ans:3,
+   opts:['pì','bì','pí','bí'],ans:1,
    exp:'【辟】两音：①bì——辟邪、复辟（君主、邪恶义）；②pì——精辟、开辟、辟谣（开通、驳斥义）。"复辟"读 bì。'},
   {id:27,word:'薄片',char:'薄',
    text:'"<b class="keyword">薄</b>片"中"薄"的正确读音是？',
-   opts:['báo','bào','bó','bǒ'],ans:0,
+   opts:['bó','báo','bào','bǒ'],ans:1,
    exp:'【薄】两音：①báo——薄片（口语，厚度小）；②bó——薄弱、单薄（书面语，力量轻微）。"薄片"读 báo。'},
   {id:28,word:'尊称',char:'称',
    text:'"尊<b class="keyword">称</b>"中"称"的正确读音是？',
-   opts:['chéng','chēng','chèng','chèn'],ans:1,
+   opts:['chèn','chēng','chéng','chèng'],ans:1,
    exp:'【称】两音：①chēng——称呼、尊称（称谓义）；②chèn——称心、称职（相符义）。"尊称"读 chēng。'},
   {id:29,word:'骠勇',char:'骠',
    text:'"<b class="keyword">骠</b>勇"中"骠"的正确读音是？',
-   opts:['biào','biāo','piāo','piào'],ans:3,
+   opts:['biāo','piào','biào','piāo'],ans:1,
    exp:'【骠】两音：①biāo——黄骠马（毛色义）；②piào——骠勇（勇猛善战义）。"骠勇"读 piào。'},
   {id:30,word:'单于',char:'单',
    text:'"<b class="keyword">单</b>于"中"单"的正确读音是？',
-   opts:['Shàn','shān','chán','dān'],ans:2,
+   opts:['dān','chán','Shàn','shān'],ans:1,
    exp:'【单】三音：①dān——单独；②chán——单于（匈奴首领称号）；③Shàn——单县（地名）。"单于"读 chán。'},
   {id:31,word:'倒戈',char:'倒',
    text:'"<b class="keyword">倒</b>戈"中"倒"的正确读音是？',
-   opts:['dōu','dǎo','dǎ','dào'],ans:1,
+   opts:['dǎo','dào','dǎ','dōu'],ans:0,
    exp:'【倒】两音：①dǎo——倒戈、倒闭、颠倒（翻倒、垮掉义）；②dào——倒立、倒退（方向相反义）。"倒戈"是背叛义，读 dǎo。'},
   {id:32,word:'提防',char:'提',
    text:'"<b class="keyword">提</b>防"中"提"的正确读音是？',
-   opts:['dí','dī','tǐ','tí'],ans:1,
+   opts:['tí','dī','dí','tǐ'],ans:1,
    exp:'【提】两音：①dī——提防、提溜（小心警惕义，特殊读音）；②tí——提高、提取（一般义）。"提防"读 dī，切勿读成 tí fáng。'},
   {id:33,word:'调动',char:'调',
    text:'"<b class="keyword">调</b>动"中"调"的正确读音是？',
-   opts:['tiáo','diào','tiào','diǎo'],ans:1,
+   opts:['tiáo','diào','diǎo','tiào'],ans:1,
    exp:'【调】两音：①diào——调动、调度、调换（调遣义）；②tiáo——调皮、调和（调整义）。"调动"读 diào。'},
   {id:34,word:'揣度',char:'度',
    text:'"揣<b class="keyword">度</b>"中"度"的正确读音是？',
-   opts:['dú','duò','dù','duó'],ans:3,
+   opts:['dù','duó','dú','duò'],ans:1,
    exp:'【度】两音：①dù——程度、度量（名词，标准或限度）；②duó——揣度、忖度（动词，估量猜测义）。"揣度"读 duó。'},
   {id:35,word:'囤粮',char:'囤',
    text:'"<b class="keyword">囤</b>粮"中"囤"的正确读音是？',
-   opts:['tún','dūn','tǔn','dùn'],ans:3,
+   opts:['tún','dùn','dūn','tǔn'],ans:1,
    exp:'【囤】两音：①dùn——囤粮（储粮，dùn 多指少量储藏）；②tún——囤积（大量储存、积聚义）。"囤粮"读 dùn。'},
 
   // ── F ──────────────────────────────────────────
   {id:36,word:'结发',char:'发',
    text:'"结<b class="keyword">发</b>"中"发"的正确读音是？',
-   opts:['fá','fǎ','fà','fā'],ans:2,
+   opts:['fā','fà','fǎ','fá'],ans:1,
    exp:'【发】两音：①fā——发表、发人深省（发出义）；②fà——理发、结发、千钧一发（头发义）。"结发"指成婚结发，读 fà。'},
   {id:37,word:'磨坊',char:'坊',
    text:'"磨<b class="keyword">坊</b>"中"坊"的正确读音是？',
-   opts:['fàng','fāng','fǎng','fáng'],ans:3,
+   opts:['fāng','fáng','fǎng','fàng'],ans:1,
    exp:'【坊】两音：①fāng——坊间、牌坊（街坊义）；②fáng——磨坊、作坊（手工业场所义）。"磨坊"读 fáng。'},
   {id:38,word:'缝隙',char:'缝',
    text:'"<b class="keyword">缝</b>隙"中"缝"的正确读音是？',
-   opts:['fēng','fóng','fèng','féng'],ans:2,
+   opts:['féng','fèng','fēng','fóng'],ans:1,
    exp:'【缝】两音：①féng——缝合（动词，用线缝义）；②fèng——缝隙、裂缝（名词，裂口义）。"缝隙"是名词，读 fèng。'},
 
   // ── G ──────────────────────────────────────────
   {id:39,word:'旗杆',char:'杆',
    text:'"旗<b class="keyword">杆</b>"中"杆"的正确读音是？',
-   opts:['gǎn','gàn','gáng','gān'],ans:3,
+   opts:['gǎn','gān','gàn','gáng'],ans:1,
    exp:'【杆】两音：①gān——栏杆、旗杆（细长棍形物，书面义）；②gǎn——枪杆、笔杆子（口语义）。"旗杆"读 gān。'},
   {id:40,word:'补给',char:'给',
    text:'"补<b class="keyword">给</b>"中"给"的正确读音是？',
-   opts:['gěi','jǐ','jì','gǐ'],ans:1,
+   opts:['gěi','jǐ','gǐ','jì'],ans:1,
    exp:'【给】两音：①gěi——给力、给你（口语义）；②jǐ——补给、给养、自给自足（供应义）。"补给"读 jǐ。'},
   {id:41,word:'更换',char:'更',
    text:'"<b class="keyword">更</b>换"中"更"的正确读音是？',
-   opts:['gèng','géng','gēng','gěng'],ans:2,
+   opts:['gèng','gēng','gěng','géng'],ans:1,
    exp:'【更】两音：①gēng——更换、更新（改变义）；②gèng——更加（副词，程度加深义）。"更换"读 gēng。'},
   {id:42,word:'脖颈儿',char:'颈',
    text:'"脖<b class="keyword">颈</b>儿"中"颈"的正确读音是？',
-   opts:['jìng','jǐng','gěng','gēng'],ans:2,
+   opts:['jǐng','gěng','jìng','gēng'],ans:1,
    exp:'【颈】两音：①gěng——脖颈儿（口语义）；②jǐng——颈椎、颈项（书面语义）。"脖颈儿"读 gěng。'},
   {id:43,word:'骨碌',char:'骨',
    text:'"<b class="keyword">骨</b>碌"中"骨"的正确读音是？',
-   opts:['gú','gǔ','gū','gù'],ans:2,
+   opts:['gǔ','gū','gú','gù'],ans:1,
    exp:'【骨】两音：①gū——骨碌（滚动，口语义）；②gǔ——骨肉、骨头（一般义）。"骨碌"读 gū。'},
   {id:44,word:'皇冠',char:'冠',
    text:'"皇<b class="keyword">冠</b>"中"冠"的正确读音是？',
-   opts:['guān','guǎng','guǎn','guàn'],ans:0,
+   opts:['guàn','guān','guǎn','guǎng'],ans:1,
    exp:'【冠】两音：①guān——鸡冠、皇冠（名词，帽子类物件）；②guàn——冠军、沐猴而冠（动词，第一名义）。"皇冠"是名词，读 guān。'},
   {id:45,word:'龟裂',char:'龟',
    text:'"<b class="keyword">龟</b>裂"中"龟"的正确读音是？',
-   opts:['guī','qiū','jūn','guǐ'],ans:2,
+   opts:['guī','jūn','qiū','guǐ'],ans:1,
    exp:'【龟】三音：①guī——乌龟；②jūn——龟裂（皮肤干裂，借用义）；③Qiū——龟兹（古代西域地名）。"龟裂"读 jūn。'},
 
   // ── H ──────────────────────────────────────────
   {id:46,word:'引吭高歌',char:'吭',
    text:'"引<b class="keyword">吭</b>高歌"中"吭"的正确读音是？',
-   opts:['hāng','kēg','háng','kēng'],ans:2,
+   opts:['kēng','háng','hāng','kēg'],ans:1,
    exp:'【吭】两音：①háng——引吭高歌（吭是喉咙义，放声歌唱）；②kēng——吭声（发出声音义）。"引吭高歌"读 háng。'},
   {id:47,word:'街头巷尾',char:'巷',
    text:'"街头<b class="keyword">巷</b>尾"中"巷"的正确读音是？',
-   opts:['xiǎng','xiàng','hǎng','hàng'],ans:1,
+   opts:['hàng','xiàng','xiǎng','hǎng'],ans:1,
    exp:'【巷】两音：①hàng——巷道（矿井通道义）；②xiàng——巷战、街头巷尾（小路胡同义）。"街头巷尾"读 xiàng。'},
   {id:48,word:'发号施令',char:'号',
    text:'"发<b class="keyword">号</b>施令"中"号"的正确读音是？',
-   opts:['háo','hāo','hǎo','hào'],ans:3,
+   opts:['háo','hào','hāo','hǎo'],ans:1,
    exp:'【号】两音：①háo——号叫、号哭（大声哭喊义）；②hào——商号、发号施令（名称或命令义）。"发号施令"读 hào。'},
   {id:49,word:'和诗',char:'和',
    text:'"<b class="keyword">和</b>诗"中"和"的正确读音是？',
-   opts:['huò','huó','hè','hé'],ans:2,
+   opts:['hé','hè','huó','huò'],ans:1,
    exp:'【和】五音：①hé——和睦；②hè——和诗、应和（跟随吟唱义）；③hú——和牌；④huó——和面；⑤huò——和药。"和诗"是跟和义，读 hè。'},
   {id:50,word:'和面',char:'和',
    text:'"<b class="keyword">和</b>面"中"和"的正确读音是？',
-   opts:['huò','huó','hè','hé'],ans:1,
+   opts:['hé','hè','huó','huò'],ans:2,
    exp:'【和面】（huó miàn）——加水揉和面粉。此处是揉面动作义，读 huó，不要读成 hé miàn。'},
   {id:51,word:'威吓',char:'吓',
    text:'"威<b class="keyword">吓</b>"中"吓"的正确读音是？',
-   opts:['hē','xià','xiā','hè'],ans:3,
+   opts:['xià','hè','xiā','hē'],ans:1,
    exp:'【吓】两音：①hè——威吓、恐吓（用言行恐吓义）；②xià——吓唬、吓人（使害怕义）。"威吓"读 hè。'},
   {id:52,word:'横财',char:'横',
    text:'"<b class="keyword">横</b>财"中"横"的正确读音是？',
-   opts:['hǒng','hēng','hèng','héng'],ans:2,
+   opts:['héng','hèng','hēng','hǒng'],ans:1,
    exp:'【横】两音：①héng——横行、纵横（方向义）；②hèng——横财、蛮横（凶暴不讲理义）。"横财"是不义之财，读 hèng。'},
   {id:53,word:'哄骗',char:'哄',
    text:'"<b class="keyword">哄</b>骗"中"哄"的正确读音是？',
-   opts:['hòng','hōng','hǒng','héng'],ans:2,
+   opts:['hōng','hǒng','hòng','héng'],ans:1,
    exp:'【哄】三音：①hōng——哄堂大笑（众声义）；②hǒng——哄骗、哄孩子（欺骗哄逗义）；③hòng——起哄（捣乱义）。"哄骗"读 hǒng。'},
   {id:54,word:'摇晃',char:'晃',
    text:'"摇<b class="keyword">晃</b>"中"晃"的正确读音是？',
-   opts:['huàng','huāng','huǎg','huǎng'],ans:0,
+   opts:['huǎng','huàng','huāng','huǎg'],ans:1,
    exp:'【晃】两音：①huǎng——晃眼、明晃晃（光亮义）；②huàng——摇晃、晃动（摇摆义）。"摇晃"读 huàng。'},
   {id:55,word:'豁出去',char:'豁',
    text:'"<b class="keyword">豁</b>出去"中"豁"的正确读音是？',
-   opts:['huó','huǒ','huò','huō'],ans:3,
+   opts:['huò','huō','huó','huǒ'],ans:1,
    exp:'【豁】两音：①huō——豁出去（舍弃、冒险义）；②huò——豁亮、豁然开朗（开阔明亮义）。"豁出去"读 huō。'},
 
   // ── J ──────────────────────────────────────────
   {id:56,word:'滑稽',char:'稽',
    text:'"滑<b class="keyword">稽</b>"中"稽"的正确读音是？',
-   opts:['jī','qī','jǐ','qǐ'],ans:0,
+   opts:['qǐ','jī','jǐ','qī'],ans:1,
    exp:'【稽】两音：①jī——滑稽、无稽之谈（查考、诙谐义）；②qǐ——稽首（古代叩头礼）。"滑稽"读 jī。'},
   {id:57,word:'狼藉',char:'藉',
    text:'"狼<b class="keyword">藉</b>"中"藉"的正确读音是？',
-   opts:['jí','jiè','jiē','jì'],ans:0,
+   opts:['jiè','jí','jì','jiē'],ans:1,
    exp:'【藉】两音：①jí——狼藉、杯盘狼藉（凌乱义）；②jiè——枕藉、慰藉（垫、凭借义）。"狼藉"读 jí。'},
   {id:58,word:'救济',char:'济',
    text:'"救<b class="keyword">济</b>"中"济"的正确读音是？',
-   opts:['jì','jíi','jī','jǐ'],ans:0,
+   opts:['jǐ','jì','jī','jíi'],ans:1,
    exp:'【济】两音：①jǐ——济济一堂（人多义）；②jì——救济、同舟共济（帮助、渡过义）。"救济"读 jì。'},
   {id:59,word:'系鞋带',char:'系',
    text:'"<b class="keyword">系</b>鞋带"中"系"的正确读音是？',
-   opts:['xī','jì','jǐ','xì'],ans:1,
+   opts:['xì','jì','xī','jǐ'],ans:1,
    exp:'【系】两音：①jì——系鞋带、系围裙（打结绑扎义）；②xì——维系、系统（联系归属义）。"系鞋带"读 jì。'},
   {id:60,word:'雪茄',char:'茄',
    text:'"雪<b class="keyword">茄</b>"中"茄"的正确读音是？',
-   opts:['qiē','jiā','qié','jiē'],ans:1,
+   opts:['qié','jiā','jiē','qiē'],ans:1,
    exp:'【茄】两音：①jiā——雪茄（外来词 cigar 音译）；②qié——茄子（蔬菜）。"雪茄"读 jiā。'},
   {id:61,word:'亲密无间',char:'间',
    text:'"亲密无<b class="keyword">间</b>"中"间"的正确读音是？',
-   opts:['jiàn','jiān','jián','jiǎn'],ans:0,
+   opts:['jiān','jiàn','jiǎn','jián'],ans:1,
    exp:'【间】两音：①jiān——中间（空间义）；②jiàn——间谍、亲密无间（间隔、分开义）。"亲密无间"是没有间隔义，读 jiàn。'},
   {id:62,word:'将帅',char:'将',
    text:'"<b class="keyword">将</b>帅"中"将"的正确读音是？',
-   opts:['jiāng','jiàng','jiǎng','qiǎng'],ans:1,
+   opts:['jiāng','jiàng','qiǎng','jiǎng'],ans:1,
    exp:'【将】三音：①jiāng——将来（未来义）；②jiàng——将帅、大将（武将义）；③qiāng——将进酒（请义，古语）。"将帅"读 jiàng。'},
   {id:63,word:'强迫',char:'强',
    text:'"<b class="keyword">强</b>迫"中"强"的正确读音是？',
-   opts:['qiǎng','qiáng','jiǎng','jiàng'],ans:0,
+   opts:['qiáng','qiǎng','jiàng','jiǎng'],ans:1,
    exp:'【强】三音：①jiàng——倔强（固执）；②qiáng——强大、强壮（力量大义）；③qiǎng——强迫、牵强（勉强、硬要义）。"强迫"读 qiǎng。'},
   {id:64,word:'细嚼慢咽',char:'嚼',
    text:'"细<b class="keyword">嚼</b>慢咽"中"嚼"的正确读音是？',
-   opts:['jiào','juě','jué','jiáo'],ans:3,
+   opts:['jué','jiáo','jiào','juě'],ans:1,
    exp:'【嚼】两音：①jiáo——细嚼慢咽（口语，用牙咬）；②jué——咀嚼（书面语，反复品味义）。"细嚼慢咽"读 jiáo。'},
   {id:65,word:'主角',char:'角',
    text:'"主<b class="keyword">角</b>"中"角"的正确读音是？',
-   opts:['jǐao','jué','jiǎo','jiào'],ans:1,
+   opts:['jiǎo','jué','jiào','jǐao'],ans:1,
    exp:'【角】两音：①jiǎo——角落、号角（形状义）；②jué——主角、角色、角逐（戏曲演员、竞争义）。"主角"读 jué。'},
   {id:66,word:'解数',char:'解',
    text:'"<b class="keyword">解</b>数"中"解"的正确读音是？',
-   opts:['jiè','xiě','jiě','xiè'],ans:3,
+   opts:['jiě','jiè','xiě','xiè'],ans:3,
    exp:'【解】三音：①jiě——解除、解元（解开义）；②jiè——押解（押送义）；③xiè——解数（武术招数）、姓解。"解数"读 xiè。'},
   {id:67,word:'干劲',char:'劲',
    text:'"干<b class="keyword">劲</b>"中"劲"的正确读音是？',
@@ -739,191 +902,191 @@ const Q = [
   // ── K ──────────────────────────────────────────
   {id:68,word:'关卡',char:'卡',
    text:'"关<b class="keyword">卡</b>"中"卡"的正确读音是？',
-   opts:['kā','qiā','qiǎ','kǎ'],ans:2,
+   opts:['kǎ','qiǎ','kā','qiā'],ans:1,
    exp:'【卡】两音：①kǎ——卡车、卡片（外来词音译）；②qiǎ——关卡、卡壳、卡脖子（夹住阻塞义）。"关卡"读 qiǎ。'},
   {id:69,word:'看守',char:'看',
    text:'"<b class="keyword">看</b>守"中"看"的正确读音是？',
-   opts:['kàn','kǎn','kāng','kān'],ans:3,
+   opts:['kàn','kān','kǎn','kāng'],ans:1,
    exp:'【看】两音：①kān——看守、看管（守护照管义）；②kàn——看病、看中（观看诊治义）。"看守"读 kān。'},
   {id:70,word:'坎坷',char:'坷',
    text:'"坎<b class="keyword">坷</b>"中"坷"的正确读音是？',
-   opts:['kè','kē','kě','kǒ'],ans:2,
+   opts:['kē','kě','kè','kǒ'],ans:1,
    exp:'【坷】两音：①kē——坷垃（方言，土块）；②kě——坎坷（道路不平，比喻处境困难）。"坎坷"读 kě。'},
   {id:71,word:'地壳',char:'壳',
    text:'"地<b class="keyword">壳</b>"中"壳"的正确读音是？',
-   opts:['qiào','kè','qiāo','ké'],ans:0,
+   opts:['ké','qiào','kè','qiāo'],ans:1,
    exp:'【壳】两音：①ké——贝壳、脑壳（口语义）；②qiào——地壳、甲壳、金蝉脱壳（书面语义）。"地壳"读 qiào。'},
 
   // ── L ──────────────────────────────────────────
   {id:72,word:'丢三落四',char:'落',
    text:'"丢三<b class="keyword">落</b>四"中"落"的正确读音是？',
-   opts:['lào','luō','là','luò'],ans:2,
+   opts:['luò','lào','là','luō'],ans:2,
    exp:'【落】四音：①là——丢三落四（遗漏义）；②lào——落枕、落色（口语固定词）；③luō——大大落落；④luò——落花生（一般义）。"丢三落四"读 là。'},
   {id:73,word:'落枕',char:'落',
    text:'"<b class="keyword">落</b>枕"中"落"的正确读音是？',
-   opts:['lào','là','luò','luō'],ans:0,
+   opts:['luò','là','lào','luō'],ans:2,
    exp:'【落枕】（lào zhěn）——睡觉姿势不当导致颈部酸痛。"落"在此是口语固定读法 lào，不读 luò。'},
   {id:74,word:'悬崖勒马',char:'勒',
    text:'"悬崖<b class="keyword">勒</b>马"中"勒"的正确读音是？',
-   opts:['lè','lě','lēi','léi'],ans:0,
+   opts:['lēi','lè','lě','léi'],ans:1,
    exp:'【勒】两音：①lè——勒令、悬崖勒马（用缰绳控制马义）；②lēi——勒紧（用力捆绑义）。"悬崖勒马"读 lè。'},
   {id:75,word:'果实累累',char:'累',
    text:'"果实<b class="keyword">累</b>累"中"累"的正确读音是？',
-   opts:['léi','lēi','lèi','lǚ'],ans:0,
+   opts:['lèi','léi','lǚ','lēi'],ans:1,
    exp:'【累】三音：①léi——果实累累（连成串、堆叠义）；②lèi——牵累、日积月累（拖累积累义）；③lèi——劳累（疲乏义）。"果实累累"读 léi。'},
   {id:76,word:'打擂',char:'擂',
    text:'"打<b class="keyword">擂</b>"中"擂"的正确读音是？',
-   opts:['lěi','léi','luì','lèi'],ans:3,
+   opts:['léi','lèi','lěi','luì'],ans:1,
    exp:'【擂】两音：①léi——擂鼓、自吹自擂（捶打义，动词）；②lèi——擂台、打擂（比武台子，名词义）。"打擂"读 lèi。'},
   {id:77,word:'量体裁衣',char:'量',
    text:'"<b class="keyword">量</b>体裁衣"中"量"的正确读音是？',
-   opts:['liǎng','liàng','liáng','liǎo'],ans:2,
+   opts:['liáng','liàng','liǎng','liǎo'],ans:0,
    exp:'【量】两音：①liáng——丈量、量体裁衣（动词，测量义）；②liàng——气量、胆量（名词，限度义）。"量体裁衣"是测量动作，读 liáng。'},
   {id:78,word:'笼络',char:'笼',
    text:'"<b class="keyword">笼</b>络"中"笼"的正确读音是？',
-   opts:['lōng','lǒng','lóng','lòng'],ans:1,
+   opts:['lóng','lǒng','lōng','lòng'],ans:1,
    exp:'【笼】两音：①lóng——笼子、牢笼（名物义）；②lǒng——笼络、笼统（动作义，笼盖控制）。"笼络"是拉拢义，读 lǒng。'},
   {id:79,word:'弄堂',char:'弄',
    text:'"<b class="keyword">弄</b>堂"中"弄"的正确读音是？',
-   opts:['nòng','nóng','lōng','lòng'],ans:3,
+   opts:['nòng','lòng','lōng','nóng'],ans:1,
    exp:'【弄】两音：①lòng——弄堂、里弄（小巷义，江浙方言）；②nòng——玩弄、弄权（操作玩耍义）。"弄堂"读 lòng。'},
   {id:80,word:'捋虎须',char:'捋',
    text:'"<b class="keyword">捋</b>虎须"中"捋"的正确读音是？',
-   opts:['lǔ','lǚ','luō','luó'],ans:2,
+   opts:['lǚ','luō','luó','lǔ'],ans:1,
    exp:'【捋】两音：①lǚ——捋胡子（顺着抹过义）；②luō——捋袖子、捋虎须（撸袖子，冒险挑衅义）。"捋虎须"读 luō。'},
 
   // ── M ──────────────────────────────────────────
   {id:81,word:'蒙骗',char:'蒙',
    text:'"<b class="keyword">蒙</b>骗"中"蒙"的正确读音是？',
-   opts:['méng','měng','mēng','Měng'],ans:2,
+   opts:['méng','mēng','měng','Měng'],ans:1,
    exp:'【蒙】三音：①mēng——蒙骗、蒙蒙亮（欺骗、迷糊义）；②méng——蒙昧、蒙难（受、遭受义）；③Měng——蒙古族（专名）。"蒙骗"读 mēng。'},
   {id:82,word:'蒙昧',char:'蒙',
    text:'"<b class="keyword">蒙</b>昧"中"蒙"的正确读音是？',
-   opts:['mòng','měng','mēng','méng'],ans:3,
+   opts:['mēng','méng','měng','mòng'],ans:1,
    exp:'【蒙】三音：①méng——蒙昧、蒙太奇（受到、未开化义）；②mēng——蒙骗（欺骗义）；③Měng——蒙古族。"蒙昧"读 méng。'},
   {id:83,word:'眯缝',char:'眯',
    text:'"<b class="keyword">眯</b>缝"中"眯"的正确读音是？',
-   opts:['mǐ','mí','mī','mì'],ans:2,
+   opts:['mī','mí','mì','mǐ'],ans:0,
    exp:'【眯】两音：①mī——眯缝（眼睛微微合拢义）；②mí——眯了眼（灰尘等进入眼睛义）。"眯缝"读 mī。'},
   {id:84,word:'分泌',char:'泌',
    text:'"分<b class="keyword">泌</b>"中"泌"的正确读音是？',
-   opts:['bì','mí','mì','bí'],ans:2,
+   opts:['mì','bì','mí','bí'],ans:0,
    exp:'【泌】两音：①mì——分泌（液体缓慢流出义）；②Bì——泌阳（地名）。"分泌"读 mì。'},
   {id:85,word:'姓缪',char:'缪',
    text:'"姓<b class="keyword">缪</b>"中"缪"的正确读音是？',
-   opts:['miào','miǎo','móu','miù'],ans:2,
+   opts:['miào','miù','móu','miǎo'],ans:2,
    exp:'【缪】三音：①Miào——姓缪（作姓氏时读 Miào）；②miù——纰缪（错误义）；③móu——未雨绸缪（事先筹谋义）。"姓缪"读 Miào。'},
   {id:86,word:'未雨绸缪',char:'缪',
    text:'"未雨绸<b class="keyword">缪</b>"中"缪"的正确读音是？',
-   opts:['miù','miǔ','móu','miào'],ans:2,
+   opts:['miào','miù','móu','miǔ'],ans:2,
    exp:'【缪】三音：①móu——未雨绸缪（事先筹备义）；②miù——纰缪（错误）；③Miào——姓氏。"未雨绸缪"读 móu。'},
   {id:87,word:'模具',char:'模',
    text:'"<b class="keyword">模</b>具"中"模"的正确读音是？',
-   opts:['mò','mó','mō','mú'],ans:3,
+   opts:['mó','mú','mō','mò'],ans:1,
    exp:'【模】两音：①mó——模范、模型（仿照、样式义）；②mú——模具、模样、装模作样（铸造器具义）。"模具"读 mú。'},
   {id:88,word:'摩拳擦掌',char:'摩',
    text:'"<b class="keyword">摩</b>拳擦掌"中"摩"的正确读音是？',
-   opts:['mó','mō','mà','mā'],ans:0,
+   opts:['mā','mó','mō','mà'],ans:1,
    exp:'【摩】两音：①mó——摩擦、摩拳擦掌（摩擦、接触义）；②mā——摩挲（suō）（用手轻抚义）。"摩拳擦掌"读 mó。'},
 
   // ── N ──────────────────────────────────────────
   {id:89,word:'难兄难弟',char:'难',
    text:'"<b class="keyword">难</b>兄难弟"（贬义）中"难"的正确读音是？',
-   opts:['nán','náng','nàn','nǎn'],ans:2,
+   opts:['nán','nàn','náng','nǎn'],ans:1,
    exp:'【难】两音：①nán——难过、难兄难弟（贬义，同样糟糕）；②nàn——苦难、难民（灾难义）。贬义的"难兄难弟"读 nán。'},
   {id:90,word:'患难兄弟',char:'难',
    text:'"患<b class="keyword">难</b>兄弟"中"难"的正确读音是？',
-   opts:['nǎn','náng','nàn','nán'],ans:2,
+   opts:['nán','nàn','náng','nǎn'],ans:1,
    exp:'【难】两音：①nàn——患难兄弟（共同承担苦难，灾难义）；②nán——难题（困难义）。"患难兄弟"读 nàn。'},
   {id:91,word:'宁可',char:'宁',
    text:'"<b class="keyword">宁</b>可"中"宁"的正确读音是？',
-   opts:['nǐng','nīng','níng','nìng'],ans:3,
+   opts:['níng','nìng','nǐng','nīng'],ans:1,
    exp:'【宁】两音：①níng——安宁、宁静（平静义）；②nìng——宁可、宁愿、宁死不屈（情愿、宁肯义）。"宁可"读 nìng。'},
   {id:92,word:'拧螺丝',char:'拧',
    text:'"<b class="keyword">拧</b>螺丝"中"拧"的正确读音是？',
-   opts:['níng','nīng','nǐng','nìng'],ans:2,
+   opts:['níng','nǐng','nìng','nīng'],ans:1,
    exp:'【拧】三音：①níng——拧毛巾（旋转绞义）；②nǐng——拧螺丝（旋转固定义）；③nìng——脾气拧（固执义）。"拧螺丝"读 nǐng。'},
   {id:93,word:'发疟子',char:'疟',
    text:'"发<b class="keyword">疟</b>子"中"疟"的正确读音是？',
-   opts:['yào','yuē','nuè','nüè'],ans:0,
+   opts:['nüè','yào','nuè','yuē'],ans:1,
    exp:'【疟】两音：①nüè——疟疾（正式医学读音）；②yào——发疟子（口语读法）。"发疟子"口语读 yào。'},
 
   // ── P ──────────────────────────────────────────
   {id:94,word:'排除',char:'排',
    text:'"<b class="keyword">排</b>除"中"排"的正确读音是？',
-   opts:['pǎi','pái','pāi','páng'],ans:1,
+   opts:['pái','pǎi','pāi','páng'],ans:0,
    exp:'【排】两音：①pái——排除、排队（排列义）；②pǎi——排子车（方言）。"排除"读 pái。'},
   {id:95,word:'迫不及待',char:'迫',
    text:'"<b class="keyword">迫</b>不及待"中"迫"的正确读音是？',
-   opts:['pāi','pò','pǎi','pó'],ans:1,
+   opts:['pǎi','pò','pāi','pó'],ans:1,
    exp:'【迫】两音：①pǎi——迫击炮（特定词）；②pò——逼迫、迫不及待（紧迫逼近义）。"迫不及待"读 pò。'},
   {id:96,word:'心广体胖',char:'胖',
    text:'"心广体<b class="keyword">胖</b>"中"胖"的正确读音是？',
-   opts:['pàng','pāng','pán','páng'],ans:2,
+   opts:['pàng','pán','pāng','páng'],ans:1,
    exp:'【胖】两音：①pán——心广体胖（舒泰安适义，成语专用）；②pàng——肥胖（体型肥义）。"心广体胖"读 pán。'},
   {id:97,word:'朴刀',char:'朴',
    text:'"<b class="keyword">朴</b>刀"中"朴"的正确读音是？',
-   opts:['pò','pǔ','pō','Piáo'],ans:2,
+   opts:['pǔ','pō','pò','Piáo'],ans:1,
    exp:'【朴】四音：①Piáo——姓朴；②pō——朴刀（古代兵器，一种刀）；③pò——朴硝（化学品）；④pǔ——朴素（质朴义）。"朴刀"读 pō。'},
   {id:98,word:'撇开',char:'撇',
    text:'"<b class="keyword">撇</b>开"中"撇"的正确读音是？',
-   opts:['piē','pì','piè','piě'],ans:0,
+   opts:['piē','piě','piè','pì'],ans:0,
    exp:'【撇】两音：①piē——撇开、撇弃（抛开不顾义）；②piě——撇嘴（嘴角下拉义）。"撇开"读 piē。'},
 
   // ── Q ──────────────────────────────────────────
   {id:99,word:'栖居',char:'栖',
    text:'"<b class="keyword">栖</b>居"中"栖"的正确读音是？',
-   opts:['qǐ','xǐ','xī','qī'],ans:3,
+   opts:['qī','xī','qǐ','xǐ'],ans:0,
    exp:'【栖】两音：①qī——栖居、栖息（停留居住义）；②xī——栖栖（形容不安定）。"栖居"读 qī。'},
   {id:100,word:'蹊径',char:'蹊',
    text:'"<b class="keyword">蹊</b>径"中"蹊"的正确读音是？',
-   opts:['xī','qí','qī','xǐ'],ans:0,
+   opts:['xī','qī','qí','xǐ'],ans:0,
    exp:'【蹊】两音：①qī——蹊跷（奇怪义）；②xī——蹊径（小路义）。"蹊径"读 xī。'},
   {id:101,word:'纤维',char:'纤',
    text:'"<b class="keyword">纤</b>维"中"纤"的正确读音是？',
-   opts:['qiàn','xiǎn','qiān','xiān'],ans:3,
+   opts:['qiàn','xiān','qiān','xiǎn'],ans:1,
    exp:'【纤】两音：①qiàn——纤夫（拉船的人）；②xiān——纤维、纤细（细小义）。"纤维"读 xiān。'},
   {id:102,word:'悄然',char:'悄',
    text:'"<b class="keyword">悄</b>然"中"悄"的正确读音是？',
-   opts:['qiāo','qiào','qiǎo','qiáo'],ans:0,
+   opts:['qiǎo','qiāo','qiào','qiáo'],ans:1,
    exp:'【悄】两音：①qiāo——静悄悄（寂静义）；②qiǎo——悄然、悄无声息（忧愁或默默义）。"悄然"读 qiǎo。'},
   {id:103,word:'雀跃',char:'雀',
    text:'"<b class="keyword">雀</b>跃"中"雀"的正确读音是？',
-   opts:['qiāo','què','qiǎo','qiào'],ans:1,
+   opts:['qiāo','qiǎo','què','qiào'],ans:2,
    exp:'【雀】三音：①qiāo——雀子（口语，雀斑）；②qiǎo——家雀儿（麻雀口语）；③què——雀跃、麻雀（正式义）。"雀跃"读 què。'},
   {id:104,word:'翘首以待',char:'翘',
    text:'"<b class="keyword">翘</b>首以待"中"翘"的正确读音是？',
-   opts:['qiōu','qiáo','qiǎo','qiào'],ans:1,
+   opts:['qiào','qiáo','qiǎo','qiōu'],ans:1,
    exp:'【翘】两音：①qiáo——翘首以待（抬头望义）；②qiào——翘尾巴（上翘义）。"翘首以待"读 qiáo。'},
   {id:105,word:'切磋',char:'切',
    text:'"<b class="keyword">切</b>磋"中"切"的正确读音是？',
-   opts:['qiē','qié','qiè','qiě'],ans:2,
+   opts:['qiē','qiè','qié','qiě'],ans:1,
    exp:'【切】两音：①qiē——切磋、切割（切开义）；②qiè——急切、切脉、切题（贴近、符合义）。"切磋"是共同研究，读 qiē。'},
 
   // ── S ──────────────────────────────────────────
   {id:106,word:'瓶塞',char:'塞',
    text:'"瓶<b class="keyword">塞</b>"中"塞"的正确读音是？',
-   opts:['sāi','sǎi','sài','sè'],ans:0,
+   opts:['sài','sāi','sè','sǎi'],ans:1,
    exp:'【塞】三音：①sāi——活塞、瓶塞（填充堵住义）；②sài——边塞、塞翁失马（边境义）；③sè——堵塞（不通义）。"瓶塞"读 sāi。'},
   {id:107,word:'懒散',char:'散',
    text:'"懒<b class="keyword">散</b>"中"散"的正确读音是？',
-   opts:['sáng','sān','sàn','sǎn'],ans:3,
+   opts:['sàn','sǎn','sān','sáng'],ans:1,
    exp:'【散】两音：①sǎn——懒散、散漫（不集中、自由义）；②sàn——散布、散失（分散开义）。"懒散"读 sǎn。'},
   {id:108,word:'丧乱',char:'丧',
    text:'"<b class="keyword">丧</b>乱"中"丧"的正确读音是？',
-   opts:['sāng','sáng','sàng','sǎng'],ans:0,
+   opts:['sāng','sàng','sǎng','sáng'],ans:0,
    exp:'【丧】两音：①sāng——丧乱、丧葬、丧钟（与死亡葬礼有关义）；②sàng——丧失、丧气（失去、垂头义）。"丧乱"读 sāng。'},
   {id:109,word:'落色',char:'色',
    text:'"落<b class="keyword">色</b>"中"色"的正确读音是？',
-   opts:['sé','shāi','shǎi','sè'],ans:2,
+   opts:['sè','shǎi','shāi','sé'],ans:1,
    exp:'【色】两音：①sè——色彩、气色（一般义）；②shǎi——掉色、落色、色子（口语，颜色脱落义）。"落色"读 shǎi。'},
   {id:110,word:'煞白',char:'煞',
    text:'"<b class="keyword">煞</b>白"中"煞"的正确读音是？',
-   opts:['sà','shà','sā','shā'],ans:1,
+   opts:['shā','shà','sā','sà'],ans:1,
    exp:'【煞】两音：①shā——煞笔、煞尾（停止义）；②shà——煞白、恶煞、煞费苦心（极、很义）。"煞白"是极白义，读 shà。'},
   {id:111,word:'厦门',char:'厦',
    text:'"<b class="keyword">厦</b>门"中"厦"的正确读音是？',
-   opts:['xiā','shā','shà','Xià'],ans:3,
+   opts:['shà','Xià','shā','xiā'],ans:1,
    exp:'【厦】两音：①shà——广厦、高楼大厦（大屋义）；②Xià——厦门（地名专用）。"厦门"读 Xià。'},
   {id:112,word:'折本',char:'折',
    text:'"<b class="keyword">折</b>本"中"折"的正确读音是？',
@@ -931,145 +1094,145 @@ const Q = [
    exp:'【折】三音：①shé——折本、折跟头（亏损、跌倒义）；②zhē——折腾（反复义）；③zhé——折合、折扣（折叠、折算义）。"折本"读 shé。'},
   {id:113,word:'舍弃',char:'舍',
    text:'"<b class="keyword">舍</b>弃"中"舍"的正确读音是？',
-   opts:['shě','shē','shè','shé'],ans:0,
+   opts:['shè','shě','shē','shé'],ans:1,
    exp:'【舍】两音：①shě——舍弃、施舍、舍己为人（放弃义）；②shè——校舍、退避三舍（房屋义）。"舍弃"读 shě。'},
   {id:114,word:'反省',char:'省',
    text:'"反<b class="keyword">省</b>"中"省"的正确读音是？',
-   opts:['shéng','xǐng','xìng','shěng'],ans:1,
+   opts:['shěng','xǐng','shéng','xìng'],ans:1,
    exp:'【省】两音：①shěng——节省、省份（节约、行政区义）；②xǐng——反省、省亲（检察、探望义）。"反省"读 xǐng。'},
   {id:115,word:'博闻强识',char:'识',
    text:'"博闻强<b class="keyword">识</b>"中"识"的正确读音是？',
-   opts:['zhì','shì','shí','zhí'],ans:0,
+   opts:['shí','zhì','shì','zhí'],ans:1,
    exp:'【识】两音：①shí——识别、识字（认识义）；②zhì——博闻强识（记忆义，同"志"）。"博闻强识"读 zhì。'},
   {id:116,word:'数见不鲜',char:'数',
    text:'"<b class="keyword">数</b>见不鲜"中"数"的正确读音是？',
-   opts:['shuò','shù','shǔ','shū'],ans:0,
+   opts:['shǔ','shù','shuò','shū'],ans:2,
    exp:'【数】三音：①shǔ——数落、数典忘祖（列举义）；②shù——数字（数量义）；③shuò——数见不鲜（屡次义）。"数见不鲜"读 shuò。'},
   {id:117,word:'游说',char:'说',
    text:'"游<b class="keyword">说</b>"中"说"的正确读音是？',
-   opts:['yuè','shuō','shuí','shuì'],ans:3,
+   opts:['shuō','shuì','shuí','yuè'],ans:1,
    exp:'【说】两音：①shuō——说话、说客（讲述义）；②shuì——游说（劝说义，音同"税"）。"游说"读 shuì。'},
   {id:118,word:'星宿',char:'宿',
    text:'"星<b class="keyword">宿</b>"中"宿"的正确读音是？',
-   opts:['suǒ','sù','xiǔ','xiù'],ans:3,
+   opts:['sù','xiǔ','xiù','suǒ'],ans:2,
    exp:'【宿】三音：①sù——宿舍（住宿义）；②xiǔ——一宿（量词，一夜）；③xiù——星宿（天文中的星座名义）。"星宿"读 xiù。'},
   {id:119,word:'毛遂自荐',char:'遂',
    text:'"毛<b class="keyword">遂</b>自荐"中"遂"的正确读音是？',
-   opts:['suì','sǔi','sùi','suí'],ans:0,
+   opts:['suí','suì','sùi','sǔi'],ans:1,
    exp:'【遂】两音：①suí——半身不遂（顺从、如意义）；②suì——遂心、遂愿、毛遂自荐（达成义）。"毛遂自荐"中"遂"是人名兼达成义，读 suì。'},
 
   // ── T ──────────────────────────────────────────
   {id:120,word:'舌苔',char:'苔',
    text:'"舌<b class="keyword">苔</b>"中"苔"的正确读音是？',
-   opts:['tāi','tài','tái','tǎi'],ans:0,
+   opts:['tāi','tái','tǎi','tài'],ans:0,
    exp:'【苔】两音：①tāi——舌苔（舌面上的苔状物）；②tái——苔藓（植物名）。"舌苔"读 tāi。'},
   {id:121,word:'妥帖',char:'帖',
    text:'"妥<b class="keyword">帖</b>"中"帖"的正确读音是？',
-   opts:['tiě','tiě','tiè','tiē'],ans:3,
+   opts:['tiě','tiē','tiè','tiě'],ans:1,
    exp:'【帖】三音：①tiē——妥帖（妥当贴切义）；②tiě——请帖子（邀请义）；③tiè——字帖（书法范本义）。"妥帖"读 tiē。'},
 
   // ── W ──────────────────────────────────────────
   {id:122,word:'瓦刀',char:'瓦',
    text:'"<b class="keyword">瓦</b>刀"中"瓦"的正确读音是？',
-   opts:['wā','wà','wǎ','wá'],ans:1,
+   opts:['wǎ','wà','wā','wá'],ans:1,
    exp:'【瓦】两音：①wǎ——瓦当（屋瓦义）；②wà——瓦刀（泥瓦工具，方言义）。"瓦刀"读 wà。'},
   {id:123,word:'委蛇',char:'委',
    text:'"虚与<b class="keyword">委</b>蛇"中"委"的正确读音是？',
-   opts:['wéi','wēi','wěi','wèi'],ans:1,
+   opts:['wěi','wēi','wéi','wèi'],ans:1,
    exp:'【委】两音：①wěi——委托、委曲（弯曲、托付义）；②wēi——委蛇（wēi yí，敷衍应付义）。"虚与委蛇"读 wēi。'},
   {id:124,word:'马尾罗',char:'尾',
    text:'"马<b class="keyword">尾</b>罗"中"尾"的正确读音是？',
-   opts:['wěi','yī','yǐ','wèi'],ans:2,
+   opts:['wěi','yǐ','wèi','yī'],ans:1,
    exp:'【尾】两音：①wěi——尾巴（动物尾义）；②yǐ——马尾罗（用马尾制作的筛子）。"马尾罗"读 yǐ。'},
   {id:125,word:'少尉',char:'尉',
    text:'"少<b class="keyword">尉</b>"中"尉"的正确读音是？',
-   opts:['wèi','yūn','yù','wéi'],ans:0,
+   opts:['wèi','yù','yūn','wéi'],ans:0,
    exp:'【尉】两音：①wèi——少尉、太尉（军衔职官义）；②yù——尉迟（复姓）。"少尉"读 wèi。'},
 
   // ── X ──────────────────────────────────────────
   {id:126,word:'寡廉鲜耻',char:'鲜',
    text:'"寡廉<b class="keyword">鲜</b>耻"中"鲜"的正确读音是？',
-   opts:['xiàn','xián','xiǎn','xiān'],ans:2,
+   opts:['xiān','xiǎn','xiàn','xián'],ans:1,
    exp:'【鲜】两音：①xiān——鲜美、鲜明（新鲜义）；②xiǎn——鲜见、寡廉鲜耻（少义，书面语）。"寡廉鲜耻"读 xiǎn。'},
   {id:127,word:'削足适履',char:'削',
    text:'"<b class="keyword">削</b>足适履"中"削"的正确读音是？',
-   opts:['xuě','xiǎo','xuē','xiāo'],ans:2,
+   opts:['xiāo','xuē','xiǎo','xuě'],ans:1,
    exp:'【削】两音：①xiāo——削铅笔、刀削面（切削义）；②xuē——剥削、削减、削足适履（减少、削弱义）。"削足适履"读 xuē。'},
   {id:128,word:'心血',char:'血',
    text:'"心<b class="keyword">血</b>"中"血"的正确读音是？',
-   opts:['xuè','xuě','xiè','xiě'],ans:0,
+   opts:['xuè','xiě','xuě','xiè'],ans:0,
    exp:'【血】两音：①xuè——心血、贫血、血汗（书面义）；②xiě——血淋淋、一针见血（口语义）。"心血"读 xuè。'},
   {id:129,word:'气喘吁吁',char:'吁',
    text:'"气喘<b class="keyword">吁</b>吁"中"吁"的正确读音是？',
-   opts:['yù','xū','yū','xú'],ans:1,
+   opts:['xū','yù','yū','xú'],ans:0,
    exp:'【吁】两音：①xū——气喘吁吁、长吁短叹（叹气义）；②yù——呼吁（呼号义）。"气喘吁吁"读 xū。'},
 
   // ── Y ──────────────────────────────────────────
   {id:130,word:'哑然',char:'哑',
    text:'"<b class="keyword">哑</b>然"中"哑"的正确读音是？',
-   opts:['yá','yā','yà','yǎ'],ans:3,
+   opts:['yā','yǎ','yà','yá'],ans:1,
    exp:'【哑】两音：①yā——哑哑（拟声词，婴儿声）；②yǎ——哑然失笑、哑巴（不能说话义）。"哑然"读 yǎ。'},
   {id:131,word:'倾轧',char:'轧',
    text:'"倾<b class="keyword">轧</b>"中"轧"的正确读音是？',
-   opts:['yǎ','yà','zhá','gá'],ans:1,
+   opts:['yà','zhá','gá','yǎ'],ans:0,
    exp:'【轧】三音：①yà——倾轧（排挤压制义）；②zhá——轧钢（碾压义）；③gá——轧场（chǎng）（方言，轧场地）。"倾轧"读 yà。'},
   {id:132,word:'狼吞虎咽',char:'咽',
    text:'"狼吞虎<b class="keyword">咽</b>"中"咽"的正确读音是？',
-   opts:['yè','yān','yàn','yǎn'],ans:2,
+   opts:['yān','yàn','yè','yǎn'],ans:1,
    exp:'【咽】三音：①yān——咽喉（喉咙义）；②yàn——狼吞虎咽、咽下（吞咽动作义）；③yè——哽咽（哭泣呜咽义）。"狼吞虎咽"读 yàn。'},
   {id:133,word:'股肱',char:'股',
    text:'"<b class="keyword">股</b>肱"中"股"的正确读音是？',
-   opts:['gū','yān','yǐn','gǔ'],ans:1,
+   opts:['yān','yǐn','gǔ','gū'],ans:0,
    exp:'【殷】两音：①yān——殷红（yān hóng，深红色义）；②yīn——殷实（富足义）、殷殷（热情义）。注意"殷红"专读 yān。'},
   {id:134,word:'殷红',char:'殷',
    text:'"<b class="keyword">殷</b>红"中"殷"的正确读音是？',
-   opts:['yéng','yīn','yǐn','yān'],ans:3,
+   opts:['yīn','yān','yǐn','yéng'],ans:1,
    exp:'【殷】两音：①yān——殷红（深红色义，特殊读音）；②yīn——殷实、殷殷（富裕、热情义）。"殷红"读 yān，这是常考易错点。'},
   {id:135,word:'钥匙',char:'钥',
    text:'"<b class="keyword">钥</b>匙"中"钥"的正确读音是？',
-   opts:['yǒu','yāo','yuè','yào'],ans:3,
+   opts:['yào','yuè','yāo','yǒu'],ans:0,
    exp:'【钥】两音：①yào——钥匙（开锁工具义）；②yuè——锁钥（书面语，关键义）。"钥匙"读 yào。'},
   {id:136,word:'应届',char:'应',
    text:'"<b class="keyword">应</b>届"中"应"的正确读音是？',
-   opts:['yìng','yīng','yǐng','yíng'],ans:1,
+   opts:['yīng','yìng','yíng','yǐng'],ans:0,
    exp:'【应】两音：①yīng——应该、应届、应有尽有（助动词，理应义）；②yìng——应变、应付（回应义）。"应届"读 yīng。'},
   {id:137,word:'佣金',char:'佣',
    text:'"<b class="keyword">佣</b>金"中"佣"的正确读音是？',
-   opts:['yóng','yòng','yǔng','yōng'],ans:1,
+   opts:['yōng','yòng','yóng','yǔng'],ans:1,
    exp:'【佣】两音：①yōng——雇佣（受雇义）；②yòng——佣金（中间人报酬义）。"佣金"读 yòng。'},
   {id:138,word:'熨帖',char:'熨',
    text:'"<b class="keyword">熨</b>帖"中"熨"的正确读音是？',
-   opts:['yù','wèi','yū','yùn'],ans:0,
+   opts:['yùn','yù','wèi','yū'],ans:1,
    exp:'【熨】两音：①yù——熨帖（贴切舒适义，书面语）；②yùn——熨烫（用熨斗烫平义）。"熨帖"读 yù。'},
   {id:139,word:'日晕',char:'晕',
    text:'"日<b class="keyword">晕</b>"中"晕"的正确读音是？',
-   opts:['yùn','yūn','yǔn','yǐn'],ans:0,
+   opts:['yūn','yùn','yǐn','yǔn'],ans:1,
    exp:'【晕】两音：①yūn——晕倒、晕厥（昏迷义）；②yùn——日晕、月晕、晕车（光圈、模糊义）。"日晕"是太阳周围光圈，读 yùn。'},
 
   // ── Z ──────────────────────────────────────────
   {id:140,word:'扎染',char:'扎',
    text:'"<b class="keyword">扎</b>染"中"扎"的正确读音是？',
-   opts:['zā','zǎ','zhā','zhá'],ans:0,
+   opts:['zā','zhā','zhá','zǎ'],ans:0,
    exp:'【扎】三音：①zā——扎染、扎实（捆绑义）；②zhā——扎根、扎实（刺入义）；③zhá——挣扎（挣扎义）。"扎染"读 zā。'},
   {id:141,word:'装载',char:'载',
    text:'"装<b class="keyword">载</b>"中"载"的正确读音是？',
-   opts:['zǎi','zái','zài','zāi'],ans:2,
+   opts:['zǎi','zài','zāi','zái'],ans:1,
    exp:'【载】两音：①zǎi——登载、一年半载（记录、年义）；②zài——装载、载歌载舞（运输承载义）。"装载"读 zài。'},
   {id:142,word:'择菜',char:'择',
    text:'"<b class="keyword">择</b>菜"中"择"的正确读音是？',
-   opts:['zhái','zé','zhē','zě'],ans:0,
+   opts:['zé','zhái','zhē','zě'],ans:1,
    exp:'【择】两音：①zé——选择（挑选义）；②zhái——择菜、择席（摘除、挑剔义，口语）。"择菜"读 zhái。'},
   {id:143,word:'头昏脑涨',char:'涨',
    text:'"头昏脑<b class="keyword">涨</b>"中"涨"的正确读音是？',
-   opts:['zhǎng','zhāng','záng','zhàng'],ans:3,
+   opts:['zhǎng','zhàng','zhāng','záng'],ans:1,
    exp:'【涨】两音：①zhǎng——涨落、水涨船高（水位升高义）；②zhàng——头昏脑涨、泡涨（膨胀充血义）。"头昏脑涨"读 zhàng。'},
   {id:144,word:'着凉',char:'着',
    text:'"<b class="keyword">着</b>凉"中"着"的正确读音是？',
-   opts:['zháo','zhāo','zhe','zhuó'],ans:0,
+   opts:['zháo','zhuó','zhāo','zhe'],ans:0,
    exp:'【着】四音：①zhāo——着数（棋步义）；②zháo——着急、着迷、着凉（接触达到义）；③zhuó——着落、着重（动词，附着落实义）；④zhe——走着（助词）。"着凉"读 zháo。'},
   {id:145,word:'正月',char:'正',
    text:'"<b class="keyword">正</b>月"中"正"的正确读音是？',
-   opts:['zhēng','zhóng','zhèng','zhěng'],ans:0,
+   opts:['zhèng','zhēng','zhěng','zhóng'],ans:1,
    exp:'【正】两音：①zhēng——正月（农历一月，特殊读音）；②zhèng——正常、正派（正确义）。"正月"读 zhēng，是常考易错点。'},
   {id:146,word:'中毒',char:'中',
    text:'"<b class="keyword">中</b>毒"中"中"的正确读音是？',
@@ -1077,7 +1240,7 @@ const Q = [
    exp:'【中】两音：①zhōng——中立、中间（中央义）；②zhòng——中毒、中奖、中肯（受到、击中义）。"中毒"读 zhòng。'},
   {id:147,word:'耕种',char:'种',
    text:'"耕<b class="keyword">种</b>"中"种"的正确读音是？',
-   opts:['zhōng','zhòng','zòng','zhǒng'],ans:1,
+   opts:['zhǒng','zhòng','zhōng','zòng'],ans:1,
    exp:'【种】两音：①zhǒng——种类、品种（名词义）；②zhòng——耕种、播种（动词，种植义）。"耕种"读 zhòng。'},
   {id:148,word:'压轴戏',char:'轴',
    text:'"压<b class="keyword">轴</b>戏"中"轴"的正确读音是？',
@@ -1085,11 +1248,11 @@ const Q = [
    exp:'【轴】两音：①zhóu——画轴、轮轴（轴线义）；②zhòu——压轴戏、大轴子（戏曲演出顺序义，最后的重头戏）。"压轴戏"读 zhòu。'},
   {id:149,word:'转圈',char:'转',
    text:'"<b class="keyword">转</b>圈"中"转"的正确读音是？',
-   opts:['zhuàn','zhuǎn','zhǔan','zhuān'],ans:0,
+   opts:['zhuǎn','zhuàn','zhuān','zhǔan'],ans:1,
    exp:'【转】两音：①zhuǎn——转运、转变（改变方向义）；②zhuàn——转圈、转动（旋转义）。"转圈"读 zhuàn。'},
   {id:150,word:'钻牛角尖',char:'钻',
    text:'"<b class="keyword">钻</b>牛角尖"中"钻"的正确读音是？',
-   opts:['zuān','zuán','zuàn','zuǎn'],ans:0,
+   opts:['zuān','zuàn','zuǎn','zuán'],ans:0,
    exp:'【钻】两音：①zuān——钻探、钻牛角尖（穿入钻研义）；②zuàn——钻床、钻机（名词，打孔工具义）。"钻牛角尖"读 zuān。'},
 ];
 
@@ -1102,350 +1265,719 @@ const Q = [
 const XQ = [
   // ── 两字词语 ──────────────────────────────────────
   {id:1,q:'找出含有错别字的词语：',
-   opts:['重叠','妨碍','安详','粗旷'],ans:3,wrong:'粗旷',right:'粗犷',
+   opts:['安详','妨碍','重叠','粗旷'],ans:3,wrong:'粗旷',right:'粗犷',
    exp:'【粗犷】"犷"指粗野豪放，"旷"指空旷。"粗旷"是高频错别字，正确写法为"粗犷"。'},
   {id:2,q:'找出含有错别字的词语：',
-   opts:['家俱','松弛','脉搏','辐射'],ans:0,wrong:'家俱',right:'家具',
+   opts:['辐射','松弛','脉搏','家俱'],ans:3,wrong:'家俱',right:'家具',
    exp:'【家具】"具"指器具，"俱"指全、都（如"万事俱备"）。"家俱"是极常见错别字，正确为"家具"。'},
   {id:3,q:'找出含有错别字的词语：',
-   opts:['气概','精萃','追朔','偶尔'],ans:2,wrong:'追朔',right:'追溯',
+   opts:['气概','追朔','精萃','偶尔'],ans:1,wrong:'追朔',right:'追溯',
    exp:'【追溯】"溯"指逆水而行，引申为回顾过去；"朔"指农历初一。"追朔"错，正确为"追溯"。'},
   {id:4,q:'找出含有错别字的词语：',
-   opts:['雾淞','平添','坐落','痉挛'],ans:0,wrong:'雾淞',right:'雾凇',
+   opts:['坐落','痉挛','平添','雾淞'],ans:3,wrong:'雾淞',right:'雾凇',
    exp:'【雾凇】"凇"指水汽在树枝上凝结成的冰花；"淞"是水名（吴淞江）。"雾淞"错，正确为"雾凇"。'},
   {id:5,q:'找出含有错别字的词语：',
-   opts:['遂道','旋律','增值','青睐'],ans:0,wrong:'遂道',right:'隧道',
+   opts:['增值','青睐','遂道','旋律'],ans:2,wrong:'遂道',right:'隧道',
    exp:'【隧道】"隧"指地下通道；"遂"指顺从、实现（如"遂愿"）。"遂道"是高频错别字，正确为"隧道"。'},
   {id:6,q:'找出含有错别字的词语：',
-   opts:['九霄','赝品','发韧','元宵'],ans:2,wrong:'发韧',right:'发轫',
+   opts:['赝品','发韧','元宵','九霄'],ans:1,wrong:'发韧',right:'发轫',
    exp:'【发轫】"轫"是古代刹车用的木块，拔去轫木即出发，引申为开始。"韧"指韧性。正确为"发轫"。'},
   {id:7,q:'找出含有错别字的词语：',
-   opts:['赃款','荧光','坐镇','急燥'],ans:3,wrong:'急燥',right:'急躁',
+   opts:['荧光','急燥','赃款','坐镇'],ans:1,wrong:'急燥',right:'急躁',
    exp:'【急躁】"躁"字从足，心急气躁；"燥"字从火，干燥。两字极易混淆。正确为"急躁"。'},
   {id:8,q:'找出含有错别字的词语：',
-   opts:['编纂','峻工','恪守','蛰伏'],ans:1,wrong:'峻工',right:'竣工',
+   opts:['峻工','编纂','恪守','蛰伏'],ans:0,wrong:'峻工',right:'竣工',
    exp:'【竣工】"竣"指完毕（竣工、竣事）；"峻"指高峻、严峻。"峻工"是高频错别字，正确为"竣工"。'},
   {id:9,q:'找出含有错别字的词语：',
-   opts:['经纬','陈规','直言','震憾'],ans:3,wrong:'震憾',right:'震撼',
+   opts:['震憾','直言','经纬','陈规'],ans:0,wrong:'震憾',right:'震撼',
    exp:'【震撼】"撼"从手，指摇动（撼动、震撼）；"憾"从心，指遗憾（遗憾、抱憾）。"震憾"错，正确为"震撼"。'},
   {id:10,q:'找出含有错别字的词语：',
-   opts:['抱怨','渊源','音迅','俯视'],ans:2,wrong:'音迅',right:'音讯',
+   opts:['渊源','音迅','俯视','抱怨'],ans:1,wrong:'音迅',right:'音讯',
    exp:'【音讯】"讯"指消息、信息（讯息、通讯）；"迅"指快速（迅速、迅猛）。"音迅"错，正确为"音讯"。'},
   {id:11,q:'找出含有错别字的词语：',
-   opts:['浪费','留连','晋升','刻画'],ans:1,wrong:'留连',right:'流连',
+   opts:['浪费','刻画','晋升','留连'],ans:3,wrong:'留连',right:'流连',
    exp:'【流连】"流连"指留恋不舍，"留连"是常见错别字。注意"刻画"也可写"刻划"，但规范用字为"刻画"。'},
   {id:12,q:'找出含有错别字的词语：',
-   opts:['擅长','迁徒','参与','留恋'],ans:1,wrong:'迁徒',right:'迁徙',
+   opts:['迁徒','擅长','留恋','参与'],ans:0,wrong:'迁徒',right:'迁徙',
    exp:'【迁徙】"徙"指迁移（迁徙、流徙）；"徒"指徒弟、徒步，无迁移义。"迁徒"是常见错别字。'},
   // ── 三字词语 ──────────────────────────────────────
   {id:13,q:'找出含有错别字的词语：',
-   opts:['莫须有','白炽灯','黄梁梦','破天荒'],ans:2,wrong:'黄梁梦',right:'黄粱梦',
+   opts:['莫须有','破天荒','黄梁梦','白炽灯'],ans:2,wrong:'黄梁梦',right:'黄粱梦',
    exp:'【黄粱梦】"粱"指高粱（粮食）；"梁"指梁木、桥梁。黄粱米煮饭，典出唐传奇，正确为"黄粱梦"。'},
   {id:14,q:'找出含有错别字的词语：',
-   opts:['坐标系','度假村','唱倒彩','压轴戏'],ans:2,wrong:'唱倒彩',right:'喝倒彩',
+   opts:['度假村','压轴戏','唱倒彩','坐标系'],ans:2,wrong:'唱倒彩',right:'喝倒彩',
    exp:'【喝倒彩】表示起哄、嘘声，应用"喝"（喝彩、喝倒彩）。"唱倒彩"是错别字，正确为"喝倒彩"。'},
   {id:15,q:'找出含有错别字的词语：',
-   opts:['舶来品','混合物','满堂彩','圆舞曲'],ans:3,wrong:'圆舞曲',right:'圆舞曲',
+   opts:['圆舞曲','满堂彩','舶来品','混合物'],ans:0,wrong:'圆舞曲',right:'圆舞曲',
    exp:'【舶来品】"舶"指海船（船舶），"舶来品"指从海外进口的商品，正确写法。注意不要写成"泊来品"。此组四个均正确。',
    allCorrect:true},
   {id:16,q:'找出含有错别字的词语：',
-   opts:['文绉绉','明信片','座右铭','照相机'],ans:0,wrong:'文绉绉',right:'文质彬彬',
+   opts:['明信片','文绉绉','照相机','座右铭'],ans:1,wrong:'文绉绉',right:'文质彬彬',
    exp:'【文质彬彬】形容人文雅有礼。但"文绉绉"另是一词，指说话、举止文雅的样子，写法正确。此组四个均正确。',
    allCorrect:true},
   {id:17,q:'找出含有错别字的词语：',
-   opts:['水蒸气','鱼水情','林荫道','笑咪咪'],ans:3,wrong:'笑咪咪',right:'笑眯眯',
+   opts:['鱼水情','笑咪咪','林荫道','水蒸气'],ans:1,wrong:'笑咪咪',right:'笑眯眯',
    exp:'【笑眯眯】形容眼睛微微眯起而笑，应用"眯"（眯眼）。"咪"是象声词（猫咪）。"笑咪咪"错，正确为"笑眯眯"。'},
   {id:18,q:'找出含有错别字的词语：',
-   opts:['冠名权','订计划','绿茵场','黄澄澄'],ans:3,wrong:'黄澄澄',right:'黄澄澄',
+   opts:['订计划','黄澄澄','绿茵场','冠名权'],ans:1,wrong:'黄澄澄',right:'黄澄澄',
    exp:'【绿茵场】"茵"指草垫、草坪（绿草如茵），正确写法为"绿茵场"，不要写成"绿荫场"。此组"黄澄澄"也正确。',
    allCorrect:true},
   {id:19,q:'找出含有错别字的词语：',
-   opts:['辩证法','唱双簧','跑龙套','碰钉子'],ans:0,wrong:'辩证法',right:'辩证法',
+   opts:['唱双簧','跑龙套','碰钉子','辩证法'],ans:3,wrong:'辩证法',right:'辩证法',
    exp:'【碰钉子】四个均正确。注意"唱双簧"不写"唱双黄"，"跑龙套"不写"跑龙椎"，"碰钉子"不写"碰订子"。',
    allCorrect:true},
   {id:20,q:'找出含有错别字的词语：',
-   opts:['挖墙角','荧光屏','雄赳赳','水龙头'],ans:0,wrong:'挖墙角',right:'挖墙脚',
+   opts:['水龙头','挖墙角','雄赳赳','荧光屏'],ans:1,wrong:'挖墙角',right:'挖墙脚',
    exp:'【挖墙脚】指暗中破坏别人基础，应用"脚"（脚下，地基）。"角"另有角落义，但此处固定写法为"挖墙脚"。'},
   {id:21,q:'找出含有错别字的词语：',
-   opts:['喜盈门','保鲜膜','口头禅','博士后'],ans:1,wrong:'保鲜膜',right:'保鲜膜',
+   opts:['保鲜膜','博士后','喜盈门','口头禅'],ans:0,wrong:'保鲜膜',right:'保鲜膜',
    exp:'【倒计时】四个均正确。注意"博士后"不写"博士侯"，"口头禅"不写"口头蝉"，"倒计时"不写"倒记时"。',
    allCorrect:true},
   // ── 四字词语（成语）──────────────────────────────
   {id:22,q:'找出含有错别字的成语：',
-   opts:['飞扬拔扈','唉声叹气','黯然失色','按兵不动'],ans:0,wrong:'飞扬拔扈',right:'飞扬跋扈',
+   opts:['唉声叹气','按兵不动','黯然失色','飞扬拔扈'],ans:3,wrong:'飞扬拔扈',right:'飞扬跋扈',
    exp:'【飞扬跋扈】"跋扈"指专横暴戾，"拔"无此义。"飞扬拔扈"是常见错别字，正确为"飞扬跋扈"。'},
   {id:23,q:'找出含有错别字的成语：',
-   opts:['英雄辈出','敝帚自珍','斑师回朝','略见一斑'],ans:2,wrong:'斑师回朝',right:'班师回朝',
+   opts:['敝帚自珍','略见一斑','斑师回朝','英雄辈出'],ans:2,wrong:'斑师回朝',right:'班师回朝',
    exp:'【班师回朝】"班"指调回军队（班师），"斑"指斑点、斑纹，字义不符。"斑师回朝"错，正确为"班师回朝"。'},
   {id:24,q:'找出含有错别字的成语：',
-   opts:['信心倍增','白璧微瑕','筚路蓝缕','金碧辉煌'],ans:0,wrong:'信心倍增',right:'信心倍增',
+   opts:['信心倍增','白璧微瑕','金碧辉煌','筚路蓝缕'],ans:0,wrong:'信心倍增',right:'信心倍增',
    exp:'【筚路蓝缕】"筚路"指柴车，"蓝缕"指破衣，形容创业艰辛。此组四个均正确，注意"白璧微瑕"不写"白壁微瑕"。',
    allCorrect:true},
   {id:25,q:'找出含有错别字的成语：',
-   opts:['张灯结彩','按部就班','无精打采','明辨是非'],ans:3,wrong:'明辨是非',right:'明辨是非',
+   opts:['明辨是非','按部就班','无精打采','张灯结彩'],ans:0,wrong:'明辨是非',right:'明辨是非',
    exp:'【按部就班】"部"指部署、部分；不写"按步就班"。"张灯结彩"不写"张灯结采"。此组四个均正确。',
    allCorrect:true},
   {id:26,q:'找出含有错别字的成语：',
-   opts:['瞠目结舌','一愁莫展','计日程功','纵横驰骋'],ans:1,wrong:'一愁莫展',right:'一筹莫展',
+   opts:['瞠目结舌','计日程功','纵横驰骋','一愁莫展'],ans:3,wrong:'一愁莫展',right:'一筹莫展',
    exp:'【一筹莫展】"筹"指计策、筹划，一点计策也施展不开。"愁"指忧愁，字义不符。正确为"一筹莫展"。'},
   {id:27,q:'找出含有错别字的成语：',
-   opts:['措手不及','披星戴月','穷兵黩武','鞠躬尽瘁'],ans:3,wrong:'鞠躬尽瘁',right:'鞠躬尽瘁',
+   opts:['鞠躬尽瘁','措手不及','披星戴月','穷兵黩武'],ans:0,wrong:'鞠躬尽瘁',right:'鞠躬尽瘁',
    exp:'【措手不及】"措"指安排、处置（措手不及）；不写"错手不及"。此组四个均正确。',
    allCorrect:true},
   {id:28,q:'找出含有错别字的成语：',
-   opts:['名列前茅','发愤图强','流言蜚语','奋发有为'],ans:2,wrong:'流言蜚语',right:'流言蜚语',
+   opts:['流言蜚语','发愤图强','奋发有为','名列前茅'],ans:0,wrong:'流言蜚语',right:'流言蜚语',
    exp:'【发愤图强】"愤"指激愤、奋发（发愤图强）；"奋"指振作（奋发有为）。两词均正确，意思相近。此组均正确。',
    allCorrect:true},
   {id:29,q:'找出含有错别字的成语：',
-   opts:['沽名钓誉','蛊惑人心','如梗在喉','事必躬亲'],ans:2,wrong:'如梗在喉',right:'如鲠在喉',
+   opts:['如梗在喉','沽名钓誉','事必躬亲','蛊惑人心'],ans:0,wrong:'如梗在喉',right:'如鲠在喉',
    exp:'【如鲠在喉】"鲠"指鱼刺（鱼鲠），鱼刺卡喉咙，形容心里有话说不出。"梗"指梗塞，字义有别，正确为"如鲠在喉"。'},
   {id:30,q:'找出含有错别字的成语：',
-   opts:['一丘之貉','老奸巨猾','涣然冰释','焕然一新'],ans:0,wrong:'一丘之貉',right:'一丘之貉',
+   opts:['一丘之貉','老奸巨猾','焕然一新','涣然冰释'],ans:0,wrong:'一丘之貉',right:'一丘之貉',
    exp:'【焕然一新】"焕"指光彩焕发；【涣然冰释】"涣"指散开消融。此组均正确，注意"焕"与"涣"的区别。',
    allCorrect:true},
   {id:31,q:'找出含有错别字的成语：',
-   opts:['前俯后仰','随声附和','和衷共济','貌合神离'],ans:0,wrong:'前俯后仰',right:'前仰后合',
+   opts:['和衷共济','随声附和','貌合神离','前俯后仰'],ans:3,wrong:'前俯后仰',right:'前仰后合',
    exp:'【前仰后合】形容笑得身体前后摇动，固定说法为"前仰后合"，不是"前俯后仰"。'},
   {id:32,q:'找出含有错别字的成语：',
-   opts:['拾人牙慧','畸形发展','愤世嫉俗','无稽之谈'],ans:2,wrong:'愤世嫉俗',right:'愤世嫉俗',
+   opts:['拾人牙慧','无稽之谈','畸形发展','愤世嫉俗'],ans:3,wrong:'愤世嫉俗',right:'愤世嫉俗',
    exp:'【拾人牙慧】"慧"指智慧，拾取别人的只言片语。此组四个均正确，注意"无稽之谈"不写"无机之谈"。',
    allCorrect:true},
   {id:33,q:'找出含有错别字的成语：',
-   opts:['故伎重演','既往不咎','迫不急待','汗流浃背'],ans:2,wrong:'迫不急待',right:'迫不及待',
+   opts:['迫不急待','故伎重演','既往不咎','汗流浃背'],ans:0,wrong:'迫不急待',right:'迫不及待',
    exp:'【迫不及待】"及"指来得及，形容急迫得不能等待。"急"字虽近义但写法错误，正确为"迫不及待"。'},
   {id:34,q:'找出含有错别字的成语：',
-   opts:['噤若寒蝉','弱不禁风','艰苦奋斗','精兵简政'],ans:2,wrong:'艰苦奋斗',right:'艰苦奋斗',
+   opts:['艰苦奋斗','精兵简政','弱不禁风','噤若寒蝉'],ans:0,wrong:'艰苦奋斗',right:'艰苦奋斗',
    exp:'【噤若寒蝉】"噤"指闭口不言，"蝉"在寒冬不鸣，此成语形容不敢发声。此组四个均正确。',
    allCorrect:true},
   {id:35,q:'找出含有错别字的成语：',
-   opts:['功亏一篑','笑容可掬','绝无仅有','同仇敌忾'],ans:1,wrong:'笑容可掬',right:'笑容可掬',
+   opts:['笑容可掬','绝无仅有','同仇敌忾','功亏一篑'],ans:0,wrong:'笑容可掬',right:'笑容可掬',
    exp:'【功亏一篑】"篑"指装土的竹筐，差一筐土功亏，形容差最后一步而失败。此组四个均正确。',
    allCorrect:true},
   {id:36,q:'找出含有错别字的成语：',
-   opts:['雷厉风行','变本加励','不寒而栗','厉行节约'],ans:1,wrong:'变本加励',right:'变本加厉',
+   opts:['不寒而栗','厉行节约','雷厉风行','变本加励'],ans:3,wrong:'变本加励',right:'变本加厉',
    exp:'【变本加厉】"厉"指猛烈、严厉（变本加厉）；"励"指激励（励志、奖励），字义不符。正确为"变本加厉"。'},
   {id:37,q:'找出含有错别字的成语：',
-   opts:['流连忘返','浮想联翩','寥寥无几','流芳百世'],ans:1,wrong:'浮想联翩',right:'浮想联翩',
+   opts:['浮想联翩','流连忘返','寥寥无几','流芳百世'],ans:0,wrong:'浮想联翩',right:'浮想联翩',
    exp:'【流连忘返】"连"指连续（不写"恋"）；"翩"指轻快飞舞。此组四个均正确。',
    allCorrect:true},
   {id:38,q:'找出含有错别字的成语：',
    opts:['美仑美奂','满腹经纶','蒙昧无知','个中三昧'],ans:0,wrong:'美仑美奂',right:'美轮美奂',
    exp:'【美轮美奂】"轮"指高大（轮囷）；"奂"指鲜明众多。形容建筑华丽壮观，正确为"美轮美奂"，不写"美仑美奂"。'},
   {id:39,q:'找出含有错别字的成语：',
-   opts:['弥天大谎','绵里藏针','勉为其难','秘而不宣'],ans:0,wrong:'弥天大谎',right:'弥天大谎',
+   opts:['弥天大谎','秘而不宣','绵里藏针','勉为其难'],ans:0,wrong:'弥天大谎',right:'弥天大谎',
    exp:'【秘而不宣】"秘"指秘密（秘而不宣）；不写"密而不宣"。此组四个均正确。',
    allCorrect:true},
   {id:40,q:'找出含有错别字的成语：',
    opts:['死不暝目','苦思冥想','漠不关心','墨守成规'],ans:0,wrong:'死不暝目',right:'死不瞑目',
    exp:'【死不瞑目】"瞑"指闭上眼睛（瞑目），"暝"指天色昏暗（暝色）。"死不暝目"是错别字，正确为"死不瞑目"。'},
   {id:41,q:'找出含有错别字的成语：',
-   opts:['出奇制胜','略有俄获','出其不意','提纲挈领'],ans:1,wrong:'略有俄获',right:'略有斩获',
+   opts:['略有俄获','出奇制胜','出其不意','提纲挈领'],ans:0,wrong:'略有俄获',right:'略有斩获',
    exp:'【略有斩获】"斩获"指战场上斩杀敌人取得战利品，引申为取得成果。"俄获"无此词，正确为"略有斩获"。'},
   {id:42,q:'找出含有错别字的成语：',
-   opts:['当仁不让','理屈词穷','惹是生非','委曲求全'],ans:3,wrong:'委曲求全',right:'委曲求全',
+   opts:['委曲求全','理屈词穷','当仁不让','惹是生非'],ans:0,wrong:'委曲求全',right:'委曲求全',
    exp:'【委曲求全】"委曲"指曲折迁就（不写"委屈"）；【理屈词穷】"屈"指理亏（不写"曲"）。此组四个均正确。',
    allCorrect:true},
   {id:43,q:'找出含有错别字的成语：',
-   opts:['纵横捭阖','关怀备至','民生凋敝','刚复自用'],ans:3,wrong:'刚复自用',right:'刚愎自用',
+   opts:['纵横捭阖','民生凋敝','关怀备至','刚复自用'],ans:3,wrong:'刚复自用',right:'刚愎自用',
    exp:'【刚愎自用】"愎"指固执任性（刚愎）；"复"指重复、回复，字义不符。"刚复自用"是常见错别字，正确为"刚愎自用"。'},
   {id:44,q:'找出含有错别字的成语：',
-   opts:['为虎作伥','得不偿失','相形见拙','川流不息'],ans:2,wrong:'相形见拙',right:'相形见绌',
+   opts:['为虎作伥','得不偿失','川流不息','相形见拙'],ans:3,wrong:'相形见拙',right:'相形见绌',
    exp:'【相形见绌】"绌"指不足、短缺（拮绌）；"拙"指笨拙。两者意近但"相形见绌"是固定成语，正确为"相形见绌"。'},
   {id:45,q:'找出含有错别字的成语：',
-   opts:['天网恢恢','病入膏肓','融会贯通','和盘托出'],ans:1,wrong:'病入膏肓',right:'病入膏肓',
+   opts:['病入膏肓','和盘托出','天网恢恢','融会贯通'],ans:0,wrong:'病入膏肓',right:'病入膏肓',
    exp:'【和盘托出】"和"指连同、一起（和盘托出，全部说出）；不写"和盘拖出"。此组四个均正确。',
    allCorrect:true},
   {id:46,q:'找出含有错别字的成语：',
-   opts:['草菅人命','若即若离','声名狼藉','汗流浃背'],ans:2,wrong:'声名狼藉',right:'声名狼藉',
+   opts:['声名狼藉','若即若离','草菅人命','汗流浃背'],ans:0,wrong:'声名狼藉',right:'声名狼藉',
    exp:'【草菅人命】"菅"是一种野草（茅草），视人命如草芥，正确写法为"草菅人命"，不写"草管人命"。此组均正确。',
    allCorrect:true},
   {id:47,q:'找出含有错别字的成语：',
-   opts:['鞭辟入里','笑容可鞠','万籁无声','泾渭分明'],ans:1,wrong:'笑容可鞠',right:'笑容可掬',
+   opts:['泾渭分明','万籁无声','鞭辟入里','笑容可鞠'],ans:3,wrong:'笑容可鞠',right:'笑容可掬',
    exp:'【笑容可掬】"掬"指双手捧取（笑容满面可以捧起来），形容笑容满面。"鞠"指鞠躬，字义不符，正确为"笑容可掬"。'},
   {id:48,q:'找出含有错别字的成语：',
-   opts:['雷厉风行','再接再厉','励精图治','变本加厉'],ans:2,wrong:'励精图治',right:'励精图治',
+   opts:['励精图治','再接再厉','雷厉风行','变本加厉'],ans:0,wrong:'励精图治',right:'励精图治',
    exp:'【励精图治】"励"指振奋、激励，"图"指谋求，"治"指治理，此组四个"厉/励"用法均正确，注意辨别场合。',
    allCorrect:true},
   {id:49,q:'找出含有错别字的成语：',
-   opts:['磬竹难书','语无伦次','光怪陆离','所向披靡'],ans:0,wrong:'磬竹难书',right:'罄竹难书',
+   opts:['语无伦次','光怪陆离','所向披靡','磬竹难书'],ans:3,wrong:'磬竹难书',right:'罄竹难书',
    exp:'【罄竹难书】"罄"指用尽、耗尽（罄竹难书，竹子用尽也写不完）；"磬"是乐器名，字义不符。正确为"罄竹难书"。'},
   {id:50,q:'找出含有错别字的成语：',
-   opts:['不名一文','如法炮制','莫名其妙','剑拔弩张'],ans:2,wrong:'莫名其妙',right:'莫名其妙',
+   opts:['莫名其妙','剑拔弩张','如法炮制','不名一文'],ans:0,wrong:'莫名其妙',right:'莫名其妙',
    exp:'【不名一文】"名"指占有（不名一文，一文钱也没有）；"鸣"字则指声音，固定用法为"不名一文"。此组均正确。',
    allCorrect:true},
   {id:51,q:'找出含有错别字的成语：',
-   opts:['要言不繁','出尔反尔','穷兵黩武','呼天抢地'],ans:0,wrong:'要言不繁',right:'要言不烦',
+   opts:['出尔反尔','要言不繁','穷兵黩武','呼天抢地'],ans:1,wrong:'要言不繁',right:'要言不烦',
    exp:'【要言不烦】"烦"指繁琐（言简意赅不烦冗）；"繁"虽近义，但此成语固定写法为"烦"。正确为"要言不烦"。'},
   {id:52,q:'找出含有错别字的成语：',
-   opts:['忐忑不安','事必躬亲','一诺千斤','沽名钓誉'],ans:2,wrong:'一诺千斤',right:'一诺千金',
+   opts:['忐忑不安','沽名钓誉','事必躬亲','一诺千斤'],ans:3,wrong:'一诺千斤',right:'一诺千金',
    exp:'【一诺千金】形容说话算数，价值千金，固定用"金"（金钱、黄金义）。"斤"指重量单位，字义不符，正确为"一诺千金"。'},
   {id:53,q:'找出含有错别字的成语：',
-   opts:['引吭高歌','焦燥不安','病入膏肓','阴谋诡计'],ans:1,wrong:'焦燥不安',right:'焦躁不安',
+   opts:['焦燥不安','阴谋诡计','引吭高歌','病入膏肓'],ans:0,wrong:'焦燥不安',right:'焦躁不安',
    exp:'【焦躁不安】"躁"指性情急躁（焦躁），从足；"燥"指干燥，从火。"焦燥不安"是常见错别字，正确为"焦躁不安"。'},
   {id:54,q:'找出含有错别字的成语：',
-   opts:['委屈求全','继往开来','各行其是','有恃无恐'],ans:0,wrong:'委屈求全',right:'委曲求全',
+   opts:['有恃无恐','各行其是','委屈求全','继往开来'],ans:2,wrong:'委屈求全',right:'委曲求全',
    exp:'【委曲求全】"委曲"指弯曲迂回、勉强迁就（不是心里受委屈）；"委屈"是情绪词。固定成语应为"委曲求全"。'},
   {id:55,q:'找出含有错别字的成语：',
-   opts:['关怀备至','箪路蓝缕','纵横捭阖','并行不悖'],ans:1,wrong:'箪路蓝缕',right:'筚路蓝缕',
+   opts:['并行不悖','关怀备至','箪路蓝缕','纵横捭阖'],ans:2,wrong:'箪路蓝缕',right:'筚路蓝缕',
    exp:'【筚路蓝缕】"筚"指荆条编的柴车（筚路）；"箪"指竹制盛饭器（箪食瓢饮）。"箪路蓝缕"错，正确为"筚路蓝缕"。'},
   {id:56,q:'找出含有错别字的成语：',
-   opts:['卧薪尝胆','涸泽而渔','鞠躬尽瘁','嘻笑怒骂'],ans:3,wrong:'嘻笑怒骂',right:'嬉笑怒骂',
+   opts:['嘻笑怒骂','鞠躬尽瘁','涸泽而渔','卧薪尝胆'],ans:0,wrong:'嘻笑怒骂',right:'嬉笑怒骂',
    exp:'【嬉笑怒骂】"嬉"指嬉戏玩耍（嬉笑）；"嘻"是笑声（嘻嘻），两字形近易混，正确为"嬉笑怒骂"。'},
   {id:57,q:'找出含有错别字的成语：',
-   opts:['相辅相成','一鼓作气','金榜题名','铤而走险'],ans:2,wrong:'金榜题名',right:'金榜题名',
+   opts:['相辅相成','金榜题名','铤而走险','一鼓作气'],ans:1,wrong:'金榜题名',right:'金榜题名',
    exp:'【铤而走险】"铤"指快速奔走（铤而走险）；不写"挺而走险"（"挺"指挺立）。此组四个均正确。',
    allCorrect:true},
   {id:58,q:'找出含有错别字的成语：',
-   opts:['莫衷一是','脍炙人口','再接再励','毛遂自荐'],ans:2,wrong:'再接再励',right:'再接再厉',
+   opts:['莫衷一是','再接再励','脍炙人口','毛遂自荐'],ans:1,wrong:'再接再励',right:'再接再厉',
    exp:'【再接再厉】"厉"指磨快（磨刀霍霍），古代斗鸡前磨利鸡嘴，引申为继续努力。"励"指激励，字义不同，正确为"再接再厉"。'},
   {id:59,q:'找出含有错别字的成语：',
-   opts:['融汇贯通','不落窠臼','煞费苦心','良莠不齐'],ans:0,wrong:'融汇贯通',right:'融会贯通',
+   opts:['良莠不齐','融汇贯通','不落窠臼','煞费苦心'],ans:1,wrong:'融汇贯通',right:'融会贯通',
    exp:'【融会贯通】"会"指领会、理解（融会贯通，融合理解）；"汇"指汇集（汇聚）。"融汇贯通"是常见错别字，正确为"融会贯通"。'},
   {id:60,q:'找出含有错别字的成语：',
-   opts:['破斧沉舟','赴汤蹈火','一蹴而就','披荆斩棘'],ans:0,wrong:'破斧沉舟',right:'破釜沉舟',
+   opts:['赴汤蹈火','披荆斩棘','破斧沉舟','一蹴而就'],ans:2,wrong:'破斧沉舟',right:'破釜沉舟',
    exp:'【破釜沉舟】"釜"指锅（釜底抽薪），砸锅沉船，比喻下定决心。"斧"指斧头，字义不符，正确为"破釜沉舟"。'},
 
   // ── 新增混合题（二字＋三字＋四字混搭）──────────────
   {id:61,q:'找出含有错别字的词语：',
-   opts:['明星效应','凑合','寒暄','人才倍出'],ans:3,wrong:'人才倍出',right:'人才辈出',
+   opts:['寒暄','凑合','明星效应','人才倍出'],ans:3,wrong:'人才倍出',right:'人才辈出',
    exp:'【人才辈出】"辈"指一批批（辈出：一代接一代涌现）；"倍"指倍数、加倍。"人才倍出"是常见错别字，正确为"人才辈出"。'},
   {id:62,q:'找出含有错别字的词语：',
-   opts:['针贬时弊','度假胜地','博士后','喜出望外'],ans:0,wrong:'针贬时弊',right:'针砭时弊',
+   opts:['针贬时弊','度假胜地','喜出望外','博士后'],ans:0,wrong:'针贬时弊',right:'针砭时弊',
    exp:'【针砭时弊】"砭"是古代石针，针砭指用石针刺穴治病，引申为指出缺点。"贬"指贬低，字义不符，正确为"针砭时弊"。'},
   {id:63,q:'找出含有错别字的词语：',
-   opts:['哗众取宠','装祯','别出心裁','走廊'],ans:1,wrong:'装祯',right:'装帧',
+   opts:['装祯','走廊','哗众取宠','别出心裁'],ans:0,wrong:'装祯',right:'装帧',
    exp:'【装帧】"帧"指书画的幅面、装订形式（装帧设计）；"祯"指吉祥（祯祥）。"装祯"是常见错别字，正确为"装帧"。'},
   {id:64,q:'找出含有错别字的词语：',
-   opts:['脉搏','义气用事','满腹经纶','世外桃源'],ans:1,wrong:'义气用事',right:'意气用事',
+   opts:['脉搏','义气用事','世外桃源','满腹经纶'],ans:1,wrong:'义气用事',right:'意气用事',
    exp:'【意气用事】"意气"指情绪冲动（意气用事，凭感情行事）；"义气"指重情义（讲义气）。"义气用事"是常见错别字。'},
   {id:65,q:'找出含有错别字的词语：',
-   opts:['自立更生','百战不殆','凌晨','世外桃源'],ans:0,wrong:'自立更生',right:'自力更生',
+   opts:['凌晨','自立更生','世外桃源','百战不殆'],ans:1,wrong:'自立更生',right:'自力更生',
    exp:'【自力更生】"力"指依靠自身力量（自力更生）；"立"指建立（自立门户是另一词）。"自立更生"是常见错别字。'},
   {id:66,q:'找出含有错别字的词语：',
-   opts:['赋予','不可思议','娇生惯养','金刚钻'],ans:3,wrong:'金刚钻',right:'金刚钻',
+   opts:['赋予','娇生惯养','金刚钻','不可思议'],ans:2,wrong:'金刚钻',right:'金刚钻',
    exp:'【娇生惯养】"娇"指娇惯（娇生惯养）；不写"骄生惯养"（"骄"指骄傲）。此组四个均正确。',
    allCorrect:true},
   {id:67,q:'找出含有错别字的词语：',
-   opts:['甘拜下风','烟幕弹','无微不至','膨胀'],ans:1,wrong:'烟幕弹',right:'烟幕弹',
+   opts:['膨胀','烟幕弹','无微不至','甘拜下风'],ans:1,wrong:'烟幕弹',right:'烟幕弹',
    exp:'【无微不至】"至"指到达、周全（无微不至）；不写"无微不致"。此组四个均正确。',
    allCorrect:true},
   {id:68,q:'找出含有错别字的词语：',
-   opts:['蜂拥','礼尚往来','名符其实','炫耀'],ans:2,wrong:'名符其实',right:'名副其实',
+   opts:['蜂拥','炫耀','名符其实','礼尚往来'],ans:2,wrong:'名符其实',right:'名副其实',
    exp:'【名副其实】"副"指符合（名副其实，名声与实际相符）；"符"虽有符合义，但此成语固定用"副"，正确为"名副其实"。'},
   {id:69,q:'找出含有错别字的词语：',
-   opts:['出类拔萃','走投无路','坐镇','绿草如荫'],ans:3,wrong:'绿草如荫',right:'绿草如茵',
+   opts:['坐镇','走投无路','出类拔萃','绿草如荫'],ans:3,wrong:'绿草如荫',right:'绿草如茵',
    exp:'【绿草如茵】"茵"指草垫、绿草（绿草如茵）；"荫"指树荫、庇护（树荫、荫蔽）。"绿草如荫"是错别字，正确为"绿草如茵"。'},
   {id:70,q:'找出含有错别字的词语：',
-   opts:['端详','开门揖盗','轻而易举','名信片'],ans:3,wrong:'名信片',right:'明信片',
+   opts:['端详','名信片','开门揖盗','轻而易举'],ans:1,wrong:'名信片',right:'明信片',
    exp:'【明信片】"明"指明信（公开、不加封套的信件）；"名"指名字、名称，字义不符。"名信片"是常见错别字，正确为"明信片"。'},
   {id:71,q:'找出含有错别字的词语：',
-   opts:['珠连璧合','嘉宾','精湛','响彻云霄'],ans:0,wrong:'珠连璧合',right:'珠联璧合',
+   opts:['精湛','珠连璧合','嘉宾','响彻云霄'],ans:1,wrong:'珠连璧合',right:'珠联璧合',
    exp:'【珠联璧合】"联"指联结（珠联璧合，珍珠和美玉结合在一起）；"连"虽近义，但成语固定写"联"，正确为"珠联璧合"。'},
   {id:72,q:'找出含有错别字的词语：',
-   opts:['座无虚席','暗然失色','司空见惯','报怨'],ans:1,wrong:'暗然失色',right:'黯然失色',
+   opts:['报怨','暗然失色','座无虚席','司空见惯'],ans:1,wrong:'暗然失色',right:'黯然失色',
    exp:'【黯然失色】"黯然"指暗淡无光（黯然，颜色昏暗）；"暗然"中"暗"指黑暗、秘密，无此固定词。正确为"黯然失色"。'},
   {id:73,q:'找出含有错别字的词语：',
-   opts:['扬长避短','枯燥','优哉游哉','烂竽充数'],ans:3,wrong:'烂竽充数',right:'滥竽充数',
+   opts:['枯燥','烂竽充数','优哉游哉','扬长避短'],ans:1,wrong:'烂竽充数',right:'滥竽充数',
    exp:'【滥竽充数】"滥"指不加选择、过多（滥竽充数，以次充好）；"烂"指腐烂，字义不符。正确为"滥竽充数"。'},
   {id:74,q:'找出含有错别字的词语：',
-   opts:['处心积虑','察言观色','世外桃园','坐落'],ans:2,wrong:'世外桃园',right:'世外桃源',
+   opts:['坐落','世外桃园','察言观色','处心积虑'],ans:1,wrong:'世外桃园',right:'世外桃源',
    exp:'【世外桃源】出自陶渊明《桃花源记》，"源"指水源处，指与世隔绝的理想境地。"园"指园子，字义不符，正确为"世外桃源"。'},
   {id:75,q:'找出含有错别字的词语：',
-   opts:['金壁辉煌','旁征博引','恳切','优柔寡断'],ans:0,wrong:'金壁辉煌',right:'金碧辉煌',
+   opts:['恳切','金壁辉煌','优柔寡断','旁征博引'],ans:1,wrong:'金壁辉煌',right:'金碧辉煌',
    exp:'【金碧辉煌】"碧"指青绿色（金碧，金色与青绿色交相辉映）；"壁"指墙壁，字义不符。正确为"金碧辉煌"。'},
   {id:76,q:'找出含有错别字的词语：',
-   opts:['当之无愧','精粹','首屈一指','察颜观色'],ans:3,wrong:'察颜观色',right:'察言观色',
+   opts:['精粹','察颜观色','首屈一指','当之无愧'],ans:1,wrong:'察颜观色',right:'察言观色',
    exp:'【察言观色】"言"指言语（察言，观察别人说的话）；"颜"指颜色、容颜（察颜是另一种说法，但规范成语用"察言观色"）。'},
   {id:77,q:'找出含有错别字的词语：',
-   opts:['蛰伏','摩肩接踵','慷慨激昂','气宇轩扬'],ans:3,wrong:'气宇轩扬',right:'气宇轩昂',
+   opts:['蛰伏','气宇轩扬','摩肩接踵','慷慨激昂'],ans:1,wrong:'气宇轩扬',right:'气宇轩昂',
    exp:'【气宇轩昂】"轩昂"指高扬、精神焕发（气宇轩昂）；"扬"虽有向上义，但成语固定为"轩昂"，不写"轩扬"。'},
   {id:78,q:'找出含有错别字的词语：',
-   opts:['老生常谈','寸草春辉','辨别','鬼斧神工'],ans:1,wrong:'寸草春辉',right:'寸草春晖',
+   opts:['辨别','老生常谈','寸草春辉','鬼斧神工'],ans:2,wrong:'寸草春辉',right:'寸草春晖',
    exp:'【寸草春晖】出自孟郊《游子吟》，"晖"指阳光（春晖，春天的阳光），比喻母恩。"辉"指光辉，近义但固定写法为"晖"。'},
   {id:79,q:'找出含有错别字的词语：',
    opts:['驰骋','弄巧成拙','锋芒毕露','功成名就'],ans:1,wrong:'弄巧成拙',right:'弄巧成拙',
    exp:'【锋芒毕露】"毕"指全部（毕露，全部显露）；不写"锋芒必露"。此组四个均正确。',
    allCorrect:true},
   {id:80,q:'找出含有错别字的词语：',
-   opts:['绿荫场','忧心忡忡','一如既往','编篡'],ans:3,wrong:'编篡',right:'编纂',
+   opts:['编篡','绿荫场','一如既往','忧心忡忡'],ans:0,wrong:'编篡',right:'编纂',
    exp:'【编纂】"纂"指编写整理（编纂、纂修）；"篡"指篡位夺权（篡改、篡位）。"编篡"是常见错别字，正确为"编纂"。'},
   {id:81,q:'找出含有错别字的词语：',
-   opts:['好高骛远','循序渐进','渡假区','脉膊'],ans:3,wrong:'脉膊',right:'脉搏',
+   opts:['脉膊','渡假区','好高骛远','循序渐进'],ans:0,wrong:'脉膊',right:'脉搏',
    exp:'【脉搏】"搏"指搏动（脉搏跳动）；"膊"指臂膊（胳臂膊），字义不符。"脉膊"是高频错别字，正确为"脉搏"。'},
   {id:82,q:'找出含有错别字的词语：',
-   opts:['克敌制胜','渡假区','蜂涌而至','名正言顺'],ans:2,wrong:'蜂涌而至',right:'蜂拥而至',
+   opts:['渡假区','蜂涌而至','克敌制胜','名正言顺'],ans:1,wrong:'蜂涌而至',right:'蜂拥而至',
    exp:'【蜂拥而至】"拥"指拥挤涌动（蜂拥，像蜜蜂一样拥挤涌来）；"涌"有涌出义，但成语固定为"蜂拥而至"。'},
   {id:83,q:'找出含有错别字的词语：',
-   opts:['积毁销骨','恭维','水泄不通','渡假区'],ans:3,wrong:'渡假区',right:'度假区',
+   opts:['恭维','渡假区','水泄不通','积毁销骨'],ans:1,wrong:'渡假区',right:'度假区',
    exp:'【度假区】"度"指度过（度假，度过假期）；"渡"指渡过水面（渡河、渡船）。"渡假区"是常见错别字，正确为"度假区"。'},
   {id:84,q:'找出含有错别字的词语：',
-   opts:['出神入化','旁若无人','稗官野史','蜕变'],ans:2,wrong:'稗官野史',right:'稗官野史',
+   opts:['蜕变','旁若无人','出神入化','稗官野史'],ans:3,wrong:'稗官野史',right:'稗官野史',
    exp:'【出神入化】"化"指出神入化，技艺达到极高境界，四个均正确。注意"稗官"不写"裨官"，"野史"不写"冶史"。',
    allCorrect:true},
   {id:85,q:'找出含有错别字的词语：',
-   opts:['摩拳擦掌','缘故','各行其是','欢心鼓舞'],ans:3,wrong:'欢心鼓舞',right:'欢欣鼓舞',
+   opts:['缘故','摩拳擦掌','各行其是','欢心鼓舞'],ans:3,wrong:'欢心鼓舞',right:'欢欣鼓舞',
    exp:'【欢欣鼓舞】"欣"指欣喜（欢欣，欢快喜悦）；"心"指内心，"欢心"是另一词。固定成语为"欢欣鼓舞"，不写"欢心鼓舞"。'},
   {id:86,q:'找出含有错别字的词语：',
-   opts:['凋零','平心而论','殚精竭虑','文身'],ans:3,wrong:'文身',right:'纹身',
+   opts:['凋零','文身','平心而论','殚精竭虑'],ans:1,wrong:'文身',right:'纹身',
    exp:'【纹身】"纹"指花纹、纹路（纹身，在皮肤上刺画花纹）；"文"指文字、文章，无此义。"文身"是常见错别字，正确为"纹身"。'},
   {id:87,q:'找出含有错别字的词语：',
-   opts:['旁敲侧击','出奇制胜','伶牙俐齿','赔偿'],ans:2,wrong:'伶牙俐齿',right:'伶牙俐齿',
+   opts:['赔偿','出奇制胜','伶牙俐齿','旁敲侧击'],ans:2,wrong:'伶牙俐齿',right:'伶牙俐齿',
    exp:'【旁敲侧击】"击"指敲击（旁敲侧击，从旁边敲打）；不写"旁敲侧激"。此组四个均正确。',
    allCorrect:true},
   {id:88,q:'找出含有错别字的词语：',
-   opts:['不胫而走','再接再厉','桀骜','反璞归真'],ans:3,wrong:'反璞归真',right:'返璞归真',
+   opts:['桀骜','再接再厉','不胫而走','反璞归真'],ans:3,wrong:'反璞归真',right:'返璞归真',
    exp:'【返璞归真】"返"指返回（返璞，返回质朴本真）；"反"指相反、翻转。"反璞归真"是常见错别字，正确为"返璞归真"。'},
   {id:89,q:'找出含有错别字的词语：',
-   opts:['哗众取宠','矫揉造作','心旷神怡','恣意'],ans:2,wrong:'心旷神怡',right:'心旷神怡',
+   opts:['恣意','哗众取宠','心旷神怡','矫揉造作'],ans:2,wrong:'心旷神怡',right:'心旷神怡',
    exp:'【矫揉造作】"矫"指矫正扭曲（矫揉造作，装腔作势）；不写"娇揉造作"（"娇"指娇嫩）。此组四个均正确。',
    allCorrect:true},
   {id:90,q:'找出含有错别字的词语：',
-   opts:['以逸待劳','汗马功绩','精简','喧嚣'],ans:1,wrong:'汗马功绩',right:'汗马功勋',
+   opts:['喧嚣','精简','以逸待劳','汗马功绩'],ans:3,wrong:'汗马功绩',right:'汗马功勋',
    exp:'【汗马功勋】"勋"指功勋（汗马功勋，战马奔驰流汗，比喻战功）；"绩"指成绩、功绩，但此成语固定用"勋"，正确为"汗马功勋"。'},
   {id:91,q:'找出含有错别字的词语：',
-   opts:['扑朔迷离','决窍','兴高采烈','绝无仅有'],ans:1,wrong:'决窍',right:'诀窍',
+   opts:['决窍','绝无仅有','兴高采烈','扑朔迷离'],ans:0,wrong:'决窍',right:'诀窍',
    exp:'【诀窍】"诀"指方法、秘诀（诀窍，关键技巧）；"决"指决定、决断，字义不符。"决窍"是常见错别字，正确为"诀窍"。'},
   {id:92,q:'找出含有错别字的词语：',
-   opts:['不落巢臼','蔓延','自惭形秽','集思广益'],ans:0,wrong:'不落巢臼',right:'不落窠臼',
+   opts:['蔓延','集思广益','自惭形秽','不落巢臼'],ans:3,wrong:'不落巢臼',right:'不落窠臼',
    exp:'【不落窠臼】"窠臼"指固定的格式（窠：鸟巢；臼：舂米器），"不落窠臼"指不落俗套。"巢"虽是鸟巢义，但固定写法为"窠臼"。'},
   {id:93,q:'找出含有错别字的词语：',
-   opts:['宣泄','豁然开朗','一泻千里','大相径庭'],ans:0,wrong:'宣泄',right:'宣泄',
+   opts:['宣泄','大相径庭','豁然开朗','一泻千里'],ans:0,wrong:'宣泄',right:'宣泄',
    exp:'【大相径庭】"径"指小路（大相径庭，差别很大）；不写"大相径情"。此组四个均正确。',
    allCorrect:true},
   {id:94,q:'找出含有错别字的词语：',
-   opts:['墨守陈规','礼上往来','协奏曲','趋之若鹜'],ans:1,wrong:'礼上往来',right:'礼尚往来',
+   opts:['协奏曲','礼上往来','墨守陈规','趋之若鹜'],ans:1,wrong:'礼上往来',right:'礼尚往来',
    exp:'【礼尚往来】"尚"指崇尚、讲究（礼尚往来，讲究以礼相待）；"上"指方向，字义不符。"礼上往来"是常见错别字。'},
   {id:95,q:'找出含有错别字的词语：',
-   opts:['奋不顾身','嘻皮笑脸','出类拔萃','人才济济'],ans:1,wrong:'嘻皮笑脸',right:'嬉皮笑脸',
+   opts:['嘻皮笑脸','奋不顾身','出类拔萃','人才济济'],ans:0,wrong:'嘻皮笑脸',right:'嬉皮笑脸',
    exp:'【嬉皮笑脸】"嬉"指嬉戏（嬉皮笑脸，嬉笑玩闹）；"嘻"是笑声（嘻嘻哈哈）。"嘻皮笑脸"是常见错别字，正确为"嬉皮笑脸"。'},
   {id:96,q:'找出含有错别字的词语：',
-   opts:['口蜜腹箭','重整旗鼓','凑合','高瞻远瞩'],ans:0,wrong:'口蜜腹箭',right:'口蜜腹剑',
+   opts:['凑合','口蜜腹箭','重整旗鼓','高瞻远瞩'],ans:1,wrong:'口蜜腹箭',right:'口蜜腹剑',
    exp:'【口蜜腹剑】"剑"指利剑（嘴上甜蜜、心里藏刀），"箭"虽也是武器但成语固定用"剑"，正确为"口蜜腹剑"。'},
   {id:97,q:'找出含有错别字的词语：',
-   opts:['一帆风顺','苍茫','言简意赅','谈笑风声'],ans:3,wrong:'谈笑风声',right:'谈笑风生',
+   opts:['苍茫','谈笑风声','一帆风顺','言简意赅'],ans:1,wrong:'谈笑风声',right:'谈笑风生',
    exp:'【谈笑风生】"生"指产生（谈笑风生，形容说话有风趣，笑声不断）；"声"指声音，字义不符。正确为"谈笑风生"。'},
   {id:98,q:'找出含有错别字的词语：',
-   opts:['大材小用','既成事实','松弛','焦头烂额'],ans:1,wrong:'既成事实',right:'既成事实',
+   opts:['松弛','大材小用','焦头烂额','既成事实'],ans:3,wrong:'既成事实',right:'既成事实',
    exp:'【焦头烂额】"焦"指烧焦（焦头烂额，形容十分狼狈）；不写"燋头烂额"。此组四个均正确。',
    allCorrect:true},
   {id:99,q:'找出含有错别字的词语：',
-   opts:['声色俱厉','彗星','举一反三','无所事事'],ans:1,wrong:'彗星',right:'彗星',
+   opts:['彗星','无所事事','声色俱厉','举一反三'],ans:0,wrong:'彗星',right:'彗星',
    exp:'【声色俱厉】"厉"指严厉（声色俱厉，声音神色都很严厉）；不写"声色俱历"。此组四个均正确。',
    allCorrect:true},
   {id:100,q:'找出含有错别字的词语：',
-   opts:['卧薪尝胆','恼羞成怒','装祯','鹤立鸡群'],ans:2,wrong:'装祯',right:'装帧',
+   opts:['装祯','恼羞成怒','卧薪尝胆','鹤立鸡群'],ans:0,wrong:'装祯',right:'装帧',
    exp:'【装帧】"帧"是书籍、画幅的幅面装订形式；"祯"指吉祥（祯祥）。"装祯"是高频错别字，正确为"装帧"。'},
 ];
 
-// ════════════════════════════════════════
-// 状态管理（含今日统计）
-// ════════════════════════════════════════
+// ════════════════════════════════ 关联词题库 ════════════════════════════════
+// 题型：判断句中关联词用法是否正确（correct:true/false）
+// type字段标记关系类型
+const LQ = [
+  // ── 并列关系 ──────────────────────────────────────
+  {id:1,sentence:'生活中的许多事，<span class="lian-kw">并不是</span>我们不能做到，<span class="lian-kw">而是</span>我们不相信能够做到。',
+   correct:true,type:'并列',
+   exp:'【不是……而是……】表示并列关系，否定前者、肯定后者。此句用法正确，"不是……而是……"引导两个并列分句，逻辑清晰。'},
+  {id:2,sentence:'这个孩子<span class="lian-kw">既</span>聪明<span class="lian-kw">又</span>用功，老师们都非常喜欢他。',
+   correct:true,type:'并列',
+   exp:'【既……又……】表示两种情况兼而有之，是并列关系。此句表达孩子同时具备聪明和用功两个特点，用法正确。'},
+  {id:3,sentence:'他<span class="lian-kw">不是</span>在图书馆学习，<span class="lian-kw">而且</span>在操场上打球。',
+   correct:false,type:'并列',
+   exp:'【错误】"不是……而且……"搭配有误。"不是……而是……"才是固定搭配，表示并列否定与肯定。"而且"用于递进关系，不能与"不是"搭配。应改为"不是在图书馆学习，<b>而是</b>在操场上打球"。'},
+  {id:4,sentence:'这幅画<span class="lian-kw">既</span>色彩鲜艳，<span class="lian-kw">但</span>构图严谨。',
+   correct:false,type:'并列',
+   exp:'【错误】"既……但……"搭配有误。"既……又……"才是并列关系的固定搭配。"但"引导转折，与"既"不能搭配。应改为"<b>既</b>色彩鲜艳，<b>又</b>构图严谨"。'},
+  {id:5,sentence:'他<span class="lian-kw">不是</span>懒惰，<span class="lian-kw">而是</span>还没找到合适的方法。',
+   correct:true,type:'并列',
+   exp:'【不是……而是……】否定"懒惰"，肯定"没找到方法"，两个并列分句对应，用法正确。'},
+
+  // ── 转折关系 ──────────────────────────────────────
+  {id:6,sentence:'现在我们<span class="lian-kw">虽然</span>生活富裕了，<span class="lian-kw">但是</span>仍要注意节约。',
+   correct:true,type:'转折',
+   exp:'【虽然……但是……】承认"生活富裕"是事实，但"节约"这一结论并不因此而不成立。转折关系用法正确。'},
+  {id:7,sentence:'他<span class="lian-kw">尽管</span>年纪很小，<span class="lian-kw">却</span>表现出了惊人的成熟。',
+   correct:true,type:'转折',
+   exp:'【尽管……却……】是转折关系的固定搭配，承认"年纪小"的前提，但结论"成熟"与预期相反。用法正确。'},
+  {id:8,sentence:'这件事情<span class="lian-kw">虽然</span>很困难，<span class="lian-kw">所以</span>我们还是要坚持完成。',
+   correct:false,type:'转折',
+   exp:'【错误】"虽然……所以……"搭配有误。"虽然"引导转折，后面应接"但是/可是/却"，而"所以"引导因果结果，两者逻辑矛盾。应改为"虽然很困难，<b>但是</b>我们还是要坚持完成"。'},
+  {id:9,sentence:'<span class="lian-kw">虽然</span>他平时训练刻苦，<span class="lian-kw">但</span>比赛时还是发挥失常。',
+   correct:true,type:'转折',
+   exp:'【虽然……但……】正确的转折搭配，"但"是"但是"的简略形式，表示前后意思相反或相对，用法正确。'},
+  {id:10,sentence:'这道题<span class="lian-kw">尽管</span>难，<span class="lian-kw">而且</span>我也要独立完成。',
+   correct:false,type:'转折',
+   exp:'【错误】"尽管……而且……"搭配有误。"尽管"引导让步转折，后面应接"也/还是/却/但"等，"而且"用于递进关系，不符合此处语境。应改为"尽管难，<b>我也</b>要独立完成"。'},
+
+  // ── 递进关系 ──────────────────────────────────────
+  {id:11,sentence:'他<span class="lian-kw">不但</span>以身作则，<span class="lian-kw">而且</span>乐于助人。',
+   correct:true,type:'递进',
+   exp:'【不但……而且……】递进关系，侧重点在后者"乐于助人"，程度比"以身作则"更进一步。用法正确，是递进关系的典型例句。'},
+  {id:12,sentence:'他们<span class="lian-kw">不仅</span>提前完成了生产任务，<span class="lian-kw">还</span>支援了兄弟单位。',
+   correct:true,type:'递进',
+   exp:'【不仅……还……】递进关系，"还支援了兄弟单位"在"完成任务"基础上更进一步。"不仅/不但/不只……还/也/并且……"都是常见递进搭配，用法正确。'},
+  {id:13,sentence:'这次活动<span class="lian-kw">不但</span>丰富了同学们的课余生活，<span class="lian-kw">虽然</span>也增强了团队合作精神。',
+   correct:false,type:'递进',
+   exp:'【错误】"不但……虽然……"搭配有误。"不但"引导递进，后面应接"而且/还/也/并且"，"虽然"引导转折让步，两者不能搭配。应改为"不但丰富了课余生活，<b>而且</b>也增强了团队合作精神"。'},
+  {id:14,sentence:'小明<span class="lian-kw">不只</span>完成了自己的作业，<span class="lian-kw">并且</span>帮助同学解决了难题。',
+   correct:true,type:'递进',
+   exp:'【不只……并且……】是递进关系的正确搭配，"并且帮助同学"在"完成自己作业"的基础上更进一步，用法正确。'},
+  {id:15,sentence:'他<span class="lian-kw">不仅</span>自己学得好，<span class="lian-kw">但是</span>还带动了全班同学共同进步。',
+   correct:false,type:'递进',
+   exp:'【错误】"不仅……但是……"搭配有误。"不仅"引导递进关系，后面应接"而且/还/也"，"但是"是转折连词，与"不仅"语义矛盾。应改为"不仅自己学得好，<b>还</b>带动了全班同学共同进步"。'},
+
+  // ── 选择关系 ──────────────────────────────────────
+  {id:16,sentence:'<span class="lian-kw">与其</span>扬汤止沸，<span class="lian-kw">不如</span>釜底抽薪。',
+   correct:true,type:'选择',
+   exp:'【与其……不如……】选择关系，舍"前"取"后"，表示两种情况比较，选择后者更好。此句是经典例句，用法正确。'},
+  {id:17,sentence:'他<span class="lian-kw">不是</span>用一句短短的话回答，<span class="lian-kw">就是</span>用一句玩笑话支吾过去。',
+   correct:true,type:'选择',
+   exp:'【不是……就是……】选择关系，非"此"即"彼"，两者必选其一。此句表示他只有两种应对方式，用法正确。'},
+  {id:18,sentence:'你<span class="lian-kw">与其</span>在这里担心，<span class="lian-kw">而且</span>不如去帮他想办法。',
+   correct:false,type:'选择',
+   exp:'【错误】"与其……而且……"搭配有误。"与其"是选择关系的固定搭配，后面必须接"不如/毋宁"，"而且"是递进连词，不能与"与其"搭配。应改为"与其在这里担心，<b>不如</b>去帮他想办法"。'},
+  {id:19,sentence:'这件事<span class="lian-kw">要么</span>你去做，<span class="lian-kw">要么</span>我去做，总得有人去。',
+   correct:true,type:'选择',
+   exp:'【要么……要么……】表示两者选其一的选择关系，此句表示两个选项必须选择其中一个，用法正确。'},
+  {id:20,sentence:'明天<span class="lian-kw">或者</span>下雨，<span class="lian-kw">或者</span>刮风，都不影响我们的计划。',
+   correct:true,type:'选择',
+   exp:'【或者……或者……】表示选择关系，两种情况均有可能。此句列举了两种可能的天气情况，用法正确。'},
+
+  // ── 条件关系 ──────────────────────────────────────
+  {id:21,sentence:'<span class="lian-kw">无论</span>任务怎么艰巨，<span class="lian-kw">都</span>要把它完成。',
+   correct:true,type:'条件',
+   exp:'【无论……都……】"无论"指在任何条件下，表示结果不会改变。"无论"后接条件，"都"后接结论，用法正确。'},
+  {id:22,sentence:'<span class="lian-kw">只要</span>肯干，<span class="lian-kw">就</span>会干出成绩来。',
+   correct:true,type:'条件',
+   exp:'【只要……就……】"只要"表示充分条件，有这个条件就一定有这个结果。此句表示"肯干"是"出成绩"的充分条件，用法正确。'},
+  {id:23,sentence:'<span class="lian-kw">只有</span>依靠群众，<span class="lian-kw">才</span>能把事情办好。',
+   correct:true,type:'条件',
+   exp:'【只有……才……】"只有"表示唯一条件，必须具备这个条件才能有这个结果。此句表示"依靠群众"是"办好事情"的必要条件，用法正确。'},
+  {id:24,sentence:'<span class="lian-kw">无论</span>遇到什么困难，<span class="lian-kw">也</span>不能放弃。',
+   correct:true,type:'条件',
+   exp:'【无论……也……】"无论……都/也……"是固定搭配，"也"在此处相当于"都"，表示任何条件下结果不变，用法正确。'},
+  {id:25,sentence:'<span class="lian-kw">只要</span>你努力，<span class="lian-kw">才</span>能取得好成绩。',
+   correct:false,type:'条件',
+   exp:'【错误】"只要……才……"搭配有误。"只要"与"就"搭配（充分条件），"只有"与"才"搭配（必要条件）。此句"只要"应改为"<b>只有</b>你努力，才能取得好成绩"，或改为"只要你努力，<b>就</b>能取得好成绩"。'},
+  {id:26,sentence:'<span class="lian-kw">不管</span>风吹浪打，<span class="lian-kw">我都</span>要坚持到底。',
+   correct:true,type:'条件',
+   exp:'【不管……都……】"不管"与"无论"同义，表示在任何情况下结果不改变，是条件关系的正确搭配，用法正确。'},
+  {id:27,sentence:'<span class="lian-kw">只有</span>坚持锻炼，<span class="lian-kw">就</span>能拥有健康的身体。',
+   correct:false,type:'条件',
+   exp:'【错误】"只有……就……"搭配有误。"只有"表示必要条件，应与"才"搭配（只有……才……），"就"是"只要"的后续词。应改为"只有坚持锻炼，<b>才</b>能拥有健康的身体"。'},
+
+  // ── 假设关系 ──────────────────────────────────────
+  {id:28,sentence:'<span class="lian-kw">如果</span>明天下雨，运动会<span class="lian-kw">就</span>不举行了。',
+   correct:true,type:'假设',
+   exp:'【如果……就……】"如果"引出假设情况，"就"引出应有的结果或判断。此句假设"下雨"，得出"不举行"的结论，用法正确。'},
+  {id:29,sentence:'<span class="lian-kw">倘若</span>你愿意帮忙，我们<span class="lian-kw">就</span>能按时完成任务。',
+   correct:true,type:'假设',
+   exp:'【倘若……就……】"倘若"与"如果"同义，引出假设，后接"就"表示结果，是假设关系的正确搭配，用法正确。'},
+  {id:30,sentence:'<span class="lian-kw">假如</span>当初他选择了另一条路，他的人生<span class="lian-kw">也许</span>会完全不同。',
+   correct:true,type:'假设',
+   exp:'【假如……也许……】"假如"引出虚拟假设，"也许"表示不确定的推测结果，逻辑上符合假设关系的用法，正确。'},
+  {id:31,sentence:'<span class="lian-kw">如果</span>你不努力学习，<span class="lian-kw">虽然</span>也不会取得好成绩。',
+   correct:false,type:'假设',
+   exp:'【错误】"如果……虽然……"搭配有误。"如果"引导假设，后面应接"就/那么/便"等表示结果的词，"虽然"是转折连词，不能作为假设结论的引导词。应改为"如果你不努力学习，<b>就</b>不会取得好成绩"。'},
+  {id:32,sentence:'<span class="lian-kw">即便</span>他不来，我们的会议<span class="lian-kw">也</span>照常进行。',
+   correct:true,type:'假设',
+   exp:'【即便……也……】"即便"表示退一步的假设（即使如此），"也"表示结果不受影响，是让步假设的正确搭配，用法正确。'},
+
+  // ── 让步关系 ──────────────────────────────────────
+  {id:33,sentence:'<span class="lian-kw">即使</span>我们的工作取得了很大的成绩，<span class="lian-kw">也</span>不能骄傲自满。',
+   correct:true,type:'让步',
+   exp:'【即使……也……】"即使"所表示的条件可以是尚未实现的事情，也可以是与既成事实相反的事情，表示假设的让步。"也"表示结论不因前提改变。用法正确。'},
+  {id:34,sentence:'<span class="lian-kw">即使</span>明天会下雪，<span class="lian-kw">但</span>我们也要按时出发。',
+   correct:false,type:'让步',
+   exp:'【错误】"即使……但……"搭配有误。"即使"引导让步假设，后面应接"也/还是"，不能接"但"（"但"用于转折关系）。应改为"即使明天会下雪，我们<b>也</b>要按时出发"。'},
+  {id:35,sentence:'<span class="lian-kw">就算</span>前方困难重重，我们<span class="lian-kw">也</span>绝不退缩。',
+   correct:true,type:'让步',
+   exp:'【就算……也……】"就算"与"即使"同义，表示让步假设，"也"表示结果不变，是让步关系的正确搭配，用法正确。'},
+  {id:36,sentence:'<span class="lian-kw">哪怕</span>只有一线希望，我们<span class="lian-kw">都</span>要全力以赴。',
+   correct:true,type:'让步',
+   exp:'【哪怕……都……】"哪怕"表示让步，"都"表示无论如何结论不变，是让步关系的正确搭配，用法正确。'},
+
+  // ── 因果关系 ──────────────────────────────────────
+  {id:37,sentence:'<span class="lian-kw">既然</span>知道做错了，<span class="lian-kw">就</span>应当赶快纠正。',
+   correct:true,type:'因果',
+   exp:'【既然……就……】"既然"表示先对现实或已有结论予以承认，"就"后的内容表示进一步对上文内容作出判断。用法正确，是因果关系的典型例句。'},
+  {id:38,sentence:'<span class="lian-kw">因为</span>今天事情多，<span class="lian-kw">所以</span>没有去成。',
+   correct:true,type:'因果',
+   exp:'【因为……所以……】"因为"引出原因，"所以"引出结果，是因果关系最基本的搭配。此句"事情多"是原因，"没有去成"是结果，用法正确。'},
+  {id:39,sentence:'<span class="lian-kw">由于</span>天气恶劣，<span class="lian-kw">因此</span>比赛被迫推迟。',
+   correct:true,type:'因果',
+   exp:'【由于……因此……】"由于"与"因为"同义，"因此"与"所以"同义，都是因果关系的正确搭配，用法正确。'},
+  {id:40,sentence:'他<span class="lian-kw">既然</span>答应了，<span class="lian-kw">但是</span>又反悔了。',
+   correct:false,type:'因果',
+   exp:'【错误】"既然……但是……"搭配有误。"既然"引导因果关系，后面应接"就/便/那"等，"但是"是转折连词，逻辑上与"既然"矛盾。应改为"他既然答应了，<b>就</b>不该反悔"，或不用"既然"。'},
+  {id:41,sentence:'<span class="lian-kw">因为</span>他勤奋努力，<span class="lian-kw">而且</span>成绩一直名列前茅。',
+   correct:false,type:'因果',
+   exp:'【错误】"因为……而且……"搭配有误。"因为"引导原因，后面应接"所以/因此"引导结果，"而且"是递进连词，不能表示因果结果。应改为"因为他勤奋努力，<b>所以</b>成绩一直名列前茅"。'},
+  {id:42,sentence:'<span class="lian-kw">之所以</span>会失败，<span class="lian-kw">是因为</span>准备工作做得不充分。',
+   correct:true,type:'因果',
+   exp:'【之所以……是因为……】这是因果关系的倒装形式，先说结果再说原因，是正确的搭配。此句先说"失败"，后说原因"准备不充分"，用法正确。'},
+
+  // ── 综合辨析（混合易错）──────────────────────────────
+  {id:43,sentence:'<span class="lian-kw">不管</span>你同意<span class="lian-kw">还是</span>不同意，这件事都已经决定了。',
+   correct:true,type:'条件',
+   exp:'【不管……还是……都……】"不管……都……"是条件关系，"还是"列举了条件的两面（同意或不同意），结论不变。用法正确。'},
+  {id:44,sentence:'他学习成绩好，<span class="lian-kw">不是</span>因为他聪明，<span class="lian-kw">而是</span>因为他刻苦。',
+   correct:true,type:'并列',
+   exp:'【不是……而是……】否定"聪明"是原因，肯定"刻苦"才是原因，两个"因为"结构对称，并列否定与肯定，用法正确。'},
+  {id:45,sentence:'<span class="lian-kw">尽管</span>条件艰苦，<span class="lian-kw">而且</span>他们依然坚持工作。',
+   correct:false,type:'转折',
+   exp:'【错误】"尽管……而且……"搭配有误。"尽管"表示让步转折，后面应接"但/可/却/也/还是"，"而且"是递进连词，与"尽管"语义冲突。应改为"尽管条件艰苦，<b>但</b>他们依然坚持工作"。'},
+  {id:46,sentence:'<span class="lian-kw">与其</span>坐以待毙，<span class="lian-kw">不如</span>主动出击，寻找转机。',
+   correct:true,type:'选择',
+   exp:'【与其……不如……】比较两种选择，舍弃消极的"坐以待毙"，选择积极的"主动出击"，是选择关系的正确用法。'},
+  {id:47,sentence:'<span class="lian-kw">只有</span>经过反复实践，<span class="lian-kw">就</span>能真正掌握知识。',
+   correct:false,type:'条件',
+   exp:'【错误】"只有……就……"搭配有误。"只有"表示必要条件，固定与"才"搭配；"就"是"只要"的后续词，表示充分条件。应改为"只有经过反复实践，<b>才</b>能真正掌握知识"。'},
+  {id:48,sentence:'<span class="lian-kw">即使</span>面对再大的压力，他<span class="lian-kw">也</span>从不抱怨。',
+   correct:true,type:'让步',
+   exp:'【即使……也……】"即使"引导让步假设，"也"表示在任何情况下结果不改变。此句表达他在任何压力下都不抱怨，用法正确。'},
+  {id:49,sentence:'这次考试<span class="lian-kw">不但</span>没有取得好成绩，<span class="lian-kw">反而</span>退步了不少。',
+   correct:true,type:'递进',
+   exp:'【不但……反而……】这是递进关系的特殊用法，用于程度加深的否定语境："不但没有好成绩"还"反而退步"，程度更深，用法正确。'},
+  {id:50,sentence:'<span class="lian-kw">因为</span>大家共同努力，<span class="lian-kw">不但</span>完成了任务，而且超额完成了指标。',
+   correct:false,type:'因果',
+   exp:'【错误】此句结构混乱。"因为"引导的原因分句后，不能直接用"不但……而且……"作为结果，因为"不但……而且……"是递进关系，与"因为"引导的因果结构搭配生硬。应改为"由于大家共同努力，<b>不仅</b>完成了任务，<b>还</b>超额完成了指标"（去掉"因为"，使整体为递进关系）。'},
+];
+// ════════════════════════════════ 标点符号题库 ════════════════════════════════
+const BQ = [
+  // ── 句号 ──────────────────────────────────────────
+  {id:1,sentence:'甲<span class="biao-kw">：</span>吃午饭了吗<span class="biao-kw">？</span>乙<span class="biao-kw">：</span>吃过了<span class="biao-kw">。</span>',
+   correct:true,type:'句号',
+   exp:'【句号】结构完整、意思独立的陈述句，句末用句号，无论句子长短。"吃过了"是完整陈述，用句号正确。'},
+  {id:2,sentence:'天黑了<span class="biao-kw">。</span>起风了<span class="biao-kw">。</span>',
+   correct:true,type:'句号',
+   exp:'【句号】无主句、独词句的陈述句，句末用句号。"天黑了""起风了"虽无主语，但各自意思独立，分别用句号正确。'},
+  {id:3,sentence:'请把我的书一起带过来<span class="biao-kw">！</span>',
+   correct:false,type:'句号',
+   exp:'【句号】语气舒缓的祈使句，句末用句号而非叹号。"请把我的书一起带过来"语气平和，应改为句号"<b>。</b>"。'},
+  {id:4,sentence:'请帮忙带个路<span class="biao-kw">。</span>',
+   correct:true,type:'句号',
+   exp:'【句号】"请帮忙带个路"是语气舒缓的祈使句，语调平和无感叹，用句号正确。'},
+  // ── 问号 ──────────────────────────────────────────
+  {id:5,sentence:'诗中记述的这场战争究竟是真实的历史描述，还是诗人的虚构<span class="biao-kw">？</span>',
+   correct:true,type:'问号',
+   exp:'【问号】选择问句，一般只在句末用问号，中间用逗号。此句在句末用一个问号，正确。'},
+  {id:6,sentence:'这是巧合还是有意安排<span class="biao-kw">？</span>',
+   correct:true,type:'问号',
+   exp:'【问号】选项较短且选项之间几乎没有停顿时，选项之间可不用逗号，句末用一个问号。此句用法正确。'},
+  {id:7,sentence:'天也分不清这里是哪里<span class="biao-kw">？</span>',
+   correct:false,type:'问号',
+   exp:'【问号】含有疑问词（哪里、什么等），但无疑问语气，而是表陈述时，句末应用句号，不用问号。应改为"天也分不清这里是哪里<b>。</b>"。'},
+  {id:8,sentence:'他不明白为什么看到这把剑会情不自禁地难过<span class="biao-kw">。</span>',
+   correct:true,type:'问号',
+   exp:'【句号正确】含"为什么"疑问词，但整句是陈述他的心理状态，无疑问语气，句末用句号正确。'},
+  {id:9,sentence:'请你把门关上好吗<span class="biao-kw">？</span>',
+   correct:true,type:'问号',
+   exp:'【问号】带有疑问语气的祈使句，句末用问号。"请你把门关上好吗"征求对方同意，有疑问语气，用问号正确。'},
+  {id:10,sentence:'要一个什么样的结尾<span class="biao-kw">？</span>现实主义的<span class="biao-kw">？</span>传统的<span class="biao-kw">？</span>大团圆的<span class="biao-kw">？</span>',
+   correct:true,type:'问号',
+   exp:'【问号】选项较多或有意突出每个选项独立性时，可在每个选项之后都用问号。此句每个选项各有侧重，逐一用问号正确。'},
+  // ── 逗号 ──────────────────────────────────────────
+  {id:11,sentence:'苏州园林建筑各种门窗的精美设计和雕镂功夫<span class="biao-kw">，</span>都令人叹为观止。',
+   correct:true,type:'逗号',
+   exp:'【逗号】较长的主语之后用逗号。"苏州园林建筑各种门窗的精美设计和雕镂功夫"是较长主语，后加逗号再接谓语，用法正确。'},
+  {id:12,sentence:'在苍茫的大海上<span class="biao-kw">，</span>狂风卷集着乌云。',
+   correct:true,type:'逗号',
+   exp:'【逗号】句首状语之后用逗号。"在苍茫的大海上"是前置状语，后加逗号正确。'},
+  {id:13,sentence:'他呢<span class="biao-kw">，</span>倒是很乐意地、全神贯注地干起了活。',
+   correct:true,type:'逗号',
+   exp:'【逗号】带句内语气词的主语之后用逗号。"他呢"后加逗号正确。'},
+  {id:14,sentence:'不是人们的意识决定存在<span class="biao-kw">，</span>而是人们的社会存在决定人们的意识。',
+   correct:true,type:'逗号',
+   exp:'【逗号】复句内各分句之间的停顿，一般都用逗号。"不是……而是……"两个分句之间用逗号正确。'},
+  {id:15,sentence:'老张<span class="biao-kw">，</span>就是原来的办公室主任<span class="biao-kw">，</span>上星期已经调走了。',
+   correct:true,type:'逗号',
+   exp:'【逗号】复指成分或插说成分前后用逗号。"就是原来的办公室主任"是复指成分，前后各加逗号正确。'},
+  // ── 顿号 ──────────────────────────────────────────
+  {id:16,sentence:'桃树<span class="biao-kw">、</span>杏树<span class="biao-kw">、</span>梨树<span class="biao-kw">，</span>你不让我<span class="biao-kw">，</span>我不让你<span class="biao-kw">，</span>都开满了花赶趟儿。',
+   correct:true,type:'顿号',
+   exp:'【顿号】用于句中并列词语之间表短暂停顿。"桃树、杏树、梨树"三者并列用顿号正确。'},
+  {id:17,sentence:'一<span class="biao-kw">、</span>二十米　三<span class="biao-kw">、</span>五个　十三<span class="biao-kw">、</span>四岁',
+   correct:false,type:'顿号',
+   exp:'【顿号】相邻或相近两个数字连用表示概数，通常不用顿号。"一二十米""三五个""十三四岁"是概数，数字间不用顿号，应直接连写。'},
+  {id:18,sentence:'二<span class="biao-kw">、</span>三区域　三<span class="biao-kw">、</span>四组',
+   correct:true,type:'顿号',
+   exp:'【顿号】若相邻两个数字连用为缩略形式（非概数），宜用顿号。"二、三区域"表示第二和第三区域（缩略非概数），用顿号正确。'},
+  {id:19,sentence:'李白的"白发三千丈"（《秋浦歌十七首》）<span class="biao-kw">、</span>"朝如青丝暮成雪"（《将进酒》）都是脍炙人口的诗句。',
+   correct:true,type:'顿号',
+   exp:'【顿号】若有括注插在并列的引号或书名号之间，宜用顿号。此处括注后用顿号正确。'},
+  {id:20,sentence:'学校西南角是一片"植物园"<span class="biao-kw">、</span>里面有银杏树、辛夷、女贞子、桑树和柏树等。',
+   correct:false,type:'顿号',
+   exp:'【顿号】此处"植物园"后是分句间停顿，不是并列词语间停顿，应用逗号"<b>，</b>"而非顿号。且并列成分中已有"和"连词，前不再用顿号。'},
+  {id:21,sentence:'我国古典长篇小说的四大名著——《红楼梦》《三国演义》《西游记》《水浒传》。',
+   correct:true,type:'顿号',
+   exp:'【顿号】标有书名号的并列成分之间通常不用顿号。此处四部书名号之间无顿号，用法正确。'},
+  {id:22,sentence:'这个故事讲得生动<span class="biao-kw">、</span>真实。',
+   correct:false,type:'顿号',
+   exp:'【顿号】并列词语作谓语、补语时，不用顿号，而用逗号。"生动、真实"作谓语，之间应用逗号"<b>，</b>"。'},
+  // ── 分号 ──────────────────────────────────────────
+  {id:23,sentence:'张家界石峰林立，天子山居高临下<span class="biao-kw">；</span>索溪峪群峰环抱。',
+   correct:true,type:'分号',
+   exp:'【分号】复句内并列分句之间，尤其当分句内包含逗号时，宜用分号。三个并列分句间用分号正确。'},
+  {id:24,sentence:'桥砖是深褐色，表明它历史的悠久<span class="biao-kw">；</span>但都完好无缺，令人叹息于古昔工程的坚美。',
+   correct:true,type:'分号',
+   exp:'【分号】多重复句的第一层前后两部分之间，主要表转折、因果等非并列关系时使用分号。此句表转折，第一层用分号正确。'},
+  {id:25,sentence:'虚心使人进步<span class="biao-kw">；</span>骄傲使人落后。',
+   correct:false,type:'分号',
+   exp:'【分号】并列分句内没有逗号时，不使用分号。两个分句各自内部无逗号，之间应用逗号"<b>，</b>"而非分号。'},
+  {id:26,sentence:'心理学的主要流派：构造主义心理学派<span class="biao-kw">；</span>行为主义心理学派<span class="biao-kw">；</span>精神分析心理学派<span class="biao-kw">；</span>人本主义心理学派等。',
+   correct:true,type:'分号',
+   exp:'【分号】分项列举的各项之间，也可用分号。此处列举各心理学派，各项之间用分号正确。'},
+  // ── 叹号 ──────────────────────────────────────────
+  {id:27,sentence:'桂林的山真险啊<span class="biao-kw">！</span>',
+   correct:true,type:'叹号',
+   exp:'【叹号】表语调、感情强烈，句末用叹号。"桂林的山真险啊"感情强烈，用叹号正确。'},
+  {id:28,sentence:'咚咚<span class="biao-kw">！</span>突然传来一阵急促的敲门声。',
+   correct:true,type:'叹号',
+   exp:'【叹号】拟声词之后，表声音短促或突然，用叹号。"咚咚"是拟声词，后用叹号正确。'},
+  {id:29,sentence:'我要揭露<span class="biao-kw">！</span>我要控诉<span class="biao-kw">！！</span>我要以死抗争<span class="biao-kw">！！！</span>',
+   correct:true,type:'叹号',
+   exp:'【叹号】表示声音不断加大或强烈语气时，可叠用叹号，最多三个。此处叹号递增表情绪递进，用法正确。'},
+  {id:30,sentence:'他连这些最基本的知识都不懂，还敢说自己是学霸<span class="biao-kw">？！</span>',
+   correct:true,type:'叹号',
+   exp:'【叹号】句子包含疑问、感叹两种强烈语气时，可在问号后加叹号（问号叹号各一）。此句反问兼感叹，用法正确。'},
+  {id:31,sentence:'多么壮丽呀<span class="biao-kw">！</span>祖国的大好山河<span class="biao-kw">！</span>',
+   correct:true,type:'叹号',
+   exp:'【叹号】感叹句中如有成分倒置于句末，感叹号应放在句末。"祖国的大好山河"倒置句末，末尾用叹号正确。'},
+  // ── 冒号 ──────────────────────────────────────────
+  {id:32,sentence:'她委婉地说<span class="biao-kw">：</span>"这次太叨扰了，还是下次吧。"',
+   correct:true,type:'冒号',
+   exp:'【冒号】提示性词语（说、想、证明等）之后使用冒号，引出直接引语。"说"后用冒号正确。'},
+  {id:33,sentence:'行动，要靠思想来指导<span class="biao-kw">；</span>思想，要靠行动来证明<span class="biao-kw">；</span>思想和行动是紧密相连的<span class="biao-kw">。</span>',
+   correct:false,type:'冒号',
+   exp:'【冒号】总结性语句之前使用冒号，表总结上文。"思想和行动是紧密相连的"是对前两句的总结，前面应用冒号"<b>：</b>"（或破折号），而非分号。'},
+  {id:34,sentence:'云就像是天气的"招牌"<span class="biao-kw">：</span>天上挂什么云，就将出现什么样的天气。',
+   correct:true,type:'冒号',
+   exp:'【冒号】需要说明的词语之后使用冒号，表注释、说明。"招牌"后冒号引出解释，用法正确。'},
+  {id:35,sentence:'"这个事情，"张兰说，"让我好好考虑考虑<span class="biao-kw">。</span>"',
+   correct:true,type:'冒号',
+   exp:'【句号·冒号】说话人放在所说话的中间不用冒号，用逗号；放在所说话后边用句号。此句引语分两段插入"张兰说"，末尾用句号正确。'},
+  {id:36,sentence:'今天开会，万总表示<span class="biao-kw">：</span>厂里要落实两项改革<span class="biao-kw">：</span>一是持证上岗，二是脱产培训。',
+   correct:false,type:'冒号',
+   exp:'【冒号】冒号不能连用，同一句子中不能出现两个冒号。应将第一个冒号改为逗号"<b>，</b>"。'},
+  {id:37,sentence:'经调研走访，不少家长宣称<span class="biao-kw">：</span>孩子作业多，作业时间长，有时候作业要做到深夜，这些情况在全国各地都存在。',
+   correct:false,type:'冒号',
+   exp:'【冒号】冒号的提示作用要发挥到句末，冒号要管到句末。此处冒号只管到"做到深夜"，"深夜"后的逗号应改为句号，使整句在"都存在"结束。'},
+  // ── 引号 ──────────────────────────────────────────
+  {id:38,sentence:'唐朝的张嘉贞说它<span class="biao-kw">"</span>制造奇特，人不知其所以为<span class="biao-kw">"</span>。',
+   correct:true,type:'引号',
+   exp:'【引号】标明引用内容。引文不独立成句，引号内末尾不用句号，句末标点放引号外。此句正确。'},
+  {id:39,sentence:'鲁迅在书桌上刻了一个小小的字<span class="biao-kw">：</span><span class="biao-kw">"</span>早<span class="biao-kw">"</span>。',
+   correct:true,type:'引号',
+   exp:'【引号】强调或着重论述的内容用引号。"早"字加引号表着重，冒号引出，用法正确。'},
+  {id:40,sentence:'山脚下有一泓清泉，人称<span class="biao-kw">"</span>天下第二泉<span class="biao-kw">"</span>。',
+   correct:true,type:'引号',
+   exp:'【引号】特定称谓加引号。"天下第二泉"是特定称谓，用引号正确。'},
+  {id:41,sentence:'孟浩然接过酒杯，一饮而尽，然后说道<span class="biao-kw">：</span><span class="biao-kw">"</span>王勃说得好，<span class="biao-kw">&#39;</span>海内存知己，天涯若比邻<span class="biao-kw">&#39;</span>。虽然我们暂时分别了，我们的友谊却像这长江的波涛永世不绝。<span class="biao-kw">"</span>',
+   correct:true,type:'引号',
+   exp:'【引号】引文里面还要用引号时，外面一层用双引号，里面一层用单引号。此处外双内单，用法正确。'},
+  {id:42,sentence:'世界上许多地方都在闹<span class="biao-kw">"</span>能源危机<span class="biao-kw">"</span>。',
+   correct:true,type:'引号',
+   exp:'【引号】强调或着重论述的内容用引号。"能源危机"加引号表强调，用法正确。'},
+  // ── 书名号 ──────────────────────────────────────────
+  {id:43,sentence:'《西游记》（书名）　《沁园春·雪》　《荀子·劝学》',
+   correct:true,type:'书名号',
+   exp:'【书名号】用于标明书名、篇名、报刊名等。以上三者均为书名或篇名，用书名号正确。'},
+  {id:44,sentence:'《教育部关于提请审议〈高等教育自学考试试行办法〉的报告》',
+   correct:true,type:'书名号',
+   exp:'【书名号】书名号中还需书名号时，里层用单书名号〈〉，外层用双书名号《》。此处嵌套正确。'},
+  {id:45,sentence:'他正在上《语文》课，老师讲到了《荷塘月色》这篇文章。',
+   correct:false,type:'书名号',
+   exp:'【书名号】课程、标题、学科名称不用书名号。"语文"是课程名，应去掉书名号；《荷塘月色》是文章名，用书名号正确。'},
+  {id:46,sentence:'《人民日报》今天刊登了一篇题为《改革开放四十年》的文章。',
+   correct:true,type:'书名号',
+   exp:'【书名号】报刊名、文章名均用书名号。《人民日报》是报刊名，《改革开放四十年》是文章名，用法均正确。'},
+  // ── 括号 ──────────────────────────────────────────
+  {id:47,sentence:'庄生晓梦迷蝴蝶，望帝春心托杜鹃。（李商隐《锦瑟》）',
+   correct:true,type:'括号',
+   exp:'【括号】句外括注（如注明引文出处）应紧接正文句号之后，或放在句末标点之前。此处"（李商隐《锦瑟》）"是对整句诗的出处说明，放在句号后面作为句外括注，用法正确。'},
+  {id:48,sentence:'根据×××××发〔2019〕12号文件精神……',
+   correct:true,type:'括号',
+   exp:'【括号】公文发文字号中的发文年份，应使用六角括号〔〕。此处〔2019〕用六角括号正确。'},
+  {id:49,sentence:'围绕政府半年工作开展"回头看"，认真总结上半年工作。【责任单位：各镇（街道）】',
+   correct:true,type:'括号',
+   exp:'【括号】必须套用括号时，应采用不同形式配合。此处外层【】方头括号，内层（）圆括号，套用正确。'},
+  {id:50,sentence:'宋朝历城（现山东省历城县）人，参加工作好几年了。',
+   correct:true,type:'括号',
+   exp:'【括号】句内括号要紧贴被注释的内容后。"历城"后括号解释地名，紧贴其后，用法正确。'},
+  // ── 破折号 ──────────────────────────────────────────
+  {id:51,sentence:'风拥着浪花不断向堤上猛扑"啊——"扑上来，"哗——"退回去。',
+   correct:true,type:'破折号',
+   exp:'【破折号】表示声音延长，用破折号。"啊——""哗——"用破折号表示声音延续，用法正确。'},
+  {id:52,sentence:'这就是中国最大的平原——东北平原。',
+   correct:true,type:'破折号',
+   exp:'【破折号】用来提示下文、注释补充说明等。此处破折号引出"东北平原"解释"中国最大的平原"，用法正确。'},
+  {id:53,sentence:'你的生日——四月十八日——每年我总记得。',
+   correct:true,type:'破折号',
+   exp:'【破折号】两个破折号之间为插入语，起补充说明作用。"四月十八日"补充说明"你的生日"，前后各用破折号，正确。'},
+  {id:54,sentence:'我们都去学习去——提壶开水来。',
+   correct:false,type:'破折号',
+   exp:'【破折号】"提壶开水来"与"去学习"无关联，不构成自然的话题转换，用破折号不当。两者应另起一句，用句号分开。'},
+  // ── 省略号 ──────────────────────────────────────────
+  {id:55,sentence:'石开顺手伸进东西里，一摸，是鸡蛋。这么多呀！1个，2个，3个……共18个。',
+   correct:true,type:'省略号',
+   exp:'【省略号】表示列举的省略。此处省略中间数字，再接"共18个"总结，前后内容不直接相连时省略号后可用句号，用法正确。'},
+  {id:56,sentence:'含有铁质的食物有大豆、菠菜、猪肝……等。',
+   correct:false,type:'省略号',
+   exp:'【省略号】文中使用"等""等等"之后，便不能再使用省略号（二者都表列举未尽，不能重复）。应去掉省略号或去掉"等"，不能同时使用。'},
+  {id:57,sentence:'列宁说道："这应该是一般辩证法的……叙述（以及研究）方法。"',
+   correct:true,type:'省略号',
+   exp:'【省略号】表示引文的省略。省略号用在引号内表示原话中省去了部分内容，用法正确。'},
+  {id:58,sentence:'她轻轻地哼着歌，……，眼睛里闪着泪光。',
+   correct:false,type:'省略号',
+   exp:'【省略号】省略号前后除问号、感叹号外，一般不再使用其他点号（如逗号）。省略号后的逗号应去掉，直接接"眼睛里闪着泪光"。'},
+  // ── 综合辨析 ──────────────────────────────────────
+  {id:59,sentence:'山海关，这号称"天下第一关"的山海关<span class="biao-kw">！</span>',
+   correct:false,type:'综合',
+   exp:'【综合】"山海关，这号称……的山海关"是平和陈述，语气并不强烈，句末应用句号"<b>。</b>"而非叹号。叹号用于语气强烈的感叹，此句不符合。'},
+  {id:60,sentence:'这些作品最近结集成书，名为《科学与艺术》，引起了科学界和艺术界的瞩目。',
+   correct:true,type:'综合',
+   exp:'【综合】书名《科学与艺术》用书名号正确；书名号内无多余标点；句末用句号。整句标点均正确。'},
+];
 function todayKey(){ return new Date().toISOString().slice(0,10); }
 
 function loadState(){try{return JSON.parse(localStorage.getItem('zy_s2')||'{}');}catch(e){return{};}}
 function saveState(s){localStorage.setItem('zy_s2',JSON.stringify(s));}
 function loadXState(){try{return JSON.parse(localStorage.getItem('zx_s1')||'{}');}catch(e){return{};}}
 function saveXState(s){localStorage.setItem('zx_s1',JSON.stringify(s));}
+function loadLState(){try{return JSON.parse(localStorage.getItem('zl_s1')||'{}');}catch(e){return{};}}
+function saveLState(s){localStorage.setItem('zl_s1',JSON.stringify(s));}
+function loadBState(){try{return JSON.parse(localStorage.getItem('zb_s1')||'{}');}catch(e){return{};}}
+function saveBState(s){localStorage.setItem('zb_s1',JSON.stringify(s));}
 
 function makeFreshState(){
   return {totalAnswered:0,totalCorrect:0,wrongBank:{},seenIds:[],history:[],
@@ -1455,9 +1987,19 @@ function makeFreshXState(){
   return {totalAnswered:0,totalCorrect:0,wrongBank:{},seenIds:[],history:[],
           today:{date:'',answered:0,correct:0,wrongIds:[]}};
 }
+function makeFreshLState(){
+  return {totalAnswered:0,totalCorrect:0,seenIds:[],history:[],
+          today:{date:'',answered:0,correct:0,wrongIds:[]}};
+}
+function makeFreshBState(){
+  return {totalAnswered:0,totalCorrect:0,seenIds:[],history:[],
+          today:{date:'',answered:0,correct:0,wrongIds:[]}};
+}
 
 let state  = Object.assign(makeFreshState(),  loadState());
 let xstate = Object.assign(makeFreshXState(), loadXState());
+let lstate = Object.assign(makeFreshLState(), loadLState());
+let bstate = Object.assign(makeFreshBState(), loadBState());
 
 // 确保today结构存在且是今天
 function ensureToday(s){
@@ -1469,6 +2011,8 @@ function ensureToday(s){
 }
 state  = ensureToday(state);
 xstate = ensureToday(xstate);
+lstate = ensureToday(lstate);
+bstate = ensureToday(bstate);
 
 // 字音会话
 let session  = {questions:[],index:0,correct:0,mode:'random',wrongInSession:[]};
@@ -1476,6 +2020,12 @@ let lastMode = 'random';
 // 字形会话
 let xsession  = {questions:[],index:0,correct:0,mode:'random',wrongInSession:[]};
 let xlastMode = 'random';
+// 关联词会话
+let lsession  = {questions:[],index:0,correct:0,mode:'random',wrongInSession:[]};
+let llastMode = 'random';
+// 标点会话
+let bsession  = {questions:[],index:0,correct:0,mode:'random',wrongInSession:[]};
+let blastMode = 'random';
 // 当前模块
 let currentModule = 'yin';
 
@@ -1498,9 +2048,15 @@ function switchModule(mod){
   currentModule = mod;
   document.getElementById('module-yin').style.display  = mod==='yin'  ? 'block' : 'none';
   document.getElementById('module-xing').style.display = mod==='xing' ? 'block' : 'none';
+  document.getElementById('module-lian').style.display = mod==='lian' ? 'block' : 'none';
+  document.getElementById('module-biao').style.display = mod==='biao' ? 'block' : 'none';
   document.getElementById('tab-yin').classList.toggle('active',  mod==='yin');
   document.getElementById('tab-xing').classList.toggle('active', mod==='xing');
+  document.getElementById('tab-lian').classList.toggle('active', mod==='lian');
+  document.getElementById('tab-biao').classList.toggle('active', mod==='biao');
   if(mod==='xing') updateXingHome();
+  else if(mod==='lian') updateLianHome();
+  else if(mod==='biao') updateBiaoHome();
   else updateHome();
 }
 
@@ -1586,20 +2142,10 @@ function renderQuestion(){
       ${q.opts.map((o,i)=>`
         <button class="option-btn" id="opt-${i}" onclick="answer(${i},${q.ans},${q.id})">
           <div class="opt-letter">${'ABCD'[i]}</div>
-          <div class="opt-pinyin" style="flex:1">${o}</div>
-          <button class="opt-elim-btn" id="elim-${i}" onclick="toggleElim(event,${i})" title="标记排除此选项"></button>
+          <div class="opt-pinyin">${o}</div>
         </button>`).join('')}
     </div>
     <div id="exp-area"></div>`;
-}
-
-// ── 字音排除按钮 ──────────────────────────────────────
-function toggleElim(e, i){
-  e.stopPropagation();
-  const btn = document.getElementById('opt-'+i);
-  if(!btn) return;
-  if(btn.classList.contains('disabled')||btn.classList.contains('correct')||btn.classList.contains('wrong-c')||btn.classList.contains('dim')) return;
-  btn.classList.toggle('eliminated');
 }
 
 function answer(chosen, ans, qid){
@@ -1609,13 +2155,11 @@ function answer(chosen, ans, qid){
   const isCorrect = (chosen===ans);
 
   document.querySelectorAll('.option-btn').forEach((el,i)=>{
-    el.classList.remove('eliminated');
     el.classList.add('disabled');
     if(i===ans)    el.classList.add('correct');
     else if(i===chosen) el.classList.add('wrong-c');
     else           el.classList.add('dim');
   });
-  document.querySelectorAll('.opt-elim-btn').forEach(b=>b.style.display='none');
 
   state = ensureToday(state);
   state.today.answered++;
@@ -1696,11 +2240,13 @@ function quitQuiz(){ if(confirm('确定退出本次练习？')) showScreen('home
 // ════════════════════════════════════════
 // 收藏系统
 // ════════════════════════════════════════
-function loadFavBank(){try{return JSON.parse(localStorage.getItem('fav_bank')||'{"yin":{},"xing":{}}');}catch(e){return{yin:{},xing:{}};}}
+function loadFavBank(){try{return JSON.parse(localStorage.getItem('fav_bank')||'{"yin":{},"xing":{},"lian":{},"biao":{}}');}catch(e){return{yin:{},xing:{},lian:{},biao:{}};}}
 function saveFavBank(){localStorage.setItem('fav_bank',JSON.stringify(favBank));}
 let favBank = loadFavBank();
 if(!favBank.yin)  favBank.yin={};
 if(!favBank.xing) favBank.xing={};
+if(!favBank.lian) favBank.lian={};
+if(!favBank.biao) favBank.biao={};
 
 let currentFavTab = 'yin';
 
@@ -1765,23 +2311,29 @@ function removeFav(type, qid){
   updateWrongScreen();
 }
 
-// 更新收藏数量角标（复用wrong-badge的nav）
+// 更新收藏数量角标
 function updateFavBadge(){
-  const total = Object.keys(favBank.yin).length + Object.keys(favBank.xing).length;
-  // 首页错题复习按钮：改为展示收藏数
-  const wb = document.getElementById('wrong-mode-btn');
-  const xwb = document.getElementById('xwrong-mode-btn');
   const yc = Object.keys(favBank.yin).length;
   const xc = Object.keys(favBank.xing).length;
-  if(wb){ wb.style.display = yc>0?'block':'none'; document.getElementById('wrong-badge').textContent=yc; }
+  const lc = Object.keys(favBank.lian).length;
+  const bc = Object.keys(favBank.biao).length;
+  const wb  = document.getElementById('wrong-mode-btn');
+  const xwb = document.getElementById('xwrong-mode-btn');
+  const lwb = document.getElementById('lwrong-mode-btn');
+  const bwb = document.getElementById('bwrong-mode-btn');
+  if(wb){  wb.style.display  = yc>0?'block':'none'; document.getElementById('wrong-badge').textContent=yc; }
   if(xwb){ xwb.style.display = xc>0?'block':'none'; document.getElementById('xwrong-badge').textContent=xc; }
+  if(lwb){ lwb.style.display = lc>0?'block':'none'; document.getElementById('lwrong-badge').textContent=lc; }
+  if(bwb){ bwb.style.display = bc>0?'block':'none'; document.getElementById('bwrong-badge').textContent=bc; }
 }
 
 // 切换收藏页tab
 function switchFavTab(tab){
   currentFavTab = tab;
-  document.getElementById('fav-tab-yin').classList.toggle('active', tab==='yin');
+  document.getElementById('fav-tab-yin').classList.toggle('active',  tab==='yin');
   document.getElementById('fav-tab-xing').classList.toggle('active', tab==='xing');
+  document.getElementById('fav-tab-lian').classList.toggle('active', tab==='lian');
+  document.getElementById('fav-tab-biao').classList.toggle('active', tab==='biao');
   renderFavList();
 }
 
@@ -1796,8 +2348,9 @@ function renderFavList(){
     .sort((a,b)=>b.savedAt-a.savedAt);
 
   if(!items.length){
+    const icons={'yin':'🔊','xing':'✍️','lian':'🔗','biao':'📌'};
     list.innerHTML=`<div class="empty-state">
-      <div class="empty-icon">${currentFavTab==='yin'?'🔊':'✍️'}</div>
+      <div class="empty-icon">${icons[currentFavTab]}</div>
       <div class="empty-text">暂无收藏<br><span style="font-size:13px;color:#bbb">答题时点击右上角 ☆ 收藏题目</span></div>
     </div>`;
     return;
@@ -1811,11 +2364,31 @@ function renderFavList(){
         <div class="fav-ans-row cor"><span class="lb">正确读音：</span>${w.opts[w.ans]}</div>
         <div class="fav-item-detail">${w.exp}</div>
       </div>`).join('');
-  } else {
+  } else if(currentFavTab==='xing'){
     list.innerHTML = items.map(w=>`
       <div class="fav-item fav-item-xing">
         <button class="fav-remove-btn" onclick="removeFav('xing',${w.id})" title="取消收藏">✕</button>
         <div class="fav-item-title"><span class="kw-xing">✗ ${w.wrong}</span> → <span style="color:var(--correct)">✓ ${w.right}</span></div>
+        <div class="fav-item-detail">${w.exp}</div>
+      </div>`).join('');
+  } else if(currentFavTab==='lian'){
+    list.innerHTML = items.map(w=>`
+      <div class="fav-item fav-item-lian">
+        <button class="fav-remove-btn" onclick="removeFav('lian',${w.id})" title="取消收藏">✕</button>
+        <div class="fav-item-title" style="font-size:14px;line-height:1.8">${w.sentence}</div>
+        <div style="font-size:12px;margin-top:6px;padding:4px 8px;border-radius:6px;display:inline-block;font-weight:700;${w.correct?'background:#d8f3dc;color:var(--correct)':'background:#fce4e4;color:var(--wrong)'}">
+          ${w.correct ? '✅ 用法正确' : '❌ 用法错误'}
+        </div>
+        <div class="fav-item-detail">${w.exp}</div>
+      </div>`).join('');
+  } else {
+    list.innerHTML = items.map(w=>`
+      <div class="fav-item fav-item-biao">
+        <button class="fav-remove-btn" onclick="removeFav('biao',${w.id})" title="取消收藏">✕</button>
+        <div class="fav-item-title" style="font-size:14px;line-height:1.9;font-family:'Noto Serif SC',serif">${w.sentence}</div>
+        <div style="font-size:12px;margin-top:6px;padding:4px 8px;border-radius:6px;display:inline-block;font-weight:700;${w.correct?'background:#d8f3dc;color:var(--correct)':'background:#fce4e4;color:var(--wrong)'}">
+          ${w.correct ? '✅ 标点正确' : '❌ 标点有误'}
+        </div>
         <div class="fav-item-detail">${w.exp}</div>
       </div>`).join('');
   }
@@ -1823,7 +2396,8 @@ function renderFavList(){
 
 // 清空当前tab收藏
 function clearFav(){
-  const label = currentFavTab==='yin' ? '字音' : '字形';
+  const labels={'yin':'字音','xing':'字形','lian':'关联词','biao':'标点'};
+  const label = labels[currentFavTab] || '收藏';
   if(!Object.keys(favBank[currentFavTab]).length) return;
   if(confirm(`确定清空所有${label}收藏？`)){
     favBank[currentFavTab]={};
@@ -1833,7 +2407,7 @@ function clearFav(){
   }
 }
 
-// 兼容旧函数名（首页错题复习按钮 → 改为从收藏刷题）
+// 兼容旧函数名
 function clearWrong(){ clearFav(); }
 
 function updateStatsScreen(){
@@ -1927,22 +2501,12 @@ function renderXingQuestion(){
       <div class="xing-words-grid">
         ${shuffled.map((item,si)=>`
           <div class="xing-opt" id="xopt-${si}" data-orig="${item.i}" onclick="answerXing(${si},${item.i},${q.ans},${q.id})">
-            <button class="xo-elim-btn" id="xelim-${si}" onclick="toggleXElim(event,${si})" title="排除此选项"></button>
             <div class="xo-label">${'ABCD'[si]}</div>
             <div class="xo-word">${item.o}</div>
           </div>`).join('')}
       </div>
     </div>
     <div id="xexp-area"></div>`;
-}
-
-// ── 字形排除按钮 ──────────────────────────────────────
-function toggleXElim(e, si){
-  e.stopPropagation();
-  const opt = document.getElementById('xopt-'+si);
-  if(!opt) return;
-  if(opt.classList.contains('disabled')||opt.classList.contains('correct')||opt.classList.contains('wrong-c')||opt.classList.contains('dim')) return;
-  opt.classList.toggle('xelim');
 }
 
 function answerXing(si, origIdx, ans, qid){
@@ -1952,14 +2516,12 @@ function answerXing(si, origIdx, ans, qid){
   const isCorrect = (origIdx===ans);
 
   document.querySelectorAll('.xing-opt').forEach((el,i)=>{
-    el.classList.remove('xelim');
     el.classList.add('disabled');
     const orig=parseInt(el.dataset.orig);
     if(orig===ans)         el.classList.add('correct');
     else if(i===si&&!isCorrect) el.classList.add('wrong-c');
     else                   el.classList.add('dim');
   });
-  document.querySelectorAll('.xo-elim-btn').forEach(b=>b.style.display='none');
 
   xstate = ensureToday(xstate);
   xstate.today.answered++;
@@ -2029,6 +2591,407 @@ function finishXingQuiz(){
 function retryXingQuiz(){ startXingQuiz(xlastMode, 15); }
 function quitXingQuiz(){ if(confirm('确定退出本次练习？')) backToXingHome(); }
 function backToXingHome(){ showScreen('home'); setTimeout(()=>switchModule('xing'), 50); }
+
+// ════════════════════════════════════════
+// 关联词 — 首页统计
+// ════════════════════════════════════════
+function updateLianHome(){
+  lstate = ensureToday(lstate);
+  const total   = LQ.length;
+  const td      = lstate.today;
+  const tdAcc   = td.answered>0 ? Math.round(td.correct/td.answered*100)+'%' : '—';
+  const tdWrong = td.wrongIds ? td.wrongIds.length : 0;
+  const seen    = lstate.seenIds.length;
+  const pct     = Math.round((seen/total)*100);
+
+  document.getElementById('lian-total-count').textContent = total;
+  document.getElementById('lstat-done').textContent       = td.answered;
+  document.getElementById('lstat-acc').textContent        = tdAcc;
+  document.getElementById('lstat-wrong').textContent      = tdWrong;
+  document.getElementById('lseen-count').textContent      = seen;
+  document.getElementById('lcoverage-bar').style.width    = pct+'%';
+  document.getElementById('lcoverage-pct').textContent    = pct+'%';
+  document.getElementById('lian-progress-tip').textContent= total;
+
+  const lc  = Object.keys(favBank.lian).length;
+  const lwb = document.getElementById('lwrong-mode-btn');
+  if(lwb){ lwb.style.display = lc>0?'block':'none'; document.getElementById('lwrong-badge').textContent=lc; }
+}
+
+// ════════════════════════════════════════
+// 关联词 — 答题
+// ════════════════════════════════════════
+function startLianQuiz(mode, count){
+  llastMode = mode;
+  let pool;
+  if(mode==='wrong'){
+    const ids = Object.keys(favBank.lian).map(Number);
+    pool = LQ.filter(q=>ids.includes(q.id));
+    if(!pool.length){alert('收藏夹里还没有关联词题，先收藏一些再来复习吧～');return;}
+  } else if(mode==='all'){
+    pool = [...LQ];
+  } else {
+    pool = shuffle([...LQ]).slice(0,count);
+  }
+  lsession.questions = (mode==='all') ? pool : shuffle(pool).slice(0,Math.min(count,pool.length));
+  lsession.questions.forEach(q=>delete q._answered);
+  lsession.index=0; lsession.correct=0; lsession.mode=mode; lsession.wrongInSession=[];
+  showScreen('lquiz');
+  renderLianQuestion();
+}
+
+function renderLianQuestion(){
+  const q=lsession.questions[lsession.index];
+  const total=lsession.questions.length, idx=lsession.index;
+  document.getElementById('lquiz-prog-fill').style.width=((idx/total)*100)+'%';
+  document.getElementById('lquiz-prog-text').textContent=`${idx+1}/${total}`;
+  const isFaved = favBank.lian && favBank.lian[q.id];
+  const area=document.getElementById('lquestion-area');
+  const typeColors={'并列':'#1565c0','转折':'#6a1b9a','递进':'#2e7d32','选择':'#e65100','条件':'#c62828','假设':'#4e342e','因果':'#00695c'};
+  const typeColor = typeColors[q.type]||'var(--orange)';
+  area.innerHTML=`
+    <div class="lian-question-card" style="position:relative">
+      <button class="fav-btn ${isFaved?'faved':''}" id="fav-btn-lian" onclick="toggleFavLian(${q.id})" title="${isFaved?'取消收藏':'收藏此题'}">
+        ${isFaved?'⭐':'☆'}
+      </button>
+      <div class="question-num" style="color:var(--orange)">关联词辨析 · 第 ${idx+1} 题
+        <span style="margin-left:8px;font-size:10px;background:${typeColor}22;color:${typeColor};padding:2px 8px;border-radius:99px;border:1px solid ${typeColor}44">${q.type}关系</span>
+      </div>
+      <div style="font-size:12px;color:#888;margin-bottom:12px">判断下列句子中，<b style="color:var(--orange)">带色关联词</b>的用法是否正确：</div>
+      <div class="lian-sentence">${q.sentence}</div>
+      <div class="lian-judge-row">
+        <div class="lian-judge-btn" id="ljbtn-0" onclick="answerLian(true,${q.id})">
+          <span class="lj-icon">✅</span>
+          <span class="lj-label">用法正确</span>
+        </div>
+        <div class="lian-judge-btn" id="ljbtn-1" onclick="answerLian(false,${q.id})">
+          <span class="lj-icon">❌</span>
+          <span class="lj-label">用法错误</span>
+        </div>
+      </div>
+    </div>
+    <div id="lexp-area"></div>`;
+}
+
+function answerLian(userSaysCorrect, qid){
+  const q = lsession.questions.find(x=>x.id===qid);
+  if(q._answered) return;
+  q._answered = true;
+  const isRight = (userSaysCorrect === q.correct);
+
+  // 高亮两个按钮
+  const btn0 = document.getElementById('ljbtn-0'); // 用法正确
+  const btn1 = document.getElementById('ljbtn-1'); // 用法错误
+  btn0.classList.add('disabled');
+  btn1.classList.add('disabled');
+
+  if(q.correct){
+    // 正确答案是"用法正确"
+    btn0.classList.add('correct');
+    if(!isRight) btn1.classList.add('wrong-c');
+    else btn1.classList.add('dim');
+  } else {
+    // 正确答案是"用法错误"
+    btn1.classList.add('correct');
+    if(!isRight) btn0.classList.add('wrong-c');
+    else btn0.classList.add('dim');
+  }
+
+  lstate = ensureToday(lstate);
+  lstate.today.answered++;
+  lstate.totalAnswered++;
+  if(isRight){
+    lsession.correct++;
+    lstate.today.correct++;
+    lstate.totalCorrect++;
+  } else {
+    lsession.wrongInSession.push({id:qid, sentence:q.sentence, correct:q.correct, exp:q.exp, type:q.type});
+    if(!lstate.today.wrongIds) lstate.today.wrongIds=[];
+    if(!lstate.today.wrongIds.includes(qid)) lstate.today.wrongIds.push(qid);
+  }
+  if(!lstate.seenIds.includes(qid)) lstate.seenIds.push(qid);
+  saveLState(lstate);
+
+  const isLast = lsession.index===lsession.questions.length-1;
+  const expArea = document.getElementById('lexp-area');
+  expArea.innerHTML=`
+    <div class="exp-card" style="border-left-color:var(--orange)">
+      <div class="exp-label" style="color:var(--orange)">📖 关联词解析</div>
+      <div class="exp-result ${isRight?'ok':'fail'}">${isRight?'✅ 判断正确！':'❌ 判断有误，建议收藏此题'}</div>
+      <div style="font-size:13px;margin:6px 0;padding:6px 10px;background:#fff3e0;border-radius:8px">
+        本句关联词用法：<b style="color:${q.correct?'var(--correct)':'var(--wrong)'}">${q.correct?'✅ 正确':'❌ 错误'}</b>
+      </div>
+      <div class="exp-text">${q.exp}</div>
+      <button class="next-btn" style="background:var(--orange)" onclick="${isLast?'finishLianQuiz()':'nextLianQuestion()'}">
+        ${isLast?'查看本次成绩':'下一题 →'}
+      </button>
+    </div>`;
+  expArea.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function nextLianQuestion(){ lsession.index++; renderLianQuestion(); window.scrollTo(0,0); }
+
+function finishLianQuiz(){
+  const total=lsession.questions.length, cor=lsession.correct;
+  const score=Math.round((cor/total)*100);
+  lstate.history.unshift({
+    date:new Date().toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}),
+    total, correct:cor, mode:lsession.mode
+  });
+  if(lstate.history.length>20) lstate.history=lstate.history.slice(0,20);
+  saveLState(lstate);
+
+  document.getElementById('lres-score').textContent   = score;
+  document.getElementById('lres-total').textContent   = total;
+  document.getElementById('lres-correct').textContent = cor;
+  document.getElementById('lres-wrong').textContent   = total-cor;
+  const ranks=[[90,'🏆 优秀！关联词达人'],[75,'👍 良好，继续加油'],[60,'📚 及格，还需巩固'],[0,'💪 多刷几遍，加油！']];
+  document.getElementById('lres-rank').textContent = ranks.find(([s])=>score>=s)[1];
+
+  const sumEl=document.getElementById('lerr-summary');
+  const ws=lsession.wrongInSession;
+  if(!ws.length){
+    sumEl.innerHTML=`<div class="no-err-box">🎉 本次全部答对，零错题！</div>`;
+  } else {
+    const items=ws.map(w=>`
+      <div class="err-item" style="border-left-color:var(--orange)">
+        <div class="err-item-word" style="font-size:14px;line-height:1.8">${w.sentence}</div>
+        <div style="font-size:12px;margin:4px 0;padding:3px 8px;border-radius:6px;display:inline-block;font-weight:700;${w.correct?'background:#d8f3dc;color:var(--correct)':'background:#fce4e4;color:var(--wrong)'}">
+          实际用法：${w.correct?'✅ 正确':'❌ 错误'}
+        </div>
+        <div class="err-item-exp">${w.exp}</div>
+      </div>`).join('');
+    sumEl.innerHTML=`<div class="err-summary-title">本次错题总结<span class="err-count-tag">共 ${ws.length} 题</span></div>${items}`;
+  }
+  showScreen('lresult');
+}
+
+function retryLianQuiz(){ startLianQuiz(llastMode, 20); }
+function quitLianQuiz(){ if(confirm('确定退出本次练习？')) backToLianHome(); }
+function backToLianHome(){ showScreen('home'); setTimeout(()=>switchModule('lian'), 50); }
+
+// 关联词收藏切换
+function toggleFavLian(qid){
+  const q = LQ.find(x=>x.id===qid);
+  if(!q) return;
+  const btn = document.getElementById('fav-btn-lian');
+  if(favBank.lian[qid]){
+    delete favBank.lian[qid];
+    if(btn){ btn.textContent='☆'; btn.classList.remove('faved'); }
+    showFavToast('已取消收藏');
+  } else {
+    favBank.lian[qid]={
+      id:qid, sentence:q.sentence, correct:q.correct, type:q.type, exp:q.exp,
+      savedAt:Date.now()
+    };
+    if(btn){ btn.textContent='⭐'; btn.classList.add('faved'); }
+    showFavToast('⭐ 已收藏到关联词收藏夹');
+  }
+  saveFavBank();
+  updateFavBadge();
+}
+
+// ════════════════════════════════════════
+// 标点符号 — 首页统计
+// ════════════════════════════════════════
+function updateBiaoHome(){
+  bstate = ensureToday(bstate);
+  const total  = BQ.length;
+  const td     = bstate.today;
+  const tdAcc  = td.answered>0 ? Math.round(td.correct/td.answered*100)+'%' : '—';
+  const tdWrong= td.wrongIds ? td.wrongIds.length : 0;
+  const seen   = bstate.seenIds.length;
+  const pct    = Math.round((seen/total)*100);
+
+  document.getElementById('biao-total-count').textContent = total;
+  document.getElementById('bstat-done').textContent       = td.answered;
+  document.getElementById('bstat-acc').textContent        = tdAcc;
+  document.getElementById('bstat-wrong').textContent      = tdWrong;
+  document.getElementById('bseen-count').textContent      = seen;
+  document.getElementById('bcoverage-bar').style.width    = pct+'%';
+  document.getElementById('bcoverage-pct').textContent    = pct+'%';
+  document.getElementById('biao-progress-tip').textContent= total;
+
+  const bc  = Object.keys(favBank.biao).length;
+  const bwb = document.getElementById('bwrong-mode-btn');
+  if(bwb){ bwb.style.display = bc>0?'block':'none'; document.getElementById('bwrong-badge').textContent=bc; }
+}
+
+// ════════════════════════════════════════
+// 标点符号 — 答题
+// ════════════════════════════════════════
+function startBiaoQuiz(mode, count){
+  blastMode = mode;
+  let pool;
+  if(mode==='wrong'){
+    const ids = Object.keys(favBank.biao).map(Number);
+    pool = BQ.filter(q=>ids.includes(q.id));
+    if(!pool.length){alert('收藏夹里还没有标点题，先收藏一些再来复习吧～');return;}
+  } else if(mode==='all'){
+    pool = [...BQ];
+  } else {
+    pool = shuffle([...BQ]).slice(0,count);
+  }
+  bsession.questions = (mode==='all') ? pool : shuffle(pool).slice(0,Math.min(count,pool.length));
+  bsession.questions.forEach(q=>delete q._answered);
+  bsession.index=0; bsession.correct=0; bsession.mode=mode; bsession.wrongInSession=[];
+  showScreen('bquiz');
+  renderBiaoQuestion();
+}
+
+function renderBiaoQuestion(){
+  const q   = bsession.questions[bsession.index];
+  const total = bsession.questions.length, idx = bsession.index;
+  document.getElementById('bquiz-prog-fill').style.width = ((idx/total)*100)+'%';
+  document.getElementById('bquiz-prog-text').textContent = `${idx+1}/${total}`;
+  const isFaved = favBank.biao && favBank.biao[q.id];
+
+  // 每种标点类型对应小色块
+  const typeColors={
+    '句号':'#c62828','问号':'#1565c0','逗号':'#2e7d32','顿号':'#6a1b9a',
+    '分号':'#e65100','叹号':'#c62828','冒号':'#00695c','引号':'#4e342e',
+    '书名号':'#1a237e','括号':'#4527a0','破折号':'#37474f','省略号':'#546e7a','综合':'#0d47a1'
+  };
+  const tc = typeColors[q.type] || 'var(--blue)';
+
+  const area = document.getElementById('bquestion-area');
+  area.innerHTML=`
+    <div class="biao-question-card" style="position:relative">
+      <button class="fav-btn ${isFaved?'faved':''}" id="fav-btn-biao" onclick="toggleFavBiao(${q.id})" title="${isFaved?'取消收藏':'收藏此题'}">
+        ${isFaved?'⭐':'☆'}
+      </button>
+      <div class="question-num" style="color:var(--blue)">标点辨析 · 第 ${idx+1} 题
+        <span style="margin-left:8px;font-size:10px;background:${tc}18;color:${tc};padding:2px 8px;border-radius:99px;border:1px solid ${tc}33">${q.type}</span>
+      </div>
+      <div style="font-size:12px;color:#888;margin-bottom:12px">判断下列句子中，<b style="color:var(--blue)">蓝底标点</b>的使用是否正确：</div>
+      <div class="biao-sentence">${q.sentence}</div>
+      <div class="lian-judge-row">
+        <div class="lian-judge-btn" id="bjbtn-0" onclick="answerBiao(true,${q.id})">
+          <span class="lj-icon">✅</span>
+          <span class="lj-label">标点正确</span>
+        </div>
+        <div class="lian-judge-btn" id="bjbtn-1" onclick="answerBiao(false,${q.id})">
+          <span class="lj-icon">❌</span>
+          <span class="lj-label">标点有误</span>
+        </div>
+      </div>
+    </div>
+    <div id="bexp-area"></div>`;
+}
+
+function answerBiao(userSaysCorrect, qid){
+  const q = bsession.questions.find(x=>x.id===qid);
+  if(q._answered) return;
+  q._answered = true;
+  const isRight = (userSaysCorrect === q.correct);
+
+  const btn0 = document.getElementById('bjbtn-0');
+  const btn1 = document.getElementById('bjbtn-1');
+  btn0.classList.add('disabled');
+  btn1.classList.add('disabled');
+
+  if(q.correct){
+    btn0.classList.add('correct');
+    if(!isRight) btn1.classList.add('wrong-c'); else btn1.classList.add('dim');
+  } else {
+    btn1.classList.add('correct');
+    if(!isRight) btn0.classList.add('wrong-c'); else btn0.classList.add('dim');
+  }
+
+  bstate = ensureToday(bstate);
+  bstate.today.answered++;
+  bstate.totalAnswered++;
+  if(isRight){
+    bsession.correct++;
+    bstate.today.correct++;
+    bstate.totalCorrect++;
+  } else {
+    bsession.wrongInSession.push({id:qid, sentence:q.sentence, correct:q.correct, exp:q.exp, type:q.type});
+    if(!bstate.today.wrongIds) bstate.today.wrongIds=[];
+    if(!bstate.today.wrongIds.includes(qid)) bstate.today.wrongIds.push(qid);
+  }
+  if(!bstate.seenIds.includes(qid)) bstate.seenIds.push(qid);
+  saveBState(bstate);
+
+  const isLast = bsession.index===bsession.questions.length-1;
+  const expArea = document.getElementById('bexp-area');
+  expArea.innerHTML=`
+    <div class="exp-card" style="border-left-color:var(--blue)">
+      <div class="exp-label" style="color:var(--blue)">📖 标点解析</div>
+      <div class="exp-result ${isRight?'ok':'fail'}">${isRight?'✅ 判断正确！':'❌ 判断有误，建议收藏此题'}</div>
+      <div style="font-size:13px;margin:6px 0;padding:6px 10px;background:var(--blue-bg);border-radius:8px">
+        本句标点用法：<b style="color:${q.correct?'var(--correct)':'var(--wrong)'}">${q.correct?'✅ 正确':'❌ 有误'}</b>
+      </div>
+      <div class="exp-text">${q.exp}</div>
+      <button class="next-btn" style="background:var(--blue)" onclick="${isLast?'finishBiaoQuiz()':'nextBiaoQuestion()'}">
+        ${isLast?'查看本次成绩':'下一题 →'}
+      </button>
+    </div>`;
+  expArea.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function nextBiaoQuestion(){ bsession.index++; renderBiaoQuestion(); window.scrollTo(0,0); }
+
+function finishBiaoQuiz(){
+  const total=bsession.questions.length, cor=bsession.correct;
+  const score=Math.round((cor/total)*100);
+  bstate.history.unshift({
+    date:new Date().toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}),
+    total, correct:cor, mode:bsession.mode
+  });
+  if(bstate.history.length>20) bstate.history=bstate.history.slice(0,20);
+  saveBState(bstate);
+
+  document.getElementById('bres-score').textContent   = score;
+  document.getElementById('bres-total').textContent   = total;
+  document.getElementById('bres-correct').textContent = cor;
+  document.getElementById('bres-wrong').textContent   = total-cor;
+  const ranks=[[90,'🏆 优秀！标点达人'],[75,'👍 良好，继续加油'],[60,'📚 及格，还需巩固'],[0,'💪 多刷几遍，加油！']];
+  document.getElementById('bres-rank').textContent = ranks.find(([s])=>score>=s)[1];
+
+  const sumEl = document.getElementById('berr-summary');
+  const ws = bsession.wrongInSession;
+  if(!ws.length){
+    sumEl.innerHTML=`<div class="no-err-box">🎉 本次全部答对，零错题！</div>`;
+  } else {
+    const items=ws.map(w=>`
+      <div class="err-item" style="border-left-color:var(--blue)">
+        <div style="font-size:12px;font-weight:600;color:var(--blue);margin-bottom:6px">${w.type}</div>
+        <div class="err-item-word" style="font-size:14px;line-height:1.9;font-family:'Noto Serif SC',serif;font-weight:400">${w.sentence}</div>
+        <div style="font-size:12px;margin:4px 0;padding:3px 8px;border-radius:6px;display:inline-block;font-weight:700;${w.correct?'background:#d8f3dc;color:var(--correct)':'background:#fce4e4;color:var(--wrong)'}">
+          实际用法：${w.correct?'✅ 正确':'❌ 有误'}
+        </div>
+        <div class="err-item-exp">${w.exp}</div>
+      </div>`).join('');
+    sumEl.innerHTML=`<div class="err-summary-title">本次错题总结<span class="err-count-tag">共 ${ws.length} 题</span></div>${items}`;
+  }
+  showScreen('bresult');
+}
+
+function retryBiaoQuiz(){ startBiaoQuiz(blastMode, 20); }
+function quitBiaoQuiz(){ if(confirm('确定退出本次练习？')) backToBiaoHome(); }
+function backToBiaoHome(){ showScreen('home'); setTimeout(()=>switchModule('biao'), 50); }
+
+// 标点收藏切换
+function toggleFavBiao(qid){
+  const q = BQ.find(x=>x.id===qid);
+  if(!q) return;
+  const btn = document.getElementById('fav-btn-biao');
+  if(favBank.biao[qid]){
+    delete favBank.biao[qid];
+    if(btn){ btn.textContent='☆'; btn.classList.remove('faved'); }
+    showFavToast('已取消收藏');
+  } else {
+    favBank.biao[qid]={
+      id:qid, sentence:q.sentence, correct:q.correct, type:q.type, exp:q.exp,
+      savedAt:Date.now()
+    };
+    if(btn){ btn.textContent='⭐'; btn.classList.add('faved'); }
+    showFavToast('⭐ 已收藏到标点收藏夹');
+  }
+  saveFavBank();
+  updateFavBadge();
+}
 
 // ════════════════════════════════════════
 // 初始化
